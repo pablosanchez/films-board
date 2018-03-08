@@ -10,6 +10,11 @@ import UIKit
 
 class MediaItemsViewController: UIViewController {
 
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var tableView: UITableView!
+
+    private let CELL_ID = "media-items-row"
+
     private let viewModel: MediaItemsViewModel
 
     init(viewModel: MediaItemsViewModel) {
@@ -25,6 +30,8 @@ class MediaItemsViewController: UIViewController {
         super.viewDidLoad()
 
         self.initTabBarItem()
+        self.navigationItem.titleView = segmentedControl
+        self.initTableView()
     }
 }
 
@@ -33,5 +40,25 @@ extension MediaItemsViewController {
     private func initTabBarItem() {
         let tabTitle = "Tendencias"
         self.tabBarItem = UITabBarItem(title: tabTitle, image: UIImage(named: "tab-featured"), tag: 0)
+    }
+
+    private func initTableView() {
+        let rowNib = UINib(nibName: "MediaItemsRow", bundle: nil)
+        self.tableView.register(rowNib, forCellReuseIdentifier: CELL_ID)
+
+        self.tableView.dataSource = self
+        self.tableView.rowHeight = 240
+    }
+}
+
+extension MediaItemsViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID, for: indexPath) as! MediaItemsRow
+        return cell
     }
 }
