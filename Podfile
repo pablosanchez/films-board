@@ -7,4 +7,6 @@ target 'FilmsBoard' do
 
   # Pods for FilmsBoard
   pod 'Typhoon', '= 3.6.0'
+  pod 'Alamofire', '~> 4.7'
+  pod 'SDWebImage', '~> 4.0'
 end

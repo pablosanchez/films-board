@@ -22,17 +22,16 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CoU-ea-l79">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="150"/>
-                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="CoU-ea-l79" secondAttribute="height" multiplier="2:3" id="nSm-gx-bLs"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CCL-yh-TWR">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CCL-yh-TWR">
                         <rect key="frame" x="0.0" y="150" width="100" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="2XQ-Kg-R94"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -48,6 +47,10 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="171" height="214"/>
+            <connections>
+                <outlet property="imageView" destination="CoU-ea-l79" id="HIN-vr-R9m"/>
+                <outlet property="label" destination="CCL-yh-TWR" id="lMT-GM-owy"/>
+            </connections>
             <point key="canvasLocation" x="62" y="-11"/>
         </collectionViewCell>
     </objects>

@@ -32,6 +32,9 @@ class MediaItemsViewController: UIViewController {
         self.initTabBarItem()
         self.navigationItem.titleView = segmentedControl
         self.initTableView()
+
+        viewModel.delegate = self
+        viewModel.getMediaItemsByCategories(type: .movies)
     }
 }
 
@@ -48,17 +51,27 @@ extension MediaItemsViewController {
 
         self.tableView.dataSource = self
         self.tableView.rowHeight = 240
+        self.tableView.separatorStyle = .none
+    }
+}
+
+extension MediaItemsViewController: MediaItemsViewModelDelegate {
+
+    func mediaItemsViewModelDidUpdateData(_ viewModel: MediaItemsViewModel) {
+        self.tableView.reloadData()
     }
 }
 
 extension MediaItemsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return viewModel.tableCellViewModels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID, for: indexPath) as! MediaItemsRow
+        cell.viewModel = viewModel.tableCellViewModels[indexPath.row]
+
         return cell
     }
 }

@@ -10,13 +10,21 @@ import UIKit
 
 class MediaItemsRow: UITableViewCell {
 
+    @IBOutlet weak var cellTitle: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
 
     private let CELL_ID = "media-item-cell"
-    
+
+    var viewModel: MediaItemsRowViewModel? {
+        didSet {
+            self.cellTitle.text = viewModel?.title
+            self.collectionView.reloadData()
+        }
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        
         self.initCollectionView()
     }
 }
@@ -35,16 +43,21 @@ extension MediaItemsRow {
 
         self.collectionView.dataSource = self
     }
+
+    @IBAction func showMoreTapped() {
+        viewModel?.showMoreButtonTapped()
+    }
 }
 
 extension MediaItemsRow: UICollectionViewDataSource {
 
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel?.viewModels.count ?? 0
     }
 
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_ID, for: indexPath) as! MediaItemCell
+        cell.viewModel = viewModel?.viewModels[indexPath.row]
         return cell
     }
 }

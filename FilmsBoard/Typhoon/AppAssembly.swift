@@ -48,8 +48,18 @@ class AppAssembly: TyphoonAssembly {
     @objc
     public dynamic func mediaItemsViewModel() -> Any {
         return TyphoonDefinition.withClass(MediaItemsViewModel.self) { (definition) in
-            definition?.useInitializer(#selector(MediaItemsViewModel.init))
+            definition?.useInitializer(
+                #selector(MediaItemsViewModel.init(storage:))) { (initializer) in
+                    initializer?.injectParameter(with: self.mediaItemsStorage())
+                }
             definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func mediaItemsStorage() -> Any {
+        return TyphoonDefinition.withClass(MediaItemsStorage.self) { (definition) in
+            definition?.scope = .singleton
         }
     }
 }

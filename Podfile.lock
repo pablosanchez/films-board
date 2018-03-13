@@ -1,4 +1,8 @@
 PODS:
+  - Alamofire (4.7.0)
+  - SDWebImage (4.3.2):
+    - SDWebImage/Core (= 4.3.2)
+  - SDWebImage/Core (4.3.2)
   - Typhoon (3.6.0):
     - Typhoon/DeallocNotifier (= 3.6.0)
     - Typhoon/IntrospectionUtils (= 3.6.0)
@@ -9,11 +13,15 @@ PODS:
     - Typhoon/IntrospectionUtils
 
 DEPENDENCIES:
+  - Alamofire (~> 4.7)
+  - SDWebImage (~> 4.0)
   - Typhoon (= 3.6.0)
 
 SPEC CHECKSUMS:
+  Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
   Typhoon: 551cc8fae881d0f4b20ddafc6d276da3e867f61f
 
-PODFILE CHECKSUM: 918b97b84fa513b910ecb21194e771b53beab901
+PODFILE CHECKSUM: e9707fe7a674d19e78ec81aba54f068fbb829a75
 
 COCOAPODS: 1.4.0

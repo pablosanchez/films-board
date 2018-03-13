@@ -41,6 +41,9 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aPp-2l-syx">
                         <rect key="frame" x="254" y="8.5" width="56" height="30"/>
                         <state key="normal" title="Ver más"/>
+                        <connections>
+                            <action selector="showMoreTapped" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rd7-Vb-kif"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -55,6 +58,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="cellTitle" destination="AfR-uz-mev" id="oTB-Ki-LD8"/>
                 <outlet property="collectionView" destination="5eQ-Ep-zoI" id="suT-ED-oa7"/>
             </connections>
             <point key="canvasLocation" x="40" y="49.5"/>
