@@ -28,17 +28,17 @@ extension MediaItemsViewModel {
     func getMediaItemsByCategories(type: MediaItemTypes) {
         let apiManager = MoviesAPIManager(storage: storage)
 
-        apiManager.getMediaItemsByCategories(type: type) { (error) in
+        apiManager.getMediaItemsByCategories(type: type) { [unowned self] (error) in
             guard error == nil, self.storage.mediaItemsByCategories.count == MovieTypes.values.count else {
                 if let error = error as? MoviesAPIError {
                     switch error {
-                    case .networkUnavailable:
-                        print("sin red")
+                    case .networkUnavailable(let errorMessage):
+                        self.delegate?.mediaItemsViewModel(self, didGetError: errorMessage)
                     case .apiError(let code):
-                        print(code)
+                        self.delegate?.mediaItemsViewModel(self, didGetError: "Error de red: código HTTP \(code)")
                     }
                 } else if let error = error as? MediaItemsBuilderError {
-                    print("error -> \(error.errorMessage)")
+                    self.delegate?.mediaItemsViewModel(self, didGetError: error.errorMessage)
                 }
 
                 return
@@ -58,4 +58,5 @@ extension MediaItemsViewModel {
 
 protocol MediaItemsViewModelDelegate: class {
     func mediaItemsViewModelDidUpdateData(_ viewModel: MediaItemsViewModel)
+    func mediaItemsViewModel(_ viewModel: MediaItemsViewModel, didGetError errorMessage: String)
 }

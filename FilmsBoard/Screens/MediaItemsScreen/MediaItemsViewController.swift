@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SCLAlertView
 
 class MediaItemsViewController: UIViewController {
 
@@ -59,6 +60,10 @@ extension MediaItemsViewController: MediaItemsViewModelDelegate {
 
     func mediaItemsViewModelDidUpdateData(_ viewModel: MediaItemsViewModel) {
         self.tableView.reloadData()
+    }
+
+    func mediaItemsViewModel(_ viewModel: MediaItemsViewModel, didGetError errorMessage: String) {
+        SCLAlertView().showWarning("Aviso", subTitle: errorMessage, closeButtonTitle: "Ok", circleIconImage: UIImage(named: "ic-no-network"), animationStyle: .topToBottom)
     }
 }
 

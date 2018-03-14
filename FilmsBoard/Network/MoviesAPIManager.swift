@@ -33,25 +33,38 @@ struct MoviesAPIManager {
 
     private func getMoviesByCategories(completionHandler: @escaping (Error?) -> ()) {
         var result = [[MediaItem]](repeating: [], count: MovieTypes.values.count)
+        var failed = false
+        var errorReceived: Error?
 
         for (i, currentType) in MovieTypes.values.enumerated() {
             dispatchGroup.enter()
             apiCommunicator.getMovies(type: currentType) { (jsonData, error) in
                 guard let json = jsonData else {
-                    completionHandler(error)
+                    failed = true
+                    errorReceived = error
+                    self.dispatchGroup.leave()
                     return
                 }
 
                 do {
                     result[i] = try MediaItemsBuilder.decodeMediaItems(json: json)
-                    self.dispatchGroup.leave()
                 } catch {
-                    completionHandler(error)
+                    failed = true
+                    errorReceived = error
+                }
+
+                defer {  // In both cases (do-catch), leave the group
+                    self.dispatchGroup.leave()
                 }
             }
         }
 
         dispatchGroup.notify(queue: .main) {
+            if failed {
+                completionHandler(errorReceived)
+                return
+            }
+
             for (i, array) in result.enumerated() {
                 self.storage.addMediaItemsArray(array, at: i)
             }

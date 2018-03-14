@@ -115,6 +115,14 @@
 			path = TableViewCell;
 			sourceTree = "<group>";
 		};
+		6E63C79A20585D7100914163 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				6EB9D7D0205060F60033399D /* MediaItemsScreen */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		6EB9D7A12050515E0033399D = {
 			isa = PBXGroup;
 			children = (
@@ -138,7 +146,7 @@
 			children = (
 				6EB9D7C3205057C50033399D /* Typhoon */,
 				6EB9D7C4205057CD0033399D /* RouteCoordinators */,
-				6EB9D7D0205060F60033399D /* MediaItemsScreen */,
+				6E63C79A20585D7100914163 /* Screens */,
 				6EDD2C6D20559365009A85B8 /* Models */,
 				6EDD2C6820553D6E009A85B8 /* Network */,
 				6E5BBC722056D07C00410758 /* Deserializers */,
@@ -329,12 +337,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FilmsBoard/Pods-FilmsBoard-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Typhoon/Typhoon.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Typhoon.framework",
 			);

@@ -9,6 +9,6 @@
 import Foundation
 
 enum MoviesAPIError: Error {
-    case networkUnavailable
+    case networkUnavailable(errorMessage: String)
     case apiError(code: Int)
 }

@@ -43,7 +43,7 @@ struct MoviesAPICommunicator {
                     if let response = json.response {
                         completionHandler(nil, MoviesAPIError.apiError(code: response.statusCode))
                     } else {
-                        completionHandler(nil, MoviesAPIError.networkUnavailable)
+                        completionHandler(nil, MoviesAPIError.networkUnavailable(errorMessage: "No hay conectividad de red disponible. Compruebe conexión de red y vuelva a intentarlo"))
                     }
                 case .success(let json):
                     completionHandler(json, nil)

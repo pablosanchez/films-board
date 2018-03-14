@@ -9,4 +9,5 @@ target 'FilmsBoard' do
   pod 'Typhoon', '= 3.6.0'
   pod 'Alamofire', '~> 4.7'
   pod 'SDWebImage', '~> 4.0'
+  pod 'SCLAlertView'
 end
