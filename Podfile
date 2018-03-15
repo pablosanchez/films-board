@@ -10,4 +10,6 @@ target 'FilmsBoard' do
   pod 'Alamofire', '~> 4.7'
   pod 'SDWebImage', '~> 4.0'
   pod 'SCLAlertView'
+  pod 'Cosmos', '~> 15.0'
+
 end
