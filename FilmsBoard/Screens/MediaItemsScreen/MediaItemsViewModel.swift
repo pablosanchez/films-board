@@ -29,26 +29,35 @@ extension MediaItemsViewModel {
         let apiManager = MoviesAPIManager(storage: storage)
 
         apiManager.getMediaItemsByCategories(type: type) { [unowned self] (error) in
+            // Be sure there's no error and media items dictionary contains just number of movie types keys
             guard error == nil, self.storage.mediaItemsByCategories.count == MovieTypes.values.count else {
+                var errorMsg = ""
                 if let error = error as? MoviesAPIError {
                     switch error {
                     case .networkUnavailable(let errorMessage):
-                        self.delegate?.mediaItemsViewModel(self, didGetError: errorMessage)
+                        errorMsg = errorMessage
                     case .apiError(let code):
-                        self.delegate?.mediaItemsViewModel(self, didGetError: "Error de red: código HTTP \(code)")
+                        errorMsg = "Error de red: código HTTP \(code)"
                     }
                 } else if let error = error as? MediaItemsBuilderError {
-                    self.delegate?.mediaItemsViewModel(self, didGetError: error.errorMessage)
+                    errorMsg = error.errorMessage
+                } else {
+                    errorMsg = "Error desconocido"
                 }
 
+                self.delegate?.mediaItemsViewModel(self, didGetError: errorMsg)
                 return
             }
 
             self.tableCellViewModels = [
-                NowPlayingViewModel(model: self.storage.mediaItemsByCategories[0]),
-                UpcomingViewModel(model: self.storage.mediaItemsByCategories[1]),
-                TopRatedViewModel(model: self.storage.mediaItemsByCategories[2]),
-                PopularViewModel(model: self.storage.mediaItemsByCategories[3])
+                NowPlayingViewModel(
+                    model: self.storage.mediaItemsByCategories[MovieTypes.nowPlaying.rawValue] ?? []),
+                UpcomingViewModel(
+                    model: self.storage.mediaItemsByCategories[MovieTypes.upcoming.rawValue] ?? []),
+                TopRatedViewModel(
+                    model: self.storage.mediaItemsByCategories[MovieTypes.topRated.rawValue] ?? []),
+                PopularViewModel(
+                    model: self.storage.mediaItemsByCategories[MovieTypes.popular.rawValue] ?? [])
             ]
 
             self.delegate?.mediaItemsViewModelDidUpdateData(self)
@@ -59,4 +68,9 @@ extension MediaItemsViewModel {
 protocol MediaItemsViewModelDelegate: class {
     func mediaItemsViewModelDidUpdateData(_ viewModel: MediaItemsViewModel)
     func mediaItemsViewModel(_ viewModel: MediaItemsViewModel, didGetError errorMessage: String)
+}
+
+@objc
+protocol MediaItemsViewModelProvider: NSObjectProtocol {
+    func mediaItemsViewModel() -> MediaItemsViewModel
 }

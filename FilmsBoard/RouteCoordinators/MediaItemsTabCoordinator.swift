@@ -12,12 +12,12 @@ import UIKit
 class MediaItemsTabCoordinator: NSObject {
 
     private let navigationController: UINavigationController
-    private let viewModel: MediaItemsViewModel
+    private let mediaItemsViewModelProvider: MediaItemsViewModelProvider
 
     @objc
-    init(viewModel: MediaItemsViewModel) {
+    init(mediaItemsViewModelProvider: MediaItemsViewModelProvider) {
         self.navigationController = UINavigationController()
-        self.viewModel = viewModel
+        self.mediaItemsViewModelProvider = mediaItemsViewModelProvider
         super.init()
     }
 }
@@ -42,7 +42,8 @@ extension MediaItemsTabCoordinator: Coordinable {
 extension MediaItemsTabCoordinator {
 
     private func initNavigationController() {
-        let viewController = MediaItemsViewController(viewModel: self.viewModel)
+        let viewModel = self.mediaItemsViewModelProvider.mediaItemsViewModel()
+        let viewController = MediaItemsViewController(viewModel: viewModel)
         self.navigationController.pushViewController(viewController, animated: true)
     }
 }

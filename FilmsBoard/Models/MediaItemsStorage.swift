@@ -11,9 +11,13 @@ import Foundation
 @objc
 class MediaItemsStorage: NSObject {
 
-    private(set) var mediaItemsByCategories: [[MediaItem]] = []
+    private(set) var mediaItemsByCategories: [String: [MediaItem]]
 
-    func addMediaItemsArray(_ mediaItems: [MediaItem], at position: Int) {
-        self.mediaItemsByCategories.insert(mediaItems, at: position)
+    override init() {
+        self.mediaItemsByCategories = [:]
+    }
+
+    func addMediaItemsArray(_ mediaItems: [MediaItem], forKey key: String) {
+        self.mediaItemsByCategories[key] = mediaItems
     }
 }

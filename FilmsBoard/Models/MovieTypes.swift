@@ -8,11 +8,11 @@
 
 import Foundation
 
-enum MovieTypes {
-    case nowPlaying
-    case upcoming
-    case topRated
-    case popular
+enum MovieTypes: String {
+    case nowPlaying = "nowPlaying"
+    case upcoming = "upcoming"
+    case topRated = "topRated"
+    case popular = "popular"
 
     static let values = [nowPlaying, upcoming, topRated, popular]
 }

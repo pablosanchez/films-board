@@ -32,7 +32,7 @@ struct MoviesAPIManager {
     }
 
     private func getMoviesByCategories(completionHandler: @escaping (Error?) -> ()) {
-        var result = [[MediaItem]](repeating: [], count: MovieTypes.values.count)
+        var result = [String: [MediaItem]]()
         var failed = false
         var errorReceived: Error?
 
@@ -47,7 +47,7 @@ struct MoviesAPIManager {
                 }
 
                 do {
-                    result[i] = try MediaItemsBuilder.decodeMediaItems(json: json)
+                    result[currentType.rawValue] = try MediaItemsBuilder.decodeMediaItems(json: json)
                 } catch {
                     failed = true
                     errorReceived = error
@@ -65,8 +65,8 @@ struct MoviesAPIManager {
                 return
             }
 
-            for (i, array) in result.enumerated() {
-                self.storage.addMediaItemsArray(array, at: i)
+            for (key, value) in result {
+                self.storage.addMediaItemsArray(value, forKey: key)
             }
 
             completionHandler(nil)

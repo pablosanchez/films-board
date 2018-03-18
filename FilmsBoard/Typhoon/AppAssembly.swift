@@ -38,8 +38,8 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsTabCoordinator() -> Any {
         return TyphoonDefinition.withClass(MediaItemsTabCoordinator.self) { (definition) in
             definition?.useInitializer(
-                #selector(MediaItemsTabCoordinator.init(viewModel:))) { (initializer) in
-                    initializer?.injectParameter(with: self.mediaItemsViewModel())
+                #selector(MediaItemsTabCoordinator.init(mediaItemsViewModelProvider:))) { (initializer) in
+                    initializer?.injectParameter(with: self)
                 }
             definition?.scope = .prototype
         }
