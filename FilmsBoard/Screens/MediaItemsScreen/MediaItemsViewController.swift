@@ -30,7 +30,6 @@ class MediaItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.initTabBarItem()
         self.navigationItem.titleView = segmentedControl
         self.initTableView()
 
@@ -40,11 +39,6 @@ class MediaItemsViewController: UIViewController {
 }
 
 extension MediaItemsViewController {
-
-    private func initTabBarItem() {
-        let tabTitle = "Tendencias"
-        self.tabBarItem = UITabBarItem(title: tabTitle, image: UIImage(named: "tab-featured"), tag: 0)
-    }
 
     private func initTableView() {
         let rowNib = UINib(nibName: "MediaItemsRow", bundle: nil)

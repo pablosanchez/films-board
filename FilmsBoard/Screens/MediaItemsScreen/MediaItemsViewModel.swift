@@ -15,6 +15,7 @@ class MediaItemsViewModel: NSObject {
     private let storage: MediaItemsStorage
 
     weak var delegate: MediaItemsViewModelDelegate?
+    weak var routingDelegate: MediaItemsViewModelRoutingDelegate?
 
     @objc
     init(storage: MediaItemsStorage) {
@@ -51,18 +52,37 @@ extension MediaItemsViewModel {
 
             self.tableCellViewModels = [
                 NowPlayingViewModel(
-                    model: self.storage.mediaItemsByCategories[MovieTypes.nowPlaying.rawValue] ?? []),
+                    model: self.storage.mediaItemsByCategories[MovieTypes.nowPlaying.rawValue] ?? [],
+                    delegate: self
+                ),
                 UpcomingViewModel(
-                    model: self.storage.mediaItemsByCategories[MovieTypes.upcoming.rawValue] ?? []),
+                    model: self.storage.mediaItemsByCategories[MovieTypes.upcoming.rawValue] ?? [],
+                    delegate: self
+                ),
                 TopRatedViewModel(
-                    model: self.storage.mediaItemsByCategories[MovieTypes.topRated.rawValue] ?? []),
+                    model: self.storage.mediaItemsByCategories[MovieTypes.topRated.rawValue] ?? [],
+                    delegate: self
+                ),
                 PopularViewModel(
-                    model: self.storage.mediaItemsByCategories[MovieTypes.popular.rawValue] ?? [])
+                    model: self.storage.mediaItemsByCategories[MovieTypes.popular.rawValue] ?? [],
+                    delegate: self
+                )
             ]
 
             self.delegate?.mediaItemsViewModelDidUpdateData(self)
         }
     }
+}
+
+extension MediaItemsViewModel: MediaItemsRowViewModelRoutingDelegate {
+
+    func mediaItemsRowDidTapShowMoreButton(category: MovieTypes) {
+        routingDelegate?.mediaItemsDidTapShowMoreButton(category: category)
+    }
+}
+
+protocol MediaItemsViewModelRoutingDelegate: class {
+    func mediaItemsDidTapShowMoreButton(category: MovieTypes)
 }
 
 protocol MediaItemsViewModelDelegate: class {

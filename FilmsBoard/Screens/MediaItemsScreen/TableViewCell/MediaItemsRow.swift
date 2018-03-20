@@ -45,7 +45,7 @@ extension MediaItemsRow {
     }
 
     @IBAction func showMoreTapped() {
-        viewModel?.showMoreButtonTapped()
+        viewModel?.handleShowMoreButtonTap()
     }
 }
 

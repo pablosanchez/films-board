@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.7.0)
+  - Cosmos (15.0.0)
   - SCLAlertView (0.8)
   - SDWebImage (4.3.2):
     - SDWebImage/Core (= 4.3.2)
@@ -15,16 +16,18 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - Cosmos (~> 15.0)
   - SCLAlertView
   - SDWebImage (~> 4.0)
   - Typhoon (= 3.6.0)
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  Cosmos: a6dbd3d0baa0cc8f51f8598f7508d5a09d0a9ade
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
   Typhoon: 551cc8fae881d0f4b20ddafc6d276da3e867f61f
 
-PODFILE CHECKSUM: e6f62972ecac23ba297c11e795f552cb689511cd
+PODFILE CHECKSUM: 3750fa5f5e3df7c12a6dd422ac7ea0f14ec1be82
 
 COCOAPODS: 1.4.0

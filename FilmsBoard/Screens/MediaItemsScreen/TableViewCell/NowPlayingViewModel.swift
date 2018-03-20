@@ -10,20 +10,23 @@ import Foundation
 
 struct NowPlayingViewModel: MediaItemsRowViewModel {
 
+    let delegate: MediaItemsRowViewModelRoutingDelegate
+
     let title = "Ahora en cartelera"
 
     let viewModels: [MediaItemViewModel]
 
-    init(model: [MediaItem]) {
+    init(model: [MediaItem], delegate: MediaItemsRowViewModelRoutingDelegate) {
         self.viewModels = model.map { (mediaItem) -> MediaItemViewModel in
             return MediaItemViewModel(model: mediaItem)
         }
+        self.delegate = delegate
     }
 }
 
 extension NowPlayingViewModel {
 
-    func showMoreButtonTapped() {
-
+    func handleShowMoreButtonTap() {
+        delegate.mediaItemsRowDidTapShowMoreButton(category: MovieTypes.nowPlaying)
     }
 }

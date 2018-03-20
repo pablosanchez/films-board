@@ -21,8 +21,7 @@ class MediaItemCell: UICollectionViewCell {
     }
 
     private func bindViews() {
-        self.imageView.sd_setImage(with: URL(string: viewModel?.posterImageURL ?? "http://abqpride.com/no-image-available/"),
-            placeholderImage: nil, options: [], completed: nil)
+        self.imageView.sd_setImage(with: URL(string: viewModel?.posterImageURL ?? "http://abqpride.com/no-image-available/"), completed: nil)
         self.label.text = viewModel?.title
     }
 }

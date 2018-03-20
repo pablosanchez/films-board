@@ -14,6 +14,8 @@ class TabsCoordinator: NSObject {
     private let tabBarController: UITabBarController
     private let mediaItemsTabCoordinatorProvider: MediaItemsTabCoordinatorProvider
 
+    private var firstTabCoordinator: Coordinable!
+
     @objc
     init(mediaItemsTabCoordinatorProvider: MediaItemsTabCoordinatorProvider) {
         self.tabBarController = UITabBarController()
@@ -49,6 +51,8 @@ extension TabsCoordinator {
         let tabCoordinator = mediaItemsTabCoordinatorProvider.mediaItemsTabCoordinator()
         tabCoordinator.start()
         self.tabBarController.viewControllers = [tabCoordinator.rootViewController]
+
+        self.firstTabCoordinator = tabCoordinator
     }
 }
 
