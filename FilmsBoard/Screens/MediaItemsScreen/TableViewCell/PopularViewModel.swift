@@ -10,20 +10,23 @@ import Foundation
 
 struct PopularViewModel: MediaItemsRowViewModel {
 
-    let title = "Más populares"
+    let delegate: MediaItemsRowViewModelRoutingDelegate
+
+    let title = MovieTypes.popular.getTitle()
 
     let viewModels: [MediaItemViewModel]
 
-    init(model: [MediaItem]) {
+    init(model: [MediaItem], delegate: MediaItemsRowViewModelRoutingDelegate) {
         self.viewModels = model.map { (mediaItem) -> MediaItemViewModel in
             return MediaItemViewModel(model: mediaItem)
         }
+        self.delegate = delegate
     }
 }
 
 extension PopularViewModel {
 
-    func showMoreButtonTapped() {
-
+    func handleShowMoreButtonTap() {
+        delegate.mediaItemsRowDidTapShowMoreButton(category: MovieTypes.popular)
     }
 }

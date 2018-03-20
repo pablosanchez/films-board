@@ -8,11 +8,24 @@
 
 import Foundation
 
-enum MovieTypes {
-    case nowPlaying
-    case upcoming
-    case topRated
-    case popular
+enum MovieTypes: String {
+    case nowPlaying = "nowPlaying"
+    case upcoming = "upcoming"
+    case topRated = "topRated"
+    case popular = "popular"
 
     static let values = [nowPlaying, upcoming, topRated, popular]
+
+    func getTitle() -> String {
+        switch self {
+        case .nowPlaying:
+            return "Ahora en cartelera"
+        case .upcoming:
+            return "Próximamente"
+        case .topRated:
+            return "Mejor valorados"
+        case .popular:
+            return "Más populares"
+        }
+    }
 }

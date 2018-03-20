@@ -10,6 +10,8 @@ import Foundation
 
 struct MoviesAPIManager {
 
+    typealias ErrorHandler = (Error?) -> ()
+
     private let apiCommunicator = MoviesAPICommunicator()
     private let dispatchGroup = DispatchGroup()
 
@@ -19,7 +21,7 @@ struct MoviesAPIManager {
         self.storage = storage
     }
 
-    func getMediaItemsByCategories(type: MediaItemTypes, completionHandler: @escaping (Error?) -> ()) {
+    func getMediaItemsByCategories(type: MediaItemTypes, completionHandler: @escaping ErrorHandler) {
         switch type {
         case .movies:
             self.getMoviesByCategories { (error) in
@@ -31,8 +33,26 @@ struct MoviesAPIManager {
         }
     }
 
-    private func getMoviesByCategories(completionHandler: @escaping (Error?) -> ()) {
-        var result = [[MediaItem]](repeating: [], count: MovieTypes.values.count)
+    func getMediaItemsCategory(_ category: MovieTypes, forPage page: Int, completionHandler: @escaping ErrorHandler) {
+        apiCommunicator.getMovies(type: category, page: page) { (jsonData, error) in
+            guard let json = jsonData else {
+                // TODO: manage errors
+                return
+            }
+
+            do {
+                let decodedJson = try MediaItemsBuilder.decodeMediaItems(json: json)
+                self.storage.appendMediaItemsArray(decodedJson.mediaItems, forKey: category.rawValue)
+                self.storage.totalPages = decodedJson.totalPages
+                completionHandler(nil)
+            } catch {
+                completionHandler(error)
+            }
+        }
+    }
+
+    private func getMoviesByCategories(completionHandler: @escaping ErrorHandler) {
+        var result = [String: [MediaItem]]()
         var failed = false
         var errorReceived: Error?
 
@@ -47,7 +67,7 @@ struct MoviesAPIManager {
                 }
 
                 do {
-                    result[i] = try MediaItemsBuilder.decodeMediaItems(json: json)
+                    result[currentType.rawValue] = try (MediaItemsBuilder.decodeMediaItems(json: json)).mediaItems
                 } catch {
                     failed = true
                     errorReceived = error
@@ -65,8 +85,8 @@ struct MoviesAPIManager {
                 return
             }
 
-            for (i, array) in result.enumerated() {
-                self.storage.addMediaItemsArray(array, at: i)
+            for (key, value) in result {
+                self.storage.addMediaItemsArray(value, forKey: key)
             }
 
             completionHandler(nil)

@@ -38,9 +38,11 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsTabCoordinator() -> Any {
         return TyphoonDefinition.withClass(MediaItemsTabCoordinator.self) { (definition) in
             definition?.useInitializer(
-                #selector(MediaItemsTabCoordinator.init(viewModel:))) { (initializer) in
-                    initializer?.injectParameter(with: self.mediaItemsViewModel())
-                }
+                #selector(MediaItemsTabCoordinator.init(mediaItemsViewModelProvider:
+                    mediaItemsCategoryViewModelProvider:))) { (initializer) in
+                        initializer?.injectParameter(with: self)
+                        initializer?.injectParameter(with: self)
+                    }
             definition?.scope = .prototype
         }
     }
@@ -50,6 +52,17 @@ class AppAssembly: TyphoonAssembly {
         return TyphoonDefinition.withClass(MediaItemsViewModel.self) { (definition) in
             definition?.useInitializer(
                 #selector(MediaItemsViewModel.init(storage:))) { (initializer) in
+                    initializer?.injectParameter(with: self.mediaItemsStorage())
+                }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func mediaItemsCategoryViewModel() -> Any {
+        return TyphoonDefinition.withClass(MediaItemsCategoryViewModel.self) { (definition) in
+            definition?.useInitializer(
+                #selector(MediaItemsCategoryViewModel.init(storage:))) { (initializer) in
                     initializer?.injectParameter(with: self.mediaItemsStorage())
                 }
             definition?.scope = .prototype

@@ -10,13 +10,9 @@ import UIKit
 
 protocol Coordinable {
 
-    /**
-     The root view controller for the coordinator
-     */
+    // The root view controller for the coordinator
     var rootViewController: UIViewController { get }
 
-    /**
-     Initial configuration for the coordinator
-     */
+    // Initial configuration for the coordinator
     func start()
 }

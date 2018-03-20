@@ -10,23 +10,18 @@ import Foundation
 
 protocol MediaItemsRowViewModel {
 
-    /**
-     The title for this table view cell
-     */
+    // The title for the cell
     var title: String { get }
 
-    /**
-     Array of collection view cell view models
-     */
+    // Array of collection view cell view models
     var viewModels: [MediaItemViewModel] { get }
 
-    /**
-     Handle click on "Show more" button
-     */
-    func showMoreButtonTapped()
+    // Designated initializer
+    init(model: [MediaItem], delegate: MediaItemsRowViewModelRoutingDelegate)
 
-    /**
-     Designated initializer
-     */
-    init(model: [MediaItem])
+    // Handle "Show more" button tap
+    func handleShowMoreButtonTap()
+
+    // Entity that will receive "Show more" button tap event
+    var delegate: MediaItemsRowViewModelRoutingDelegate { get }
 }

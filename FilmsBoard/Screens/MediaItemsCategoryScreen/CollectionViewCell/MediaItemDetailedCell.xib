@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MediaItemDetailedCell" customModule="FilmsBoard" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MediaItemDetailedCell" customModule="FilmsBoard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="326" height="123"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="326" height="123"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d02-Ya-cub" userLabel="Content View">
+                        <rect key="frame" x="0.0" y="0.0" width="326" height="123"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EGT-zz-IES">
+                                <rect key="frame" x="0.0" y="0.0" width="81.5" height="122.5"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJt-ZT-3op" userLabel="Title">
+                                <rect key="frame" x="89" y="6" width="229" height="20.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kvh-f3-sjL" userLabel="Release Date">
+                                <rect key="frame" x="89" y="75" width="37.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view userInteractionEnabled="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="JlF-Ga-aua" customClass="CosmosView" customModule="Cosmos">
+                                <rect key="frame" x="89" y="99" width="100" height="20"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                        <real key="value" value="3.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fillMode">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starMargin">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="emptyBorderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="filledBorderWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="EGT-zz-IES" firstAttribute="top" secondItem="d02-Ya-cub" secondAttribute="top" id="CeX-Yr-WyA"/>
+                            <constraint firstItem="pJt-ZT-3op" firstAttribute="leading" secondItem="EGT-zz-IES" secondAttribute="trailing" constant="8" id="EDK-jU-bdR"/>
+                            <constraint firstItem="EGT-zz-IES" firstAttribute="leading" secondItem="d02-Ya-cub" secondAttribute="leading" id="L5h-wL-dMp"/>
+                            <constraint firstItem="JlF-Ga-aua" firstAttribute="top" secondItem="Kvh-f3-sjL" secondAttribute="bottom" constant="6" id="N1g-RE-fS7"/>
+                            <constraint firstAttribute="trailing" secondItem="pJt-ZT-3op" secondAttribute="trailing" constant="8" id="VFG-34-EwX"/>
+                            <constraint firstItem="EGT-zz-IES" firstAttribute="width" secondItem="d02-Ya-cub" secondAttribute="width" multiplier="0.25" id="XN7-SU-eLF"/>
+                            <constraint firstAttribute="bottom" secondItem="JlF-Ga-aua" secondAttribute="bottom" constant="4" id="eom-yQ-FJH"/>
+                            <constraint firstItem="JlF-Ga-aua" firstAttribute="leading" secondItem="Kvh-f3-sjL" secondAttribute="leading" id="erI-aH-YpA"/>
+                            <constraint firstItem="Kvh-f3-sjL" firstAttribute="leading" secondItem="pJt-ZT-3op" secondAttribute="leading" id="v06-QJ-JXC"/>
+                            <constraint firstAttribute="bottom" secondItem="EGT-zz-IES" secondAttribute="bottom" id="vYd-cT-Wxq"/>
+                            <constraint firstItem="pJt-ZT-3op" firstAttribute="top" secondItem="d02-Ya-cub" secondAttribute="top" constant="6" id="z5I-iN-E6b"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="d02-Ya-cub" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="NQE-YM-OAw"/>
+                <constraint firstAttribute="bottom" secondItem="d02-Ya-cub" secondAttribute="bottom" id="YlR-RC-HwU"/>
+                <constraint firstAttribute="trailing" secondItem="d02-Ya-cub" secondAttribute="trailing" id="osc-4B-erb"/>
+                <constraint firstItem="d02-Ya-cub" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="wzO-IF-ztC"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="326" height="123"/>
+            <connections>
+                <outlet property="imageView" destination="EGT-zz-IES" id="kEg-s5-ITB"/>
+                <outlet property="ratingView" destination="JlF-Ga-aua" id="BxK-IH-Zt1"/>
+                <outlet property="releaseDateLabel" destination="Kvh-f3-sjL" id="ymJ-WB-je8"/>
+                <outlet property="titleLabel" destination="pJt-ZT-3op" id="wJW-ar-0B6"/>
+            </connections>
+            <point key="canvasLocation" x="43" y="17.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

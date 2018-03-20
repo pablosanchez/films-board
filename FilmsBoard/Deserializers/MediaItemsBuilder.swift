@@ -10,10 +10,12 @@ import Foundation
 
 struct MediaItemsBuilder {
 
-    static func decodeMediaItems(json rawJson: Any) throws -> [MediaItem] {
+    static func decodeMediaItems(json rawJson: Any) throws -> (mediaItems: [MediaItem], totalPages: Int?) {
         guard let dictJson = rawJson as? [String: Any] else {
             throw MediaItemsBuilderError(errorMessage: "Error parsing media items json")
         }
+
+        let totalPages = dictJson["total_pages"] as? Int
 
         guard let mediaItemsJson = dictJson["results"] as? [[String: Any]] else {
             throw MediaItemsBuilderError(errorMessage: "Error parsing results json key")
@@ -27,6 +29,6 @@ struct MediaItemsBuilder {
             throw MediaItemsBuilderError(errorMessage: "Error building media items from json")
         }
 
-        return mediaItems
+        return (mediaItems, totalPages)
     }
 }

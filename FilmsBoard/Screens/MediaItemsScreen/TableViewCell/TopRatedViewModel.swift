@@ -10,20 +10,23 @@ import Foundation
 
 struct TopRatedViewModel: MediaItemsRowViewModel {
 
-    let title = "Mejor valorados"
+    let delegate: MediaItemsRowViewModelRoutingDelegate
+
+    let title = MovieTypes.topRated.getTitle()
 
     let viewModels: [MediaItemViewModel]
 
-    init(model: [MediaItem]) {
+    init(model: [MediaItem], delegate: MediaItemsRowViewModelRoutingDelegate) {
         self.viewModels = model.map { (mediaItem) -> MediaItemViewModel in
             return MediaItemViewModel(model: mediaItem)
         }
+        self.delegate = delegate
     }
 }
 
 extension TopRatedViewModel {
 
-    func showMoreButtonTapped() {
-
+    func handleShowMoreButtonTap() {
+        delegate.mediaItemsRowDidTapShowMoreButton(category: MovieTypes.topRated)
     }
 }

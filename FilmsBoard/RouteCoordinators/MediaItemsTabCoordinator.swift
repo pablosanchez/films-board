@@ -12,28 +12,25 @@ import UIKit
 class MediaItemsTabCoordinator: NSObject {
 
     private let navigationController: UINavigationController
-    private let viewModel: MediaItemsViewModel
+    private let mediaItemsViewModelProvider: MediaItemsViewModelProvider
+    private let mediaItemsCategoryViewModelProvider: MediaItemsCategoryViewModelProvider
 
     @objc
-    init(viewModel: MediaItemsViewModel) {
+    init(mediaItemsViewModelProvider: MediaItemsViewModelProvider,
+         mediaItemsCategoryViewModelProvider: MediaItemsCategoryViewModelProvider) {
         self.navigationController = UINavigationController()
-        self.viewModel = viewModel
+        self.mediaItemsViewModelProvider = mediaItemsViewModelProvider
+        self.mediaItemsCategoryViewModelProvider = mediaItemsCategoryViewModelProvider
         super.init()
     }
 }
 
 extension MediaItemsTabCoordinator: Coordinable {
 
-    /**
-     The root view controller for this coordinator
-     */
     var rootViewController: UIViewController {
         return navigationController
     }
 
-    /**
-     Initial configuration for the coordinator
-     */
     func start() {
         self.initNavigationController()
     }
@@ -42,7 +39,27 @@ extension MediaItemsTabCoordinator: Coordinable {
 extension MediaItemsTabCoordinator {
 
     private func initNavigationController() {
-        let viewController = MediaItemsViewController(viewModel: self.viewModel)
+        let viewModel = self.mediaItemsViewModelProvider.mediaItemsViewModel()
+        viewModel.routingDelegate = self
+        let viewController = MediaItemsViewController(viewModel: viewModel)
+
+        self.navigationController.pushViewController(viewController, animated: true)
+        self.initTabBarItem()
+    }
+
+    private func initTabBarItem() {
+        let tabTitle = "Tendencias"
+        self.navigationController.tabBarItem =
+            UITabBarItem(title: tabTitle, image: UIImage(named: "tab-featured"), tag: 0)
+    }
+}
+
+extension MediaItemsTabCoordinator: MediaItemsViewModelRoutingDelegate {
+    
+    func mediaItemsDidTapShowMoreButton(category: MovieTypes) {
+        let viewModel = self.mediaItemsCategoryViewModelProvider.mediaItemsCategoryViewModel()
+        viewModel.category = category
+        let viewController = MediaItemsCategoryViewController(viewModel: viewModel)
         self.navigationController.pushViewController(viewController, animated: true)
     }
 }
