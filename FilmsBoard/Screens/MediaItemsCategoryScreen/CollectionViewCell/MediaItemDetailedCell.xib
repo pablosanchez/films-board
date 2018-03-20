@@ -25,7 +25,6 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EGT-zz-IES">
                                 <rect key="frame" x="0.0" y="0.0" width="81.5" height="122.5"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJt-ZT-3op" userLabel="Title">
                                 <rect key="frame" x="89" y="6" width="229" height="20.5"/>
@@ -63,7 +62,6 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.90196078430000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="EGT-zz-IES" firstAttribute="top" secondItem="d02-Ya-cub" secondAttribute="top" id="CeX-Yr-WyA"/>
                             <constraint firstItem="pJt-ZT-3op" firstAttribute="leading" secondItem="EGT-zz-IES" secondAttribute="trailing" constant="8" id="EDK-jU-bdR"/>

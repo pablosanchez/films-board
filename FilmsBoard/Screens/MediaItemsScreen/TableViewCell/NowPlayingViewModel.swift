@@ -12,7 +12,7 @@ struct NowPlayingViewModel: MediaItemsRowViewModel {
 
     let delegate: MediaItemsRowViewModelRoutingDelegate
 
-    let title = "Ahora en cartelera"
+    let title = MovieTypes.nowPlaying.getTitle()
 
     let viewModels: [MediaItemViewModel]
 

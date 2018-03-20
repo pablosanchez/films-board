@@ -29,7 +29,8 @@ class MediaItemsCategoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = viewModel.category.rawValue
+        self.viewModel.delegate = self
+        self.title = viewModel.title
         self.initCollectionView()
     }
 }
@@ -52,14 +53,26 @@ extension MediaItemsCategoryViewController {
     }
 }
 
+extension MediaItemsCategoryViewController: MediaItemsCategoryViewModelDelegate {
+
+    func mediaItemsCategoryViewModelDidUpdateData(_ viewModel: MediaItemsCategoryViewModel) {
+        self.collectionView.reloadData()
+    }
+}
+
 extension MediaItemsCategoryViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 16
+        return viewModel.cellViewModels.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_ID, for: indexPath) as! MediaItemDetailedCell
+        cell.viewModel = viewModel.cellViewModels[indexPath.row]
+
+        if indexPath.row == (viewModel.cellViewModels.count - 1) {  // Infinite scroll
+            viewModel.getNextMediaItemsPage()
+        }
 
         return cell
     }

@@ -13,17 +13,24 @@ struct Movie: MediaItem {
     private enum Keys: String, CodingKey {
         case imageURL = "poster_path"
         case title = "title"
+        case releaseDate = "release_date"
+        case rating = "vote_average"
     }
 
     private let imageBaseURL = "https://image.tmdb.org/t/p/w154"
 
     let posterImageURL: String
     let title: String
+    let releaseDate: String
+    let rating: Double
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: Keys.self)
         let imagePath = try values.decode(String.self, forKey: .imageURL)
         self.posterImageURL = "\(self.imageBaseURL)\(imagePath)"
         self.title = try values.decode(String.self, forKey: .title)
+        let unformattedReleaseDate = try values.decode(String.self, forKey: .releaseDate)
+        self.releaseDate = unformattedReleaseDate.formatDate()
+        self.rating = try values.decode(Double.self, forKey: .rating) / 2
     }
 }

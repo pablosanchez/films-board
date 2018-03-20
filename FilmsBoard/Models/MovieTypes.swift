@@ -15,4 +15,17 @@ enum MovieTypes: String {
     case popular = "popular"
 
     static let values = [nowPlaying, upcoming, topRated, popular]
+
+    func getTitle() -> String {
+        switch self {
+        case .nowPlaying:
+            return "Ahora en cartelera"
+        case .upcoming:
+            return "Próximamente"
+        case .topRated:
+            return "Mejor valorados"
+        case .popular:
+            return "Más populares"
+        }
+    }
 }

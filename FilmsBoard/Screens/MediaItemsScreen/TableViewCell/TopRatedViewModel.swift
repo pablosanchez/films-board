@@ -12,7 +12,7 @@ struct TopRatedViewModel: MediaItemsRowViewModel {
 
     let delegate: MediaItemsRowViewModelRoutingDelegate
 
-    let title = "Mejor valorados"
+    let title = MovieTypes.topRated.getTitle()
 
     let viewModels: [MediaItemViewModel]
 

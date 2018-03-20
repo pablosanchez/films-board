@@ -12,7 +12,7 @@ struct UpcomingViewModel: MediaItemsRowViewModel {
 
     let delegate: MediaItemsRowViewModelRoutingDelegate
 
-    let title = "Próximamente"
+    let title = MovieTypes.upcoming.getTitle()
 
     let viewModels: [MediaItemViewModel]
 

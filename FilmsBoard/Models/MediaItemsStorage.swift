@@ -12,6 +12,7 @@ import Foundation
 class MediaItemsStorage: NSObject {
 
     private(set) var mediaItemsByCategories: [String: [MediaItem]]
+    var totalPages: Int?
 
     override init() {
         self.mediaItemsByCategories = [:]
@@ -19,5 +20,11 @@ class MediaItemsStorage: NSObject {
 
     func addMediaItemsArray(_ mediaItems: [MediaItem], forKey key: String) {
         self.mediaItemsByCategories[key] = mediaItems
+    }
+
+    func appendMediaItemsArray(_ mediaItems: [MediaItem], forKey key: String) {
+        var array = mediaItemsByCategories[key]
+        array?.append(contentsOf: mediaItems)
+        self.mediaItemsByCategories[key] = array
     }
 }

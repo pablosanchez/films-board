@@ -12,4 +12,6 @@ protocol MediaItem: Decodable {
 
     var posterImageURL: String { get }
     var title: String { get }
+    var releaseDate: String { get }
+    var rating: Double { get }
 }

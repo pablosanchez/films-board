@@ -12,7 +12,7 @@ struct PopularViewModel: MediaItemsRowViewModel {
 
     let delegate: MediaItemsRowViewModelRoutingDelegate
 
-    let title = "Más populares"
+    let title = MovieTypes.popular.getTitle()
 
     let viewModels: [MediaItemViewModel]
 
