@@ -11,5 +11,9 @@ import Foundation
 protocol MediaItem: Decodable {
 
     var posterImageURL: String { get }
+    var backgroundImageURL: String { get }
     var title: String { get }
+    var year: String { get }
+    var description: String { get }
+    var rating: String { get }
 }
