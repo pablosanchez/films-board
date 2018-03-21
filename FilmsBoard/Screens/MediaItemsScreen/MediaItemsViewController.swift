@@ -8,11 +8,14 @@
 
 import UIKit
 import SCLAlertView
+import MBProgressHUD
 
 class MediaItemsViewController: UIViewController {
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+
+    private var progressIndicator: MBProgressHUD!
 
     private let CELL_ID = "media-items-row"
 
@@ -36,17 +39,11 @@ class MediaItemsViewController: UIViewController {
 
         viewModel.delegate = self
 
-        let index = self.segmentedControl.selectedSegmentIndex
-        if let type = self.getType(forIndex: index) {
-            viewModel.getMediaItemsByCategories(type: type)
-        }
+        self.requestData()
     }
 
     @IBAction func segmentedControlDidChange(_ sender: UISegmentedControl) {
-        let index = sender.selectedSegmentIndex
-        if let type = self.getType(forIndex: index) {
-            viewModel.getMediaItemsByCategories(type: type)
-        }
+        self.requestData()
     }
 }
 
@@ -73,15 +70,28 @@ extension MediaItemsViewController {
     private func getType(forIndex index: Int) -> MediaItemTypes? {
         return MediaItemTypes(rawValue: index)
     }
+
+    private func requestData() {
+        self.progressIndicator = MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.progressIndicator.label.text = "Cargando..."
+        self.progressIndicator.mode = .indeterminate
+
+        let index = self.segmentedControl.selectedSegmentIndex
+        if let type = self.getType(forIndex: index) {
+            viewModel.getMediaItemsByCategories(type: type)
+        }
+    }
 }
 
 extension MediaItemsViewController: MediaItemsViewModelDelegate {
 
     func mediaItemsViewModelDidUpdateData(_ viewModel: MediaItemsViewModel) {
+        self.progressIndicator.hide(animated: true)
         self.tableView.reloadData()
     }
 
     func mediaItemsViewModel(_ viewModel: MediaItemsViewModel, didGetError errorMessage: String) {
+        self.progressIndicator.hide(animated: true)
         SCLAlertView().showWarning("Aviso", subTitle: errorMessage, closeButtonTitle: "Ok", circleIconImage: UIImage(named: "ic-no-network"), animationStyle: .topToBottom)
     }
 }

@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class MediaItemsCategoryViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
+
+    private var progressIndicator: MBProgressHUD!
 
     private let CELL_ID = "media-item-cell"
     private let margin: CGFloat = 10  // Collection view margin
@@ -56,6 +59,7 @@ extension MediaItemsCategoryViewController {
 extension MediaItemsCategoryViewController: MediaItemsCategoryViewModelDelegate {
 
     func mediaItemsCategoryViewModelDidUpdateData(_ viewModel: MediaItemsCategoryViewModel) {
+        self.progressIndicator.hide(animated: true)
         self.collectionView.reloadData()
     }
 }
@@ -71,6 +75,10 @@ extension MediaItemsCategoryViewController: UICollectionViewDataSource {
         cell.viewModel = viewModel.cellViewModels[indexPath.row]
 
         if indexPath.row == (viewModel.cellViewModels.count - 1) {  // Infinite scroll
+            self.progressIndicator = MBProgressHUD.showAdded(to: self.view, animated: true)
+            self.progressIndicator.label.text = "Cargando..."
+            self.progressIndicator.mode = .indeterminate
+
             viewModel.getNextMediaItemsPage()
         }
 
