@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MediaItemTypes {
-    case movies
-    case tvShows
+enum MediaItemTypes: Int {
+    case movies = 0
+    case tvShows = 1
 }

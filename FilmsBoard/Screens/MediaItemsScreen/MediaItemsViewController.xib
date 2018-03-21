@@ -29,6 +29,9 @@
                         <segment title="Películas"/>
                         <segment title="Series"/>
                     </segments>
+                    <connections>
+                        <action selector="segmentedControlDidChange:" destination="-1" eventType="valueChanged" id="Rsu-BZ-X1C"/>
+                    </connections>
                 </segmentedControl>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ME3-rl-pmb">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>

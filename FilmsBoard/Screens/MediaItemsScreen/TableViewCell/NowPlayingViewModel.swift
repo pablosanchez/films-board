@@ -12,7 +12,7 @@ struct NowPlayingViewModel: MediaItemsRowViewModel {
 
     let delegate: MediaItemsRowViewModelRoutingDelegate
 
-    let title = MovieTypes.nowPlaying.getTitle()
+    let title = MediaItemCategories.nowPlaying.getTitle()
 
     let viewModels: [MediaItemViewModel]
 
@@ -27,6 +27,6 @@ struct NowPlayingViewModel: MediaItemsRowViewModel {
 extension NowPlayingViewModel {
 
     func handleShowMoreButtonTap() {
-        delegate.mediaItemsRowDidTapShowMoreButton(category: MovieTypes.nowPlaying)
+        delegate.mediaItemsRowDidTapShowMoreButton(category: MediaItemCategories.nowPlaying)
     }
 }

@@ -12,7 +12,7 @@ struct PopularViewModel: MediaItemsRowViewModel {
 
     let delegate: MediaItemsRowViewModelRoutingDelegate
 
-    let title = MovieTypes.popular.getTitle()
+    let title = MediaItemCategories.popular.getTitle()
 
     let viewModels: [MediaItemViewModel]
 
@@ -27,6 +27,6 @@ struct PopularViewModel: MediaItemsRowViewModel {
 extension PopularViewModel {
 
     func handleShowMoreButtonTap() {
-        delegate.mediaItemsRowDidTapShowMoreButton(category: MovieTypes.popular)
+        delegate.mediaItemsRowDidTapShowMoreButton(category: MediaItemCategories.popular)
     }
 }

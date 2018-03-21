@@ -10,7 +10,7 @@ import Foundation
 
 struct MoviesAPIManager {
 
-    typealias ErrorHandler = (Error?) -> ()
+    typealias Completion = (Error?) -> ()
 
     private let apiCommunicator = MoviesAPICommunicator()
     private let dispatchGroup = DispatchGroup()
@@ -21,55 +21,23 @@ struct MoviesAPIManager {
         self.storage = storage
     }
 
-    func getMediaItemsByCategories(type: MediaItemTypes, completionHandler: @escaping ErrorHandler) {
-        switch type {
-        case .movies:
-            self.getMoviesByCategories { (error) in
-                completionHandler(error)
-            }
-        case .tvShows:
-            print("not implemented yet")
-            completionHandler(nil)
-        }
-    }
-
-    func getMediaItemsCategory(_ category: MovieTypes, forPage page: Int, completionHandler: @escaping ErrorHandler) {
-        apiCommunicator.getMovies(type: category, page: page) { (jsonData, error) in
-            guard let json = jsonData else {
-                // TODO: manage errors
-                return
-            }
-
-            do {
-                let decodedJson = try MediaItemsBuilder.decodeMediaItems(json: json)
-                self.storage.appendMediaItemsArray(decodedJson.mediaItems, forKey: category.rawValue)
-                self.storage.totalPages = decodedJson.totalPages
-                completionHandler(nil)
-            } catch {
-                completionHandler(error)
-            }
-        }
-    }
-
-    private func getMoviesByCategories(completionHandler: @escaping ErrorHandler) {
+    func getMediaItemsByCategories(type: MediaItemTypes, completion: @escaping Completion) {
         var result = [String: [MediaItem]]()
-        var failed = false
-        var errorReceived: Error?
+        var errorReceived: Error? = nil
 
-        for (i, currentType) in MovieTypes.values.enumerated() {
+        for (i, currentCategory) in MediaItemCategories.values.enumerated() {
             dispatchGroup.enter()
-            apiCommunicator.getMovies(type: currentType) { (jsonData, error) in
+            apiCommunicator.getMediaItems(type: type, category: currentCategory) { (jsonData, error) in
                 guard let json = jsonData else {
-                    failed = true
                     errorReceived = error
                     self.dispatchGroup.leave()
                     return
                 }
 
                 do {
-                    result[currentType.rawValue] = try (MediaItemsBuilder.decodeMediaItems(json: json)).mediaItems
+                    result[currentCategory.rawValue] =
+                        try (MediaItemsBuilder.decodeMediaItems(type: type, json: json)).mediaItems
                 } catch {
-                    failed = true
                     errorReceived = error
                 }
 
@@ -80,8 +48,8 @@ struct MoviesAPIManager {
         }
 
         dispatchGroup.notify(queue: .main) {
-            if failed {
-                completionHandler(errorReceived)
+            if let error = errorReceived {  // Notify the error if there is one
+                completion(error)
                 return
             }
 
@@ -89,7 +57,26 @@ struct MoviesAPIManager {
                 self.storage.addMediaItemsArray(value, forKey: key)
             }
 
-            completionHandler(nil)
+            completion(nil)
+        }
+    }
+
+    func getMediaItems(for type: MediaItemTypes, category: MediaItemCategories,
+                       page: Int, completion: @escaping Completion) {
+        apiCommunicator.getMediaItems(type: type, category: category, page: page) { (jsonData, error) in
+            guard let json = jsonData else {
+                // TODO: manage errors
+                return
+            }
+
+            do {
+                let decodedJson = try MediaItemsBuilder.decodeMediaItems(type: type, json: json)
+                self.storage.appendMediaItemsArray(decodedJson.mediaItems, forKey: category.rawValue)
+                self.storage.totalPages = decodedJson.totalPages
+                completion(nil)
+            } catch {
+                completion(error)
+            }
         }
     }
 }

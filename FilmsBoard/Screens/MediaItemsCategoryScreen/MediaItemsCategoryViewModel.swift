@@ -15,7 +15,9 @@ class MediaItemsCategoryViewModel: NSObject {
     private(set) var cellViewModels: [MediaItemDetailedCellViewModel] = []
     private var currentPage: Int
 
-    var category: MovieTypes! {
+    var type: MediaItemTypes!
+
+    var category: MediaItemCategories! {
         didSet {
             self.setTitle()
             self.updateCellViewModels()
@@ -61,7 +63,7 @@ extension MediaItemsCategoryViewModel {
             return
         }
 
-        apiManager.getMediaItemsCategory(category, forPage: currentPage) { [unowned self] (error) in
+        apiManager.getMediaItems(for: type, category: category, page: currentPage) { [unowned self] (error) in
             // TODO: manage errors
             guard error == nil else {
                 return

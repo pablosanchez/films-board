@@ -30,15 +30,32 @@ class MediaItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.initSegmentedControl()
         self.navigationItem.titleView = segmentedControl
         self.initTableView()
 
         viewModel.delegate = self
-        viewModel.getMediaItemsByCategories(type: .movies)
+
+        let index = self.segmentedControl.selectedSegmentIndex
+        if let type = self.getType(forIndex: index) {
+            viewModel.getMediaItemsByCategories(type: type)
+        }
+    }
+
+    @IBAction func segmentedControlDidChange(_ sender: UISegmentedControl) {
+        let index = sender.selectedSegmentIndex
+        if let type = self.getType(forIndex: index) {
+            viewModel.getMediaItemsByCategories(type: type)
+        }
     }
 }
 
 extension MediaItemsViewController {
+
+    private func initSegmentedControl() {
+        self.segmentedControl.setTitle("Películas", forSegmentAt: 0)
+        self.segmentedControl.setTitle("Series", forSegmentAt: 1)
+    }
 
     private func initTableView() {
         let rowNib = UINib(nibName: "MediaItemsRow", bundle: nil)
@@ -47,6 +64,14 @@ extension MediaItemsViewController {
         self.tableView.dataSource = self
         self.tableView.rowHeight = 240
         self.tableView.separatorStyle = .none
+    }
+}
+
+extension MediaItemsViewController {
+
+    // Map selected segment of segmented control to MediaItemTypes
+    private func getType(forIndex index: Int) -> MediaItemTypes? {
+        return MediaItemTypes(rawValue: index)
     }
 }
 

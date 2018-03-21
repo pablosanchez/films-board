@@ -12,7 +12,7 @@ struct TopRatedViewModel: MediaItemsRowViewModel {
 
     let delegate: MediaItemsRowViewModelRoutingDelegate
 
-    let title = MovieTypes.topRated.getTitle()
+    let title = MediaItemCategories.topRated.getTitle()
 
     let viewModels: [MediaItemViewModel]
 
@@ -27,6 +27,6 @@ struct TopRatedViewModel: MediaItemsRowViewModel {
 extension TopRatedViewModel {
 
     func handleShowMoreButtonTap() {
-        delegate.mediaItemsRowDidTapShowMoreButton(category: MovieTypes.topRated)
+        delegate.mediaItemsRowDidTapShowMoreButton(category: MediaItemCategories.topRated)
     }
 }

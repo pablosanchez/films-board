@@ -1,5 +1,5 @@
 //
-//  MovieTypes.swift
+//  MediaItemCategories.swift
 //  FilmsBoard
 //
 //  Created by Pablo on 12/03/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MovieTypes: String {
+enum MediaItemCategories: String {
     case nowPlaying = "nowPlaying"
     case upcoming = "upcoming"
     case topRated = "topRated"

@@ -56,8 +56,9 @@ extension MediaItemsTabCoordinator {
 
 extension MediaItemsTabCoordinator: MediaItemsViewModelRoutingDelegate {
     
-    func mediaItemsDidTapShowMoreButton(category: MovieTypes) {
+    func mediaItemsDidTapShowMoreButton(type: MediaItemTypes, category: MediaItemCategories) {
         let viewModel = self.mediaItemsCategoryViewModelProvider.mediaItemsCategoryViewModel()
+        viewModel.type = type
         viewModel.category = category
         let viewController = MediaItemsCategoryViewController(viewModel: viewModel)
         self.navigationController.pushViewController(viewController, animated: true)

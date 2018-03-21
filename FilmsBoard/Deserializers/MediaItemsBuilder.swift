@@ -10,7 +10,8 @@ import Foundation
 
 struct MediaItemsBuilder {
 
-    static func decodeMediaItems(json rawJson: Any) throws -> (mediaItems: [MediaItem], totalPages: Int?) {
+    static func decodeMediaItems(type: MediaItemTypes,
+                                 json rawJson: Any) throws -> (mediaItems: [MediaItem], totalPages: Int?) {
         guard let dictJson = rawJson as? [String: Any] else {
             throw MediaItemsBuilderError(errorMessage: "Error parsing media items json")
         }
@@ -25,10 +26,19 @@ struct MediaItemsBuilder {
             throw MediaItemsBuilderError(errorMessage: "Error serializing json to data")
         }
 
-        guard let mediaItems = try? JSONDecoder().decode([Movie].self, from: mediaItemsData) else {
-            throw MediaItemsBuilderError(errorMessage: "Error building media items from json")
-        }
+        switch type {
+        case .movies:
+            guard let mediaItems = try? JSONDecoder().decode([Movie].self, from: mediaItemsData) else {
+                throw MediaItemsBuilderError(errorMessage: "Error building movies from json")
+            }
 
-        return (mediaItems, totalPages)
+            return (mediaItems, totalPages)
+        case .tvShows:
+            guard let mediaItems = try? JSONDecoder().decode([TvShow].self, from: mediaItemsData) else {
+                throw MediaItemsBuilderError(errorMessage: "Error building series from json")
+            }
+
+            return (mediaItems, totalPages)
+        }
     }
 }

@@ -14,6 +14,8 @@ class MediaItemsViewModel: NSObject {
     private(set) var tableCellViewModels: [MediaItemsRowViewModel]
     private let storage: MediaItemsStorage
 
+    private(set) var type: MediaItemTypes!
+
     weak var delegate: MediaItemsViewModelDelegate?
     weak var routingDelegate: MediaItemsViewModelRoutingDelegate?
 
@@ -27,11 +29,13 @@ class MediaItemsViewModel: NSObject {
 extension MediaItemsViewModel {
 
     func getMediaItemsByCategories(type: MediaItemTypes) {
-        let apiManager = MoviesAPIManager(storage: storage)
+        self.type = type
 
+        let apiManager = MoviesAPIManager(storage: storage)
         apiManager.getMediaItemsByCategories(type: type) { [unowned self] (error) in
             // Be sure there's no error and media items dictionary contains just number of movie types keys
-            guard error == nil, self.storage.mediaItemsByCategories.count == MovieTypes.values.count else {
+            guard error == nil,
+                self.storage.mediaItemsByCategories.count == MediaItemCategories.values.count else {
                 var errorMsg = ""
                 if let error = error as? MoviesAPIError {
                     switch error {
@@ -52,19 +56,19 @@ extension MediaItemsViewModel {
 
             self.tableCellViewModels = [
                 NowPlayingViewModel(
-                    model: self.storage.mediaItemsByCategories[MovieTypes.nowPlaying.rawValue] ?? [],
+                    model: self.storage.mediaItemsByCategories[MediaItemCategories.nowPlaying.rawValue] ?? [],
                     delegate: self
                 ),
                 UpcomingViewModel(
-                    model: self.storage.mediaItemsByCategories[MovieTypes.upcoming.rawValue] ?? [],
+                    model: self.storage.mediaItemsByCategories[MediaItemCategories.upcoming.rawValue] ?? [],
                     delegate: self
                 ),
                 TopRatedViewModel(
-                    model: self.storage.mediaItemsByCategories[MovieTypes.topRated.rawValue] ?? [],
+                    model: self.storage.mediaItemsByCategories[MediaItemCategories.topRated.rawValue] ?? [],
                     delegate: self
                 ),
                 PopularViewModel(
-                    model: self.storage.mediaItemsByCategories[MovieTypes.popular.rawValue] ?? [],
+                    model: self.storage.mediaItemsByCategories[MediaItemCategories.popular.rawValue] ?? [],
                     delegate: self
                 )
             ]
@@ -76,13 +80,13 @@ extension MediaItemsViewModel {
 
 extension MediaItemsViewModel: MediaItemsRowViewModelRoutingDelegate {
 
-    func mediaItemsRowDidTapShowMoreButton(category: MovieTypes) {
-        routingDelegate?.mediaItemsDidTapShowMoreButton(category: category)
+    func mediaItemsRowDidTapShowMoreButton(category: MediaItemCategories) {
+        routingDelegate?.mediaItemsDidTapShowMoreButton(type: self.type, category: category)
     }
 }
 
 protocol MediaItemsViewModelRoutingDelegate: class {
-    func mediaItemsDidTapShowMoreButton(category: MovieTypes)
+    func mediaItemsDidTapShowMoreButton(type: MediaItemTypes, category: MediaItemCategories)
 }
 
 protocol MediaItemsViewModelDelegate: class {
