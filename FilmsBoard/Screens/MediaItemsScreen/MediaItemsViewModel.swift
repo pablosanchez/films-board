@@ -15,6 +15,7 @@ class MediaItemsViewModel: NSObject {
     private let storage: MediaItemsStorage
 
     weak var delegate: MediaItemsViewModelDelegate?
+    var cellDelegate: MediaItemsCellSelectedDelegate?       //weak
 
     @objc
     init(storage: MediaItemsStorage) {
@@ -45,16 +46,29 @@ extension MediaItemsViewModel {
             }
 
             self.tableCellViewModels = [
-                NowPlayingViewModel(model: self.storage.mediaItemsByCategories[0]),
-                UpcomingViewModel(model: self.storage.mediaItemsByCategories[1]),
-                TopRatedViewModel(model: self.storage.mediaItemsByCategories[2]),
-                PopularViewModel(model: self.storage.mediaItemsByCategories[3])
+                NowPlayingViewModel(model: self.storage.mediaItemsByCategories[0], delegate: self),
+                UpcomingViewModel(model: self.storage.mediaItemsByCategories[1], delegate: self),
+                TopRatedViewModel(model: self.storage.mediaItemsByCategories[2], delegate: self),
+                PopularViewModel(model: self.storage.mediaItemsByCategories[3], delegate: self)
             ]
 
             self.delegate?.mediaItemsViewModelDidUpdateData(self)
         }
     }
 }
+
+extension MediaItemsViewModel: MediaItemsRowDidSelectCell {
+    func handleCellTap(mediaItem: MediaItem, isUpcoming: Bool) {
+        cellDelegate?.cellTapped(mediaItem: mediaItem, isUpcoming: isUpcoming)
+    }
+}
+
+
+protocol MediaItemsCellSelectedDelegate: class {
+    func cellTapped(mediaItem: MediaItem, isUpcoming: Bool)
+}
+
+
 
 protocol MediaItemsViewModelDelegate: class {
     func mediaItemsViewModelDidUpdateData(_ viewModel: MediaItemsViewModel)

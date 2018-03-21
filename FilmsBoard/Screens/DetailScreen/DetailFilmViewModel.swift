@@ -7,3 +7,21 @@
 //
 
 import Foundation
+
+
+@objc class DetailFilmViewModel: NSObject {
+    
+    private let storage: MediaItemsStorage
+    
+    @objc init(storage: MediaItemsStorage)
+    {
+        self.storage = storage
+    }
+    
+    
+    
+}
+
+@objc protocol DetailFilmViewModelProvider: NSObjectProtocol {
+    func detailFilmViewModel() -> DetailFilmViewModel
+}

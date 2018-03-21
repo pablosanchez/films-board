@@ -15,5 +15,7 @@ protocol MediaItem: Decodable {
     var title: String { get }
     var year: String { get }
     var description: String { get }
-    var rating: String { get }
+    var rating: Float { get }
+    
+    var id: Int { get }
 }

@@ -22,6 +22,23 @@ class AppAssembly: TyphoonAssembly {
             definition?.scope = .singleton
         }
     }
+    
+
+    
+    
+    @objc
+    public dynamic func detailFilmViewModel() -> Any {
+        return TyphoonDefinition.withClass(DetailFilmViewModel.self) { (definition) in
+            definition?.useInitializer(
+            #selector(DetailFilmViewModel.init(storage:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
+            }
+            definition?.scope = .prototype
+        }
+    }
+    
+    
+    
 
     @objc
     public dynamic func tabsCoordinator() -> Any {
@@ -38,8 +55,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsTabCoordinator() -> Any {
         return TyphoonDefinition.withClass(MediaItemsTabCoordinator.self) { (definition) in
             definition?.useInitializer(
-                #selector(MediaItemsTabCoordinator.init(viewModel:))) { (initializer) in
+                #selector(MediaItemsTabCoordinator.init(viewModel:detailFilmViewModelProvider:))) { (initializer) in
                     initializer?.injectParameter(with: self.mediaItemsViewModel())
+                    initializer?.injectParameter(with: self)
                 }
             definition?.scope = .prototype
         }

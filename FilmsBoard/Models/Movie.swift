@@ -17,6 +17,8 @@ struct Movie: MediaItem {
         case year = "release_date"
         case description = "overview"
         case rating = "vote_average"
+        
+        case id = "id"
     }
 
     private let imageBaseURL = "https://image.tmdb.org/t/p/w154"
@@ -26,7 +28,9 @@ struct Movie: MediaItem {
     let title: String
     let year: String
     let description: String
-    let rating: String
+    let rating: Float
+    
+    let id: Int
     
 
     init(from decoder: Decoder) throws {
@@ -42,6 +46,8 @@ struct Movie: MediaItem {
         self.title = try values.decode(String.self, forKey: .title)
         self.year = try values.decode(String.self, forKey: .year)
         self.description = try values.decode(String.self, forKey: .description)
-        self.rating = try values.decode(String.self, forKey: .rating)
+        self.rating = try values.decode(Float.self, forKey: .rating)
+        
+        self.id = try values.decode(Int.self, forKey: .id)
     }
 }

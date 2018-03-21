@@ -14,6 +14,9 @@ protocol MediaItemsRowViewModel {
      The title for this table view cell
      */
     var title: String { get }
+    
+    
+    var delegate: MediaItemsRowDidSelectCell { get }
 
     /**
      Array of collection view cell view models
@@ -24,9 +27,20 @@ protocol MediaItemsRowViewModel {
      Handle click on "Show more" button
      */
     func showMoreButtonTapped()
+    
+    
+    /**
+    Handle click cell
+    */
+    func selectedItem(index: Int)
 
     /**
      Designated initializer
      */
-    init(model: [MediaItem])
+    init(model: [MediaItem], delegate: MediaItemsRowDidSelectCell)
+}
+
+
+protocol MediaItemsRowDidSelectCell {
+    func handleCellTap(mediaItem: MediaItem, isUpcoming: Bool)
 }

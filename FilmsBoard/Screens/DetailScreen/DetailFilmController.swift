@@ -24,11 +24,33 @@ class DetailFilmController: UIViewController {
     @IBOutlet weak var rating: CosmosView!
     
     
+    private let viewModel: DetailFilmViewModel
+    
+    
+    
+    init(viewModel: DetailFilmViewModel)
+    {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.title = "Película"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        
+        navigationController?.navigationBar.barTintColor = UIColor.init(named: "Primary_Dark")
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.isOpaque = true
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         // Do any additional setup after loading the view.
     }
 
@@ -43,15 +65,16 @@ class DetailFilmController: UIViewController {
         
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    
+    @IBAction func addToList(_ sender: Any) {
+        
     }
-    */
+    
+    
+    
+    @IBAction func addReminder(_ sender: Any) {
+        
+    }
 
 }

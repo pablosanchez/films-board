@@ -12,6 +12,11 @@ import Foundation
 class MediaItemsStorage: NSObject {
 
     private(set) var mediaItemsByCategories: [[MediaItem]] = []
+    private(set) var currentIdMovieSelected: MediaItem?
+    
+    func addCurrentIdMovieSelected(mediaItem: MediaItem) {
+        self.currentIdMovieSelected = mediaItem
+    }
 
     func addMediaItemsArray(_ mediaItems: [MediaItem], at position: Int) {
         self.mediaItemsByCategories.insert(mediaItems, at: position)

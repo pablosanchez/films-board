@@ -13,12 +13,16 @@ class MediaItemsTabCoordinator: NSObject {
 
     private let navigationController: UINavigationController
     private let viewModel: MediaItemsViewModel
+    private let detailFilmViewModelProvider: DetailFilmViewModelProvider
 
     @objc
-    init(viewModel: MediaItemsViewModel) {
+    init(viewModel: MediaItemsViewModel, detailFilmViewModelProvider: DetailFilmViewModelProvider) {
         self.navigationController = UINavigationController()
         self.viewModel = viewModel
+        self.detailFilmViewModelProvider = detailFilmViewModelProvider
         super.init()
+        
+        self.viewModel.cellDelegate = self
     }
 }
 
@@ -46,6 +50,18 @@ extension MediaItemsTabCoordinator {
         self.navigationController.pushViewController(viewController, animated: true)
     }
 }
+
+
+extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
+    func cellTapped(mediaItem: MediaItem, isUpcoming: Bool) {
+        let viewModel = self.detailFilmViewModelProvider.detailFilmViewModel()
+        let viewController = DetailFilmController(viewModel: viewModel)
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+}
+
+
 
 @objc
 protocol MediaItemsTabCoordinatorProvider: NSObjectProtocol {
