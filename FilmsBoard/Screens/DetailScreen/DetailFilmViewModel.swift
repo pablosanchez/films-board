@@ -20,6 +20,30 @@ import Foundation
     
     
     
+    var mainImage: String {
+        return storage.currentIdMovieSelected!.posterImageURL
+    }
+    
+    var backImage: String {
+        return storage.currentIdMovieSelected!.backgroundImageURL
+    }
+    
+    var title: String {
+        return storage.currentIdMovieSelected!.title
+    }
+    
+    var year: String {
+        return storage.currentIdMovieSelected!.year
+    }
+    
+    var overview: String {
+        return storage.currentIdMovieSelected!.description
+    }
+    
+    var rating: Float {
+        return storage.currentIdMovieSelected!.rating
+    }
+    
 }
 
 @objc protocol DetailFilmViewModelProvider: NSObjectProtocol {

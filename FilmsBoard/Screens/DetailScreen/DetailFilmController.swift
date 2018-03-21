@@ -12,16 +12,21 @@ import Cosmos
 
 class DetailFilmController: UIViewController {
 
-    @IBOutlet weak var secondaryImage: UIImageView!
-    @IBOutlet weak var mainImage: UIImageView!
+    @IBOutlet weak var backImagePortrait: UIImageView!
+    @IBOutlet weak var backImageLandscape: UIImageView!
+    
+    @IBOutlet weak var mainImagePortrait: UIImageView!
+    @IBOutlet weak var mainImageLandscape: UIImageView!
     
     
-    @IBOutlet weak var title_: UILabel!
-    @IBOutlet weak var year: UILabel!
-    @IBOutlet weak var description_: UILabel!
-    @IBOutlet weak var genres: UILabel!
     
-    @IBOutlet weak var rating: CosmosView!
+    @IBOutlet weak var mediaTitle: UILabel!
+    @IBOutlet weak var mediaYear: UILabel!
+    @IBOutlet weak var mediaDescription: UILabel!
+    @IBOutlet weak var mediaGenres: UILabel!
+    
+    @IBOutlet weak var mediaRating: CosmosView!
+    
     
     
     private let viewModel: DetailFilmViewModel
@@ -41,9 +46,10 @@ class DetailFilmController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         self.title = "Película"
-        
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         
         navigationController?.navigationBar.barTintColor = UIColor.init(named: "Primary_Dark")
@@ -51,8 +57,33 @@ class DetailFilmController: UIViewController {
         navigationController?.navigationBar.isOpaque = true
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
-        // Do any additional setup after loading the view.
+        
+        self.bindViews()
     }
+    
+    
+    
+    private func bindViews() {
+        self.backImagePortrait.sd_setImage(with: URL(string: viewModel.backImage),
+                                   placeholderImage: nil, options: [], completed: nil)
+        self.backImageLandscape.sd_setImage(with: URL(string: viewModel.backImage),
+                                           placeholderImage: nil, options: [], completed: nil)
+        
+        
+        self.mainImagePortrait.sd_setImage(with: URL(string: viewModel.mainImage),
+                                           placeholderImage: nil, options: [], completed: nil)
+        self.mainImageLandscape.sd_setImage(with: URL(string: viewModel.mainImage),
+                                           placeholderImage: nil, options: [], completed: nil)
+        
+        
+        self.mediaTitle.text = viewModel.title
+        self.mediaYear.text = viewModel.year
+        self.mediaDescription.text = viewModel.overview
+        self.mediaGenres.text = "Unkown"
+        self.mediaRating.rating = Double(viewModel.rating / 2)
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

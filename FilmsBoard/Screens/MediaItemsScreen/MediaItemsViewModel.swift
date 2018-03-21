@@ -59,6 +59,7 @@ extension MediaItemsViewModel {
 
 extension MediaItemsViewModel: MediaItemsRowDidSelectCell {
     func handleCellTap(mediaItem: MediaItem, isUpcoming: Bool) {
+        self.storage.addCurrentIdMovieSelected(mediaItem: mediaItem)
         cellDelegate?.cellTapped(mediaItem: mediaItem, isUpcoming: isUpcoming)
     }
 }
