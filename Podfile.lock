@@ -6,6 +6,7 @@ PODS:
   - SDWebImage (4.3.2):
     - SDWebImage/Core (= 4.3.2)
   - SDWebImage/Core (4.3.2)
+  - SlideMenuControllerSwift (4.0.0)
   - Typhoon (3.6.0):
     - Typhoon/DeallocNotifier (= 3.6.0)
     - Typhoon/IntrospectionUtils (= 3.6.0)
@@ -21,6 +22,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 1.1.0)
   - SCLAlertView
   - SDWebImage (~> 4.0)
+  - SlideMenuControllerSwift
   - Typhoon (= 3.6.0)
 
 SPEC CHECKSUMS:
@@ -29,8 +31,9 @@ SPEC CHECKSUMS:
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
+  SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
   Typhoon: 551cc8fae881d0f4b20ddafc6d276da3e867f61f
 
-PODFILE CHECKSUM: 6e4df9a1cb508787b44c395f706c3bd994494af2
+PODFILE CHECKSUM: 053ae6d6819d75ba4088277fc07c7aab21e10e7a
 
 COCOAPODS: 1.4.0

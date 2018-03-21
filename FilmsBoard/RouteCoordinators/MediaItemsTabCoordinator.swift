@@ -42,6 +42,7 @@ extension MediaItemsTabCoordinator {
         let viewModel = self.mediaItemsViewModelProvider.mediaItemsViewModel()
         viewModel.routingDelegate = self
         let viewController = MediaItemsViewController(viewModel: viewModel)
+        viewController.addLeftBarButtonWithImage(UIImage(named: "ic-menu")!)  // Slide menu icon
 
         self.navigationController.pushViewController(viewController, animated: true)
         self.initTabBarItem()

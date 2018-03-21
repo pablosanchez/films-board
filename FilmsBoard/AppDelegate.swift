@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appCoordinator = assembly?.appCoordinator() as! AppCoordinator
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = appCoordinator.rootCoordinator.rootViewController
+        window?.rootViewController = appCoordinator.rootCoordinator
         window?.makeKeyAndVisible()
 
         return true

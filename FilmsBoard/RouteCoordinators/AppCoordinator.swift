@@ -7,19 +7,19 @@
 //
 
 import UIKit
+import SlideMenuControllerSwift
 
 @objc
 class AppCoordinator: NSObject {
 
     private let tabsCoordinatorProvider: TabsCoordinatorProvider
 
-    private var currentCoordinator: Coordinable!
+    private var slideMenuController: SlideMenuController!
+    private var activeCoordinator: Coordinable!
 
-    /**
-     The current root coordinator of the app
-     */
-    var rootCoordinator: Coordinable {
-        return currentCoordinator
+    // The current root coordinator of the app
+    var rootCoordinator: SlideMenuController {
+        return slideMenuController
     }
 
     @objc
@@ -27,13 +27,33 @@ class AppCoordinator: NSObject {
         self.tabsCoordinatorProvider = tabsCoordinatorProvider
         super.init()
         self.initFirstCoordinator()
+        self.initSlideMenu()
     }
 }
 
 extension AppCoordinator {
 
     private func initFirstCoordinator() {
-        currentCoordinator = tabsCoordinatorProvider.tabsCoordinator()
-        currentCoordinator.start()
+        self.activeCoordinator = tabsCoordinatorProvider.tabsCoordinator()
+        self.activeCoordinator.start()
+    }
+
+    private func initSlideMenu() {
+        let slideMenu = SlideMenuViewController()
+        slideMenu.delegate = self
+        self.slideMenuController = SlideMenuController(mainViewController: activeCoordinator.rootViewController, leftMenuViewController: slideMenu)
+    }
+}
+
+extension AppCoordinator: SlideMenuViewControllerDelegate {
+
+    // MARK: SlideMenuViewControllerDelegate methods
+
+    func slideMenuViewControllerDidTapListsButton(_ viewController: SlideMenuViewController) {
+        self.slideMenuController.closeLeft()
+    }
+
+    func slideMenuViewControllerDidTapCloseCinemasButton(_ viewController: SlideMenuViewController) {
+        self.slideMenuController.closeLeft()
     }
 }

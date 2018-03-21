@@ -26,16 +26,12 @@ class TabsCoordinator: NSObject {
 
 extension TabsCoordinator: Coordinable {
 
-    /**
-     The root view controller for this coordinator
-     */
+    // The root view controller for this coordinator
     var rootViewController: UIViewController {
         return tabBarController
     }
 
-    /**
-     Initial configuration for the coordinator
-     */
+    // Initial configuration for the coordinator
     func start() {
         self.initTabBarController()
     }

@@ -12,5 +12,6 @@ target 'FilmsBoard' do
   pod 'SCLAlertView'
   pod 'Cosmos', '~> 15.0'
   pod 'MBProgressHUD', '~> 1.1.0'
+  pod 'SlideMenuControllerSwift'
 
 end
