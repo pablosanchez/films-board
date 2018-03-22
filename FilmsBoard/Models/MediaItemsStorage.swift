@@ -11,11 +11,12 @@ import Foundation
 @objc
 class MediaItemsStorage: NSObject {
 
-    private(set) var mediaItemsByCategories: [String: [MediaItem]]
-    var totalPages: Int?
+    private(set) var mediaItemsByCategories: [String: [MediaItem]]  // Store media items by categories
+    private(set) var mediaItemsByTextSearch: [MediaItem]  // Store text-search results
 
     override init() {
         self.mediaItemsByCategories = [:]
+        self.mediaItemsByTextSearch = []
     }
 
     func addMediaItemsArray(_ mediaItems: [MediaItem], forKey key: String) {
@@ -26,5 +27,13 @@ class MediaItemsStorage: NSObject {
         var array = mediaItemsByCategories[key]
         array?.append(contentsOf: mediaItems)
         self.mediaItemsByCategories[key] = array
+    }
+
+    func setMediaItemsArray(_ mediaItems: [MediaItem]) {
+        self.mediaItemsByTextSearch = mediaItems
+    }
+
+    func appendMediaItemsArray(_ mediaItems: [MediaItem]) {
+        self.mediaItemsByTextSearch.append(contentsOf: mediaItems)
     }
 }

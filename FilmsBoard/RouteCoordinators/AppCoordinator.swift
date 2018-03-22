@@ -15,9 +15,7 @@ class AppCoordinator: NSObject {
 
     private var currentCoordinator: Coordinable!
 
-    /**
-     The current root coordinator of the app
-     */
+    // The current root coordinator of the app
     var rootCoordinator: Coordinable {
         return currentCoordinator
     }
@@ -33,7 +31,9 @@ class AppCoordinator: NSObject {
 extension AppCoordinator {
 
     private func initFirstCoordinator() {
-        currentCoordinator = tabsCoordinatorProvider.tabsCoordinator()
-        currentCoordinator.start()
+        let tabsCoordinator = tabsCoordinatorProvider.tabsCoordinator()
+        tabsCoordinator.start()
+
+        currentCoordinator = tabsCoordinator
     }
 }

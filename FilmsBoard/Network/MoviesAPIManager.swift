@@ -10,7 +10,7 @@ import Foundation
 
 struct MoviesAPIManager {
 
-    typealias Completion = (Error?) -> ()
+    typealias Completion = ([Int]?, Error?) -> ()  // Array of total pages for each category and if there's error
 
     private let apiCommunicator = MoviesAPICommunicator()
     private let dispatchGroup = DispatchGroup()
@@ -22,6 +22,7 @@ struct MoviesAPIManager {
     }
 
     func getMediaItemsByCategories(type: MediaItemTypes, completion: @escaping Completion) {
+        var totalPages = [Int](repeating: 0, count: MediaItemCategories.values.count)
         var result = [String: [MediaItem]]()
         var errorReceived: Error? = nil
 
@@ -35,8 +36,9 @@ struct MoviesAPIManager {
                 }
 
                 do {
-                    result[currentCategory.rawValue] =
-                        try (MediaItemsBuilder.decodeMediaItems(type: type, json: json)).mediaItems
+                    let builderResult = try MediaItemsBuilder.decodeMediaItems(type: type, json: json)
+                    totalPages[i] = builderResult.totalPages
+                    result[currentCategory.rawValue] = builderResult.mediaItems
                 } catch {
                     errorReceived = error
                 }
@@ -49,7 +51,7 @@ struct MoviesAPIManager {
 
         dispatchGroup.notify(queue: .main) {
             if let error = errorReceived {  // Notify the error if there is one
-                completion(error)
+                completion(nil, error)
                 return
             }
 
@@ -57,7 +59,7 @@ struct MoviesAPIManager {
                 self.storage.addMediaItemsArray(value, forKey: key)
             }
 
-            completion(nil)
+            completion(totalPages, nil)
         }
     }
 
@@ -65,17 +67,39 @@ struct MoviesAPIManager {
                        page: Int, completion: @escaping Completion) {
         apiCommunicator.getMediaItems(type: type, category: category, page: page) { (jsonData, error) in
             guard let json = jsonData else {
-                // TODO: manage errors
+                completion(nil, error)
                 return
             }
 
             do {
                 let decodedJson = try MediaItemsBuilder.decodeMediaItems(type: type, json: json)
                 self.storage.appendMediaItemsArray(decodedJson.mediaItems, forKey: category.rawValue)
-                self.storage.totalPages = decodedJson.totalPages
-                completion(nil)
+                completion(nil, nil)
             } catch {
-                completion(error)
+                completion(nil, error)
+            }
+        }
+    }
+
+    func getMediaItemsByText(text: String, type: MediaItemTypes, page: Int = 1, completion: @escaping Completion) {
+        apiCommunicator.getMediaItems(forText: text, type: type, page: page) { (jsonData, error) in
+            guard let json = jsonData else {
+                completion(nil, error)
+                return
+            }
+
+            do {
+                let result = try MediaItemsBuilder.decodeMediaItems(type: type, json: json)
+                let totalPages: [Int]? = [result.totalPages]
+                let decodedJson = result.mediaItems
+                if page == 1 {
+                    self.storage.setMediaItemsArray(decodedJson)
+                } else {
+                    self.storage.appendMediaItemsArray(decodedJson)
+                }
+                completion(totalPages, nil)
+            } catch {
+                completion(nil, error)
             }
         }
     }

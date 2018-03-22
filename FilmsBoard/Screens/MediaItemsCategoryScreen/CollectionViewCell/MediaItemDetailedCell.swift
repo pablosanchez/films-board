@@ -24,7 +24,7 @@ class MediaItemDetailedCell: UICollectionViewCell {
     }
 
     private func bindViews() {
-        self.imageView.sd_setImage(with: URL(string: viewModel?.posterImageURL ?? "http://abqpride.com/no-image-available/"), completed: nil)
+        self.imageView.sd_setImage(with: URL(string: viewModel?.posterImageURL ?? "https://upload.wikimedia.org/wikipedia/commons/2/2b/No-Photo-Available-240x300.jpg"), completed: nil)
         self.titleLabel.text = viewModel?.title
         self.releaseDateLabel.text = viewModel?.releaseDate
         self.ratingView.rating = viewModel?.rating ?? 0.0
