@@ -57,13 +57,16 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsTabCoordinator() -> Any {
         return TyphoonDefinition.withClass(MediaItemsTabCoordinator.self) { (definition) in
             definition?.useInitializer(
-                #selector(MediaItemsTabCoordinator.init(viewModel:detailFilmViewModelProvider:))) { (initializer) in
+            #selector(MediaItemsTabCoordinator.init(viewModel:detailFilmViewModelProvider:trailerCoordinatorProvider:))) { (initializer) in
                     initializer?.injectParameter(with: self.mediaItemsViewModel())
+                    initializer?.injectParameter(with: self)
                     initializer?.injectParameter(with: self)
                 }
             definition?.scope = .prototype
         }
     }
+    
+    
 
     @objc
     public dynamic func mediaItemsViewModel() -> Any {
@@ -75,6 +78,31 @@ class AppAssembly: TyphoonAssembly {
             definition?.scope = .prototype
         }
     }
+    
+    @objc
+    public dynamic func trailerCoordinator() -> Any {
+        return TyphoonDefinition.withClass(TrailerCoordinator.self) { (definition) in
+            definition?.useInitializer(
+            #selector(TrailerCoordinator.init(viewModel:))) { (initializer) in
+                initializer?.injectParameter(with: self.trailerViewModel())
+            }
+            definition?.scope = .prototype
+        }
+    }
+    
+    
+    
+    @objc
+    public dynamic func trailerViewModel() -> Any {
+        return TyphoonDefinition.withClass(TrailerViewModel.self) { (definition) in
+            definition?.useInitializer(
+            #selector(TrailerViewModel.init(storage:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
+            }
+            definition?.scope = .prototype
+        }
+    }
+    
 
     @objc
     public dynamic func mediaItemsStorage() -> Any {

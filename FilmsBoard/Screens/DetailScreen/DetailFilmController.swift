@@ -106,7 +106,7 @@ class DetailFilmController: UIViewController {
 
     
     @IBAction func watchTrailer(_ sender: Any) {
-        
+        viewModel.watchTrailer()
     }
     
     

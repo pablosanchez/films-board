@@ -14,12 +14,17 @@ class MediaItemsTabCoordinator: NSObject {
     private let navigationController: UINavigationController
     private let viewModel: MediaItemsViewModel
     private let detailFilmViewModelProvider: DetailFilmViewModelProvider
+    private let trailerCoordinatorProvider: TrailerCoordinatorProvider
+    private var trailerCoordinator: TrailerCoordinator?
 
+    
+    
     @objc
-    init(viewModel: MediaItemsViewModel, detailFilmViewModelProvider: DetailFilmViewModelProvider) {
+    init(viewModel: MediaItemsViewModel, detailFilmViewModelProvider: DetailFilmViewModelProvider, trailerCoordinatorProvider: TrailerCoordinatorProvider) {
         self.navigationController = UINavigationController()
         self.viewModel = viewModel
         self.detailFilmViewModelProvider = detailFilmViewModelProvider
+        self.trailerCoordinatorProvider = trailerCoordinatorProvider
         super.init()
         
         self.viewModel.cellDelegate = self
@@ -55,9 +60,29 @@ extension MediaItemsTabCoordinator {
 extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
     func cellTapped(mediaItem: MediaItem, isUpcoming: Bool) {
         let viewModel = self.detailFilmViewModelProvider.detailFilmViewModel()
+        viewModel.delegate = self
         let viewController = DetailFilmController(viewModel: viewModel)
         
         self.navigationController.pushViewController(viewController, animated: true)
+    }
+}
+
+
+extension MediaItemsTabCoordinator: TrailerButtonTappedDelegate {
+    func trailerButtonTapped() {
+        let trailerCoordinator = self.trailerCoordinatorProvider.trailerCoordinator()
+        self.trailerCoordinator = trailerCoordinator
+        self.trailerCoordinator?.delegate = self
+        
+        self.navigationController.present(trailerCoordinator.rootViewController, animated: true, completion: nil)
+    }
+}
+
+
+extension MediaItemsTabCoordinator: TrailerCoordinatorDelegate {
+    func trailerHasBeenClosed() {
+        self.navigationController.dismiss(animated: true, completion: nil)
+        self.trailerCoordinator = nil
     }
 }
 

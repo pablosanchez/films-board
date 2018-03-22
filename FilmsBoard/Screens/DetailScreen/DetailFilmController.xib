@@ -82,6 +82,9 @@
                                     <state key="normal" title="See Trailer">
                                         <color key="titleColor" name="Secondary"/>
                                     </state>
+                                    <connections>
+                                        <action selector="watchTrailer:" destination="-1" eventType="touchUpInside" id="hod-jY-0QO"/>
+                                    </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ohI-x3-PPm" userLabel="Separator2">
                                     <rect key="frame" x="8" y="574.5" width="359" height="1"/>
@@ -276,14 +279,14 @@
                             <exclude reference="iJk-2W-fbN"/>
                         </mask>
                         <mask key="constraints">
-                            <exclude reference="3ls-ZR-1Gj"/>
-                            <exclude reference="8c8-zo-apy"/>
-                            <exclude reference="9Re-MF-oVx"/>
-                            <exclude reference="shl-H0-uSC"/>
                             <exclude reference="74Y-gZ-3Nw"/>
                             <exclude reference="Dxc-VX-xUr"/>
                             <exclude reference="N4r-W5-QQA"/>
                             <exclude reference="ixl-6o-dlS"/>
+                            <exclude reference="3ls-ZR-1Gj"/>
+                            <exclude reference="8c8-zo-apy"/>
+                            <exclude reference="9Re-MF-oVx"/>
+                            <exclude reference="shl-H0-uSC"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=compact">
@@ -292,14 +295,14 @@
                             <include reference="iJk-2W-fbN"/>
                         </mask>
                         <mask key="constraints">
-                            <include reference="3ls-ZR-1Gj"/>
-                            <include reference="8c8-zo-apy"/>
-                            <include reference="9Re-MF-oVx"/>
-                            <include reference="shl-H0-uSC"/>
                             <include reference="74Y-gZ-3Nw"/>
                             <include reference="Dxc-VX-xUr"/>
                             <include reference="N4r-W5-QQA"/>
                             <include reference="ixl-6o-dlS"/>
+                            <include reference="3ls-ZR-1Gj"/>
+                            <include reference="8c8-zo-apy"/>
+                            <include reference="9Re-MF-oVx"/>
+                            <include reference="shl-H0-uSC"/>
                         </mask>
                     </variation>
                 </view>
@@ -342,8 +345,6 @@
                     <include reference="cKB-sc-L57"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="9Lr-y9-WbU"/>
-                    <exclude reference="I7F-lw-37a"/>
                     <include reference="NOq-CI-PmQ"/>
                     <include reference="f5Q-m5-fXM"/>
                     <include reference="h9k-Wo-YwG"/>
@@ -356,6 +357,8 @@
                     <include reference="oT9-Kq-Wmi"/>
                     <exclude reference="oX1-6V-Ljw"/>
                     <exclude reference="uDO-8l-aQU"/>
+                    <exclude reference="9Lr-y9-WbU"/>
+                    <exclude reference="I7F-lw-37a"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="93.5" y="-16.5"/>

@@ -16,6 +16,9 @@ import UserNotifications
     private let database: SQLiteDatabase
     private let dateUtils: DateUtils
     
+    var delegate: TrailerButtonTappedDelegate?
+    
+    
     @objc init(storage: MediaItemsStorage, database: SQLiteDatabase, dateUtils: DateUtils)
     {
         self.storage = storage
@@ -86,6 +89,12 @@ import UserNotifications
     
     
     
+    func watchTrailer() {
+        delegate?.trailerButtonTapped()
+    }
+    
+    
+    
     var mainImage: String {
         return storage.currentIdMovieSelected!.posterImageURL
     }
@@ -110,6 +119,11 @@ import UserNotifications
         return storage.currentIdMovieSelected!.rating
     }
     
+}
+
+
+protocol TrailerButtonTappedDelegate: class {
+    func trailerButtonTapped()
 }
 
 @objc protocol DetailFilmViewModelProvider: NSObjectProtocol {
