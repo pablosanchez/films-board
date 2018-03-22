@@ -18,4 +18,8 @@ protocol MediaItem: Decodable {
     var rating: Float { get }
     
     var id: Int { get }
+    
+    init(posterImageURL: String, backgroundImageURL: String, title: String,
+         year: String, description: String, rating: Float, id: Int)
+    
 }

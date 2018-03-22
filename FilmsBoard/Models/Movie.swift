@@ -32,6 +32,20 @@ struct Movie: MediaItem {
     
     let id: Int
     
+    
+    
+    init(posterImageURL: String, backgroundImageURL: String, title: String, year: String, description: String, rating: Float, id: Int) {
+        self.posterImageURL = posterImageURL
+        self.backgroundImageURL = backgroundImageURL
+        self.title = title
+        self.year = year
+        self.description = description
+        self.rating = rating
+        
+        self.id = id
+    }
+    
+    
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: Keys.self)

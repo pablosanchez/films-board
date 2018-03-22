@@ -103,26 +103,21 @@ class DetailFilmController: UIViewController {
         let actionCancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
         
         
-        let addToFabs = UIAlertAction(title: "Favoritas", style: .default, handler: {(accion) in
-            
-        })
-        
-        let addToPending = UIAlertAction(title: "Pendientes", style: .default, handler: {(accion) in
-            
-        })
-        
-        let addToViewed = UIAlertAction(title: "Vistas", style: .default, handler: {(accion) in
-           
-        })
-        
         let deleteFromLists = UIAlertAction(title: "Borrar de las listas", style: .destructive  , handler: {(accion) in
             
-            let alertDelete = UIAlertController(title: "Borrar de las listas", message: "¿Estás seguro?", preferredStyle: .alert)
+            let alertDelete = UIAlertController(title: "Borrar de las listas", message: "Nombre de la lista: ", preferredStyle: .alert)
             
-            let actionYes = UIAlertAction(title: "Sí", style: .destructive, handler: {(action) in
+            alertDelete.addTextField{ (tf) in
+                tf.placeholder = "Nombre"
+            }
+            
+            let actionYes = UIAlertAction(title: "Borrar", style: .destructive, handler: {(action) in
+                guard let name = alertDelete.textFields?.first?.text
+                    else { return }
                 
+                self.viewModel.deleteFromList(listName: name.capitalized)
             })
-            let actionNo = UIAlertAction(title: "No", style: .cancel, handler: nil)
+            let actionNo = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
             
             
             alertDelete.addAction(actionYes)
@@ -130,10 +125,17 @@ class DetailFilmController: UIViewController {
             self.present(alertDelete, animated: true, completion: nil)
         })
         
+        
+        
+        for listName in self.viewModel.retrieveListNames() {
+            let alert = UIAlertAction(title: listName, style: .default, handler: {(accion) in
+                self.viewModel.addFilmToList(listName: listName)
+            })
+            
+            alertController.addAction(alert)
+        }
+        
         alertController.addAction(actionCancel)
-        alertController.addAction(addToFabs)
-        alertController.addAction(addToPending)
-        alertController.addAction(addToViewed)
         alertController.addAction(deleteFromLists)
         
         
