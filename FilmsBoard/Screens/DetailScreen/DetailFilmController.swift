@@ -50,7 +50,6 @@ class DetailFilmController: UIViewController {
         
         self.title = "Película"
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToList))
         
         navigationController?.navigationBar.barTintColor = UIColor.init(named: "Primary_Dark")
         navigationController?.navigationBar.tintColor = UIColor.white
@@ -81,6 +80,20 @@ class DetailFilmController: UIViewController {
         self.mediaDescription.text = viewModel.overview
         self.mediaGenres.text = "Unkown"
         self.mediaRating.rating = Double(viewModel.rating / 2)
+        
+        
+        
+        
+        var buttons: [UIBarButtonItem] = []
+        
+        buttons.append(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToList)))
+        
+        if viewModel.checkIfCanRemind() {
+            buttons.append(UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(addReminder)))
+        }
+        
+        
+        navigationItem.rightBarButtonItems = buttons
     }
     
     
@@ -98,7 +111,7 @@ class DetailFilmController: UIViewController {
     
     
     
-    @objc func addToList(_ sender: Any) {
+    @objc func addToList() {
         let alertController = UIAlertController(title: "Añadir a la lista:", message: nil, preferredStyle: .actionSheet)
         let actionCancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
         
@@ -115,7 +128,9 @@ class DetailFilmController: UIViewController {
                 guard let name = alertDelete.textFields?.first?.text
                     else { return }
                 
-                self.viewModel.deleteFromList(listName: name.capitalized)
+                if name.capitalized != "Recordatorio"{
+                    self.viewModel.deleteFromList(listName: name.capitalized)
+                }
             })
             let actionNo = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
             
@@ -127,12 +142,15 @@ class DetailFilmController: UIViewController {
         
         
         
+        
         for listName in self.viewModel.retrieveListNames() {
-            let alert = UIAlertAction(title: listName, style: .default, handler: {(accion) in
-                self.viewModel.addFilmToList(listName: listName)
-            })
-            
-            alertController.addAction(alert)
+            if listName != "Recordatorio" {
+                let alert = UIAlertAction(title: listName, style: .default, handler: {(accion) in
+                    self.viewModel.addFilmToList(listName: listName)
+                })
+                
+                alertController.addAction(alert)
+            }
         }
         
         alertController.addAction(actionCancel)
@@ -144,8 +162,44 @@ class DetailFilmController: UIViewController {
     
     
     
-    @IBAction func addReminder(_ sender: Any) {
+    @objc func addReminder() {
+        let alertController = UIAlertController(title: "Crear recordatorio", message: nil, preferredStyle: .actionSheet)
+        let actionCancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
         
+        
+        
+        let createReminder = UIAlertAction(title: "Crear recordatorio", style: .default, handler: {(accion) in
+            self.viewModel.addFilmToList(listName: "Recordatorio")
+            self.viewModel.createReminder()
+        })
+        
+        
+        let removeReminder = UIAlertAction(title: "Eliminar recordatorio", style: .destructive  , handler: {(accion) in
+            
+            let alertDelete = UIAlertController(title: "Eliminar recordatorio", message: "¿Desea eliminar el recordatorio?", preferredStyle: .alert)
+            
+            let actionYes = UIAlertAction(title: "Sí", style: .destructive, handler: {(action) in
+                self.viewModel.deleteFromList(listName: "Recordatorio")
+                self.viewModel.removeReminder()
+            })
+            let actionNo = UIAlertAction(title: "No", style: .cancel, handler: nil)
+            
+            
+            alertDelete.addAction(actionYes)
+            alertDelete.addAction(actionNo)
+            self.present(alertDelete, animated: true, completion: nil)
+        })
+        
+        
+        if viewModel.checkIfIsReminding() {
+            alertController.addAction(removeReminder)
+        } else {
+            alertController.addAction(createReminder)
+        }
+        
+        alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
     }
 
 }

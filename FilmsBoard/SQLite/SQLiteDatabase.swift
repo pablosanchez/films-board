@@ -111,11 +111,13 @@ import SQLite
         let query1 = self.table_lists.insert(self.listName <- "Favoritas")
         let query2 = self.table_lists.insert(self.listName <- "Pendientes")
         let query3 = self.table_lists.insert(self.listName <- "Vistas")
+        let query4 = self.table_lists.insert(self.listName <- "Recordatorios")
         
         do {
             try self.database.run(query1)
             try self.database.run(query2)
             try self.database.run(query3)
+            try self.database.run(query4)
         } catch {
             print("\(error)")
         }
@@ -238,6 +240,22 @@ extension SQLiteDatabase {
         } catch {
             print("\(error)")
         }
+    }
+    
+    
+    func checkMovieIsInList(listName: String, id_movie: Int) -> Int{
+        var isInside: Int = 0
+        let listId = self.getListId(listName: listName)
+        
+        let query = self.table_movies.where(self.id_list == listId).where(self.id_movie == id_movie)
+        
+        do {
+            isInside = try self.database.scalar(query.count)
+        } catch {
+            print("\(error)")
+        }
+        
+        return isInside
     }
 }
 

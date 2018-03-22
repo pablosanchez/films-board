@@ -43,6 +43,7 @@
 		C98A139F206119690063C741 /* DetailFilmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A139E206119690063C741 /* DetailFilmViewModel.swift */; };
 		C98A13A520617C680063C741 /* DetailMovieCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A13A420617C680063C741 /* DetailMovieCoordinator.swift */; };
 		C9DA6729206395BE005C3987 /* SQLiteDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA6728206395BE005C3987 /* SQLiteDatabase.swift */; };
+		C9DA672C206406CF005C3987 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA672B206406CF005C3987 /* DateUtils.swift */; };
 		DFBB735B54D6C17C81B216A8 /* Pods_FilmsBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD6C39473E430CF495561E4 /* Pods_FilmsBoard.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		C98A139E206119690063C741 /* DetailFilmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilmViewModel.swift; sourceTree = "<group>"; };
 		C98A13A420617C680063C741 /* DetailMovieCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieCoordinator.swift; sourceTree = "<group>"; };
 		C9DA6728206395BE005C3987 /* SQLiteDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDatabase.swift; sourceTree = "<group>"; };
+		C9DA672B206406CF005C3987 /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				6EDD2C6820553D6E009A85B8 /* Network */,
 				C9DA672720639566005C3987 /* SQLite */,
 				6E5BBC722056D07C00410758 /* Deserializers */,
+				C9DA672A206406B4005C3987 /* Utils */,
 				6EB9D7AD2050515E0033399D /* AppDelegate.swift */,
 				6EB9D7B42050515E0033399D /* Assets.xcassets */,
 				6EB9D7B62050515E0033399D /* LaunchScreen.storyboard */,
@@ -267,6 +270,14 @@
 				C9DA6728206395BE005C3987 /* SQLiteDatabase.swift */,
 			);
 			path = SQLite;
+			sourceTree = "<group>";
+		};
+		C9DA672A206406B4005C3987 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				C9DA672B206406CF005C3987 /* DateUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -420,6 +431,7 @@
 				6ECA30402056F87200BB54CC /* NowPlayingViewModel.swift in Sources */,
 				6EB9D7D2205061ED0033399D /* MediaItemsViewModel.swift in Sources */,
 				6ECA30422056FB0100BB54CC /* MediaItemsStorage.swift in Sources */,
+				C9DA672C206406CF005C3987 /* DateUtils.swift in Sources */,
 				6EB9D7CC205058AA0033399D /* Coordinable.swift in Sources */,
 				6ECD18DD205145C300BF2F00 /* MediaItemCell.swift in Sources */,
 				6E63C7992058242E00914163 /* MediaItemTypes.swift in Sources */,
