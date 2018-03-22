@@ -5,6 +5,9 @@ PODS:
   - SDWebImage (4.3.2):
     - SDWebImage/Core (= 4.3.2)
   - SDWebImage/Core (4.3.2)
+  - SQLite.swift (0.11.4):
+    - SQLite.swift/standard (= 0.11.4)
+  - SQLite.swift/standard (0.11.4)
   - Typhoon (3.6.0):
     - Typhoon/DeallocNotifier (= 3.6.0)
     - Typhoon/IntrospectionUtils (= 3.6.0)
@@ -19,6 +22,7 @@ DEPENDENCIES:
   - Cosmos (~> 15.0)
   - SCLAlertView
   - SDWebImage (~> 4.0)
+  - SQLite.swift
   - Typhoon (= 3.6.0)
 
 SPEC CHECKSUMS:
@@ -26,8 +30,9 @@ SPEC CHECKSUMS:
   Cosmos: a6dbd3d0baa0cc8f51f8598f7508d5a09d0a9ade
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
+  SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
   Typhoon: 551cc8fae881d0f4b20ddafc6d276da3e867f61f
 
-PODFILE CHECKSUM: 72c52c196455ba82f2f74e3858d693bab4adf6d9
+PODFILE CHECKSUM: 444a350a8877b026ee884775c5cd775d3034f00d
 
 COCOAPODS: 1.4.0
