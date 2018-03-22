@@ -9,5 +9,5 @@
 import Foundation
 
 protocol MediaItemsRowViewModelRoutingDelegate {
-    func mediaItemsRowDidTapShowMoreButton(category: MediaItemCategories)
+    func mediaItemsRowDidTapShowMoreButton(totalPages: Int?, category: MediaItemCategories)
 }

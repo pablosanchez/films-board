@@ -34,14 +34,16 @@ class AppCoordinator: NSObject {
 extension AppCoordinator {
 
     private func initFirstCoordinator() {
-        self.activeCoordinator = tabsCoordinatorProvider.tabsCoordinator()
-        self.activeCoordinator.start()
+        let tabsCoordinator = tabsCoordinatorProvider.tabsCoordinator()
+        tabsCoordinator.start()
+
+        self.activeCoordinator = tabsCoordinator
     }
 
     private func initSlideMenu() {
         let slideMenu = SlideMenuViewController()
         slideMenu.delegate = self
-        self.slideMenuController = SlideMenuController(mainViewController: activeCoordinator.rootViewController, leftMenuViewController: slideMenu)
+        self.slideMenuController = SlideMenuController(mainViewController: self.activeCoordinator.rootViewController, leftMenuViewController: slideMenu)
     }
 }
 

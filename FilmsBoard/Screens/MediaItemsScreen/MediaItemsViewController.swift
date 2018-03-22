@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SCLAlertView
 import MBProgressHUD
 
 class MediaItemsViewController: UIViewController {
@@ -33,8 +32,8 @@ class MediaItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.initSegmentedControl()
         self.navigationItem.titleView = segmentedControl
+        self.initSegmentedControl()
         self.initTableView()
 
         viewModel.delegate = self
@@ -66,24 +65,17 @@ extension MediaItemsViewController {
 
 extension MediaItemsViewController {
 
-    // Map selected segment of segmented control to MediaItemTypes
-    private func getType(forIndex index: Int) -> MediaItemTypes? {
-        return MediaItemTypes(rawValue: index)
-    }
-
     private func requestData() {
-        self.progressIndicator = MBProgressHUD.showAdded(to: self.view, animated: true)
-        self.progressIndicator.label.text = "Cargando..."
-        self.progressIndicator.mode = .indeterminate
+        self.progressIndicator = MBProgressHUDBuilder.makeProgressIndicator(view: self.view)
 
         let index = self.segmentedControl.selectedSegmentIndex
-        if let type = self.getType(forIndex: index) {
-            viewModel.getMediaItemsByCategories(type: type)
-        }
+        viewModel.getMediaItemsByCategories(index: index)
     }
 }
 
 extension MediaItemsViewController: MediaItemsViewModelDelegate {
+
+    // MARK: MediaItemsViewModelDelegate mehtods
 
     func mediaItemsViewModelDidUpdateData(_ viewModel: MediaItemsViewModel) {
         self.progressIndicator.hide(animated: true)
@@ -92,11 +84,18 @@ extension MediaItemsViewController: MediaItemsViewModelDelegate {
 
     func mediaItemsViewModel(_ viewModel: MediaItemsViewModel, didGetError errorMessage: String) {
         self.progressIndicator.hide(animated: true)
-        SCLAlertView().showWarning("Aviso", subTitle: errorMessage, closeButtonTitle: "Ok", circleIconImage: UIImage(named: "ic-no-network"), animationStyle: .topToBottom)
+        SCLAlertViewBuilder()
+            .setTitle("Aviso")
+            .setSubtitle(errorMessage)
+            .setCloseButtonTitle("Ok")
+            .setCircleIconImage(UIImage(named: "ic-no-network"))
+            .show()
     }
 }
 
 extension MediaItemsViewController: UITableViewDataSource {
+
+    // MARK: UITableViewDataSource mehtods
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.tableCellViewModels.count

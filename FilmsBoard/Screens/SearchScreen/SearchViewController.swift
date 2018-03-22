@@ -1,28 +1,30 @@
 //
-//  MediaItemsCategoryViewController.swift
+//  SearchViewController.swift
 //  FilmsBoard
 //
-//  Created by Pablo on 14/03/2018.
+//  Created by Pablo on 20/03/2018.
 //  Copyright © 2018 Pablo. All rights reserved.
 //
 
 import UIKit
 import MBProgressHUD
 
-class MediaItemsCategoryViewController: UIViewController {
+class SearchViewController: UIViewController {
 
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var collectionView: UICollectionView!
 
     private var progressIndicator: MBProgressHUD!
 
     private let CELL_ID = "media-item-cell"
     private let margin: CGFloat = 10  // Collection view margin
+    private let viewModel: SearchViewModel
 
-    private let viewModel: MediaItemsCategoryViewModel
-
-    init(viewModel: MediaItemsCategoryViewModel) {
+    init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -32,13 +34,29 @@ class MediaItemsCategoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.viewModel.delegate = self
-        self.title = viewModel.title
+        self.navigationItem.titleView = searchBar
+        self.initSearchBar()
+        self.initSegmentedControl()
         self.initCollectionView()
+    }
+
+    @IBAction func segmentedControlDidChange(_ sender: UISegmentedControl) {
+        self.performSearch()
     }
 }
 
-extension MediaItemsCategoryViewController {
+extension SearchViewController {
+
+    private func initSearchBar() {
+        self.searchBar.placeholder = "Buscar..."
+        self.searchBar.showsCancelButton = true
+        self.searchBar.delegate = self
+    }
+
+    private func initSegmentedControl() {
+        self.segmentedControl.setTitle("Películas", forSegmentAt: 0)
+        self.segmentedControl.setTitle("Series", forSegmentAt: 1)
+    }
 
     private func initCollectionView() {
         let cellNib = UINib(nibName: "MediaItemDetailedCell", bundle: nil)
@@ -56,20 +74,45 @@ extension MediaItemsCategoryViewController {
     }
 }
 
-extension MediaItemsCategoryViewController: MediaItemsCategoryViewModelDelegate {
+extension SearchViewController {
 
-    // MARK: MediaItemsCategoryViewModelDelegate methods
+    func performSearch() {
+        self.progressIndicator = MBProgressHUDBuilder.makeProgressIndicator(view: self.view)
+        let index = self.segmentedControl.selectedSegmentIndex
+        viewModel.performSearchRequest(text: searchBar.text, index: index)
+    }
+}
 
-    func mediaItemsCategoryViewModelDidUpdateData(_ viewModel: MediaItemsCategoryViewModel) {
+extension SearchViewController: UISearchBarDelegate {
+
+    // MARK: UISearchBarDelegate methods
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+
+        self.performSearch()
+    }
+}
+
+extension SearchViewController: SearchViewModelDelegate {
+
+    // MARK: SearchViewModelDelegate methods
+
+    func searchViewModelDidUpdateData(_ viewModel: SearchViewModel) {
         self.progressIndicator.hide(animated: true)
         self.collectionView.reloadData()
     }
 
-    func mediaItemsCategoryViewModelDidFinishUpdatingData(_ viewModel: MediaItemsCategoryViewModel) {
+    func searchViewModelDidFinishUpdatingData(_ viewModel: SearchViewModel) {
         self.progressIndicator.hide(animated: true)
     }
 
-    func mediaItemsCategoryViewModel(_ viewModel: MediaItemsCategoryViewModel, didGetError errorMessage: String) {
+    func searchViewModel(_ viewModel: SearchViewModel, didGetError errorMessage: String) {
+        self.progressIndicator.hide(animated: true)
         SCLAlertViewBuilder()
             .setTitle("Aviso")
             .setSubtitle(errorMessage)
@@ -79,7 +122,9 @@ extension MediaItemsCategoryViewController: MediaItemsCategoryViewModelDelegate 
     }
 }
 
-extension MediaItemsCategoryViewController: UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDataSource {
+
+    // MARK: UICollectionViewDataSource methods
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.cellViewModels.count
@@ -98,7 +143,9 @@ extension MediaItemsCategoryViewController: UICollectionViewDataSource {
     }
 }
 
-extension MediaItemsCategoryViewController: UICollectionViewDelegateFlowLayout {
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+
+    // MARK: UICollectionViewDelegateFlowLayout methods
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var itemsPerRow: CGFloat

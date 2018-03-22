@@ -30,6 +30,27 @@ struct MoviesAPICommunicator {
         }
     }
 
+    func getMediaItems(forText text: String, type: MediaItemTypes, page: Int, completion: @escaping Completion) {
+        guard page > 0 else {
+            return
+        }
+
+        var url: String
+
+        switch type {
+        case .movies:
+            url = "\(baseURL)/search/movie"
+        case .tvShows:
+            url = "\(baseURL)/search/tv"
+        }
+
+        let params: [String: Any] = ["api_key": self.apiKey, "language": "es", "query": text, "page": page]
+
+        self.doRequest(url: url, parameters: params) { (jsonData, error) in
+            completion(jsonData, error)
+        }
+    }
+
     private func getUrl(for type: MediaItemTypes, category: MediaItemCategories) -> String {
         var url: String
 
