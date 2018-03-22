@@ -50,7 +50,7 @@ class DetailFilmController: UIViewController {
         
         self.title = "Película"
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToList))
         
         navigationController?.navigationBar.barTintColor = UIColor.init(named: "Primary_Dark")
         navigationController?.navigationBar.tintColor = UIColor.white
@@ -98,8 +98,46 @@ class DetailFilmController: UIViewController {
     
     
     
-    @IBAction func addToList(_ sender: Any) {
+    @objc func addToList(_ sender: Any) {
+        let alertController = UIAlertController(title: "Añadir a la lista:", message: nil, preferredStyle: .actionSheet)
+        let actionCancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
         
+        
+        let addToFabs = UIAlertAction(title: "Favoritas", style: .default, handler: {(accion) in
+            
+        })
+        
+        let addToPending = UIAlertAction(title: "Pendientes", style: .default, handler: {(accion) in
+            
+        })
+        
+        let addToViewed = UIAlertAction(title: "Vistas", style: .default, handler: {(accion) in
+           
+        })
+        
+        let deleteFromLists = UIAlertAction(title: "Borrar de las listas", style: .destructive  , handler: {(accion) in
+            
+            let alertDelete = UIAlertController(title: "Borrar de las listas", message: "¿Estás seguro?", preferredStyle: .alert)
+            
+            let actionYes = UIAlertAction(title: "Sí", style: .destructive, handler: {(action) in
+                
+            })
+            let actionNo = UIAlertAction(title: "No", style: .cancel, handler: nil)
+            
+            
+            alertDelete.addAction(actionYes)
+            alertDelete.addAction(actionNo)
+            self.present(alertDelete, animated: true, completion: nil)
+        })
+        
+        alertController.addAction(actionCancel)
+        alertController.addAction(addToFabs)
+        alertController.addAction(addToPending)
+        alertController.addAction(addToViewed)
+        alertController.addAction(deleteFromLists)
+        
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     
