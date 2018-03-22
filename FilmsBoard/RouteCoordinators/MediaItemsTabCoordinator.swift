@@ -41,10 +41,11 @@ extension MediaItemsTabCoordinator {
     private func initNavigationController() {
         let viewModel = self.mediaItemsViewModelProvider.mediaItemsViewModel()
         viewModel.routingDelegate = self
+
         let viewController = MediaItemsViewController(viewModel: viewModel)
         viewController.addLeftBarButtonWithImage(UIImage(named: "ic-menu")!)  // Slide menu icon
-
         self.navigationController.pushViewController(viewController, animated: true)
+
         self.initTabBarItem()
     }
 
@@ -56,11 +57,13 @@ extension MediaItemsTabCoordinator {
 }
 
 extension MediaItemsTabCoordinator: MediaItemsViewModelRoutingDelegate {
-    
-    func mediaItemsDidTapShowMoreButton(type: MediaItemTypes, category: MediaItemCategories) {
+
+    func mediaItemsDidTapShowMoreButton(totalPages: Int?, type: MediaItemTypes, category: MediaItemCategories) {
         let viewModel = self.mediaItemsCategoryViewModelProvider.mediaItemsCategoryViewModel()
+        viewModel.totalPages = totalPages
         viewModel.type = type
         viewModel.category = category
+
         let viewController = MediaItemsCategoryViewController(viewModel: viewModel)
         self.navigationController.pushViewController(viewController, animated: true)
     }

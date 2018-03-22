@@ -28,13 +28,13 @@ class MediaItemsViewModel: NSObject {
 
 extension MediaItemsViewModel {
 
-    func getMediaItemsByCategories(type: MediaItemTypes) {
-        self.type = type
+    func getMediaItemsByCategories(index: Int) {
+        self.type = MediaItemTypes(rawValue: index) ?? MediaItemTypes.movies
 
         let apiManager = MoviesAPIManager(storage: storage)
-        apiManager.getMediaItemsByCategories(type: type) { [unowned self] (error) in
-            // Be sure there's no error and media items dictionary contains just number of movie types keys
-            guard error == nil,
+        apiManager.getMediaItemsByCategories(type: type) { [unowned self] (totalPages, error) in
+            // Be sure there's no error and totalPages array size is just number of media item types
+            guard let pages = totalPages, pages.count == MediaItemCategories.values.count, error == nil,
                 self.storage.mediaItemsByCategories.count == MediaItemCategories.values.count else {
                 var errorMsg = ""
                 if let error = error as? MoviesAPIError {
@@ -57,18 +57,22 @@ extension MediaItemsViewModel {
             self.tableCellViewModels = [
                 NowPlayingViewModel(
                     model: self.storage.mediaItemsByCategories[MediaItemCategories.nowPlaying.rawValue] ?? [],
+                    numPages: pages[0],
                     delegate: self
                 ),
                 UpcomingViewModel(
                     model: self.storage.mediaItemsByCategories[MediaItemCategories.upcoming.rawValue] ?? [],
+                    numPages: pages[1],
                     delegate: self
                 ),
                 TopRatedViewModel(
                     model: self.storage.mediaItemsByCategories[MediaItemCategories.topRated.rawValue] ?? [],
+                    numPages: pages[2],
                     delegate: self
                 ),
                 PopularViewModel(
                     model: self.storage.mediaItemsByCategories[MediaItemCategories.popular.rawValue] ?? [],
+                    numPages: pages[3],
                     delegate: self
                 )
             ]
@@ -80,13 +84,13 @@ extension MediaItemsViewModel {
 
 extension MediaItemsViewModel: MediaItemsRowViewModelRoutingDelegate {
 
-    func mediaItemsRowDidTapShowMoreButton(category: MediaItemCategories) {
-        routingDelegate?.mediaItemsDidTapShowMoreButton(type: self.type, category: category)
+    func mediaItemsRowDidTapShowMoreButton(totalPages: Int?, category: MediaItemCategories) {
+        routingDelegate?.mediaItemsDidTapShowMoreButton(totalPages: totalPages, type: self.type, category: category)
     }
 }
 
 protocol MediaItemsViewModelRoutingDelegate: class {
-    func mediaItemsDidTapShowMoreButton(type: MediaItemTypes, category: MediaItemCategories)
+    func mediaItemsDidTapShowMoreButton(totalPages: Int?, type: MediaItemTypes, category: MediaItemCategories)
 }
 
 protocol MediaItemsViewModelDelegate: class {

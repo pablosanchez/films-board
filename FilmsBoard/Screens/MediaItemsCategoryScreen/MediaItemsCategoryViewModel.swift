@@ -13,7 +13,9 @@ class MediaItemsCategoryViewModel: NSObject {
 
     private let storage: MediaItemsStorage
     private(set) var cellViewModels: [MediaItemDetailedCellViewModel] = []
+
     private var currentPage: Int
+    var totalPages: Int?  // To handle infinite scrolling
 
     var type: MediaItemTypes!
 
@@ -59,13 +61,28 @@ extension MediaItemsCategoryViewModel {
         let apiManager = MoviesAPIManager(storage: storage)
         self.currentPage += 1
 
-        if (currentPage > self.storage.totalPages ?? 2) {  // Total pages is assigned on second request
+        if currentPage > self.totalPages ?? 1 {  // If there were no pages, give a default value of 1
+            self.delegate?.mediaItemsCategoryViewModelDidFinishUpdatingData(self)
             return
         }
 
-        apiManager.getMediaItems(for: type, category: category, page: currentPage) { [unowned self] (error) in
-            // TODO: manage errors
+        apiManager.getMediaItems(for: type, category: category, page: currentPage) { [unowned self] (pages, error) in
             guard error == nil else {
+                var errorMsg: String
+                if let error = error as? MoviesAPIError {
+                    switch error {
+                    case .apiError(let code):
+                        errorMsg = "Error de red: código HTTP \(code)"
+                    case .networkUnavailable(let errorMessage):
+                        errorMsg = errorMessage
+                    }
+                } else if let error = error as? MediaItemsBuilderError {
+                    errorMsg = error.errorMessage
+                } else {
+                    errorMsg = "Error desconocido"
+                }
+
+                self.delegate?.mediaItemsCategoryViewModel(self, didGetError: errorMsg)
                 return
             }
 
@@ -77,6 +94,8 @@ extension MediaItemsCategoryViewModel {
 
 protocol MediaItemsCategoryViewModelDelegate: class {
     func mediaItemsCategoryViewModelDidUpdateData(_ viewModel: MediaItemsCategoryViewModel)
+    func mediaItemsCategoryViewModelDidFinishUpdatingData(_ viewModel: MediaItemsCategoryViewModel)
+    func mediaItemsCategoryViewModel(_ viewModel: MediaItemsCategoryViewModel, didGetError errorMessage: String)
 }
 
 @objc

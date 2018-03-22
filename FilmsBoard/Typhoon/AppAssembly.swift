@@ -27,9 +27,11 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func tabsCoordinator() -> Any {
         return TyphoonDefinition.withClass(TabsCoordinator.self) { (definition) in
             definition?.useInitializer(
-                #selector(TabsCoordinator.init(mediaItemsTabCoordinatorProvider:))) { (initializer) in
-                    initializer?.injectParameter(with: self)
-                }
+                #selector(TabsCoordinator.init(
+                    mediaItemsTabCoordinatorProvider:searchTabCoordinatorProvider:))) { (initializer) in
+                        initializer?.injectParameter(with: self)
+                        initializer?.injectParameter(with: self)
+                    }
             definition?.scope = .prototype
         }
     }
@@ -43,6 +45,17 @@ class AppAssembly: TyphoonAssembly {
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
                     }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func searchTabCoordinator() -> Any {
+        return TyphoonDefinition.withClass(SearchTabCoordinator.self) { (definition) in
+            definition?.useInitializer(
+                #selector(SearchTabCoordinator.init(searchViewModelProvider:))) { (initializer) in
+                    initializer?.injectParameter(with: self)
+                }
             definition?.scope = .prototype
         }
     }
@@ -63,6 +76,17 @@ class AppAssembly: TyphoonAssembly {
         return TyphoonDefinition.withClass(MediaItemsCategoryViewModel.self) { (definition) in
             definition?.useInitializer(
                 #selector(MediaItemsCategoryViewModel.init(storage:))) { (initializer) in
+                    initializer?.injectParameter(with: self.mediaItemsStorage())
+                }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func searchViewModel() -> Any {
+        return TyphoonDefinition.withClass(SearchViewModel.self) { (definition) in
+            definition?.useInitializer(
+                #selector(SearchViewModel.init(storage:))) { (initializer) in
                     initializer?.injectParameter(with: self.mediaItemsStorage())
                 }
             definition?.scope = .prototype

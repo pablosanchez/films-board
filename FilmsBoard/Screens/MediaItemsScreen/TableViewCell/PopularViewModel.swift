@@ -16,10 +16,13 @@ struct PopularViewModel: MediaItemsRowViewModel {
 
     let viewModels: [MediaItemViewModel]
 
-    init(model: [MediaItem], delegate: MediaItemsRowViewModelRoutingDelegate) {
+    var numPages: Int?
+
+    init(model: [MediaItem], numPages: Int? = nil, delegate: MediaItemsRowViewModelRoutingDelegate) {
         self.viewModels = model.map { (mediaItem) -> MediaItemViewModel in
             return MediaItemViewModel(model: mediaItem)
         }
+        self.numPages = numPages
         self.delegate = delegate
     }
 }
@@ -27,6 +30,6 @@ struct PopularViewModel: MediaItemsRowViewModel {
 extension PopularViewModel {
 
     func handleShowMoreButtonTap() {
-        delegate.mediaItemsRowDidTapShowMoreButton(category: MediaItemCategories.popular)
+        delegate.mediaItemsRowDidTapShowMoreButton(totalPages: numPages, category: MediaItemCategories.popular)
     }
 }

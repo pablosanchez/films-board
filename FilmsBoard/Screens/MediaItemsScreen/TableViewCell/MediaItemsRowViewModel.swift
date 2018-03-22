@@ -16,8 +16,11 @@ protocol MediaItemsRowViewModel {
     // Array of collection view cell view models
     var viewModels: [MediaItemViewModel] { get }
 
+    // Number of pages of results
+    var numPages: Int? { get }
+
     // Designated initializer
-    init(model: [MediaItem], delegate: MediaItemsRowViewModelRoutingDelegate)
+    init(model: [MediaItem], numPages: Int?, delegate: MediaItemsRowViewModelRoutingDelegate)
 
     // Handle "Show more" button tap
     func handleShowMoreButtonTap()

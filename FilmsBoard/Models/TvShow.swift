@@ -19,15 +19,19 @@ struct TvShow: MediaItem {
 
     private let imageBaseURL = "https://image.tmdb.org/t/p/w154"
     
-    let posterImageURL: String
+    var posterImageURL: String?
     let title: String
     let releaseDate: String
     let rating: Double
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: Keys.self)
-        let imagePath = try values.decode(String.self, forKey: .imageURL)
-        self.posterImageURL = "\(self.imageBaseURL)\(imagePath)"
+        do {
+            let imagePath = try values.decode(String.self, forKey: .imageURL)
+            self.posterImageURL = "\(self.imageBaseURL)\(imagePath)"
+        } catch {
+            self.posterImageURL = nil
+        }
         self.title = try values.decode(String.self, forKey: .title)
         let unformattedReleaseDate = try values.decode(String.self, forKey: .releaseDate)
         self.releaseDate = unformattedReleaseDate.formatDate()

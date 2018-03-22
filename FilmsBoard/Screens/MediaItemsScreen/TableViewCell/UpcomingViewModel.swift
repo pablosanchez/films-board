@@ -16,10 +16,13 @@ struct UpcomingViewModel: MediaItemsRowViewModel {
 
     let viewModels: [MediaItemViewModel]
 
-    init(model: [MediaItem], delegate: MediaItemsRowViewModelRoutingDelegate) {
+    var numPages: Int?
+
+    init(model: [MediaItem], numPages: Int? = nil, delegate: MediaItemsRowViewModelRoutingDelegate) {
         self.viewModels = model.map { (mediaItem) -> MediaItemViewModel in
             return MediaItemViewModel(model: mediaItem)
         }
+        self.numPages = numPages
         self.delegate = delegate
     }
 }
@@ -27,6 +30,6 @@ struct UpcomingViewModel: MediaItemsRowViewModel {
 extension UpcomingViewModel {
 
     func handleShowMoreButtonTap() {
-        delegate.mediaItemsRowDidTapShowMoreButton(category: MediaItemCategories.upcoming)
+        delegate.mediaItemsRowDidTapShowMoreButton(totalPages: numPages, category: MediaItemCategories.upcoming)
     }
 }
