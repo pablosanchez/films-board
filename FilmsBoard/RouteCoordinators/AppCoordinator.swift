@@ -13,9 +13,10 @@ import SlideMenuControllerSwift
 class AppCoordinator: NSObject {
 
     private let tabsCoordinatorProvider: TabsCoordinatorProvider
+    private let mapCoordinatorProvider: MapCoordinatorProvider
 
     private var slideMenuController: SlideMenuController!
-    private var activeCoordinator: Coordinable!
+    private var slideMenu: SlideMenuViewController!
 
     // The current root coordinator of the app
     var rootCoordinator: SlideMenuController {
@@ -23,27 +24,27 @@ class AppCoordinator: NSObject {
     }
 
     @objc
-    init(tabsCoordinatorProvider: TabsCoordinatorProvider) {
+    init(tabsCoordinatorProvider: TabsCoordinatorProvider, mapCoordinatorProvider: MapCoordinatorProvider) {
         self.tabsCoordinatorProvider = tabsCoordinatorProvider
+        self.mapCoordinatorProvider = mapCoordinatorProvider
         super.init()
-        self.initFirstCoordinator()
         self.initSlideMenu()
     }
 }
 
 extension AppCoordinator {
 
-    private func initFirstCoordinator() {
+    private func initSlideMenu() {
+        self.slideMenu = SlideMenuViewController()
+        self.slideMenu.delegate = self
+
         let tabsCoordinator = tabsCoordinatorProvider.tabsCoordinator()
         tabsCoordinator.start()
-
-        self.activeCoordinator = tabsCoordinator
+        self.slideMenuController = SlideMenuController(mainViewController: tabsCoordinator.rootViewController, leftMenuViewController: self.slideMenu)
     }
 
-    private func initSlideMenu() {
-        let slideMenu = SlideMenuViewController()
-        slideMenu.delegate = self
-        self.slideMenuController = SlideMenuController(mainViewController: self.activeCoordinator.rootViewController, leftMenuViewController: slideMenu)
+    private func changeSlideMenuRootViewController(_ viewController: UIViewController) {
+        self.slideMenuController.mainViewController = viewController
     }
 }
 
@@ -51,11 +52,23 @@ extension AppCoordinator: SlideMenuViewControllerDelegate {
 
     // MARK: SlideMenuViewControllerDelegate methods
 
+    func slideMenuViewControllerDidTapHomeButton(_ viewController: SlideMenuViewController) {
+        self.slideMenuController.closeLeft()
+
+        let tabsCoordinator = tabsCoordinatorProvider.tabsCoordinator()
+        tabsCoordinator.start()
+        self.changeSlideMenuRootViewController(tabsCoordinator.rootViewController)
+    }
+
     func slideMenuViewControllerDidTapListsButton(_ viewController: SlideMenuViewController) {
         self.slideMenuController.closeLeft()
     }
 
     func slideMenuViewControllerDidTapCloseCinemasButton(_ viewController: SlideMenuViewController) {
         self.slideMenuController.closeLeft()
+
+        let mapCoordinator = mapCoordinatorProvider.mapCoordinator()
+        mapCoordinator.start()
+        self.changeSlideMenuRootViewController(mapCoordinator.rootViewController)
     }
 }
