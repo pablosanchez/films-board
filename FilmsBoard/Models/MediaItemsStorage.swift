@@ -14,7 +14,7 @@ class MediaItemsStorage: NSObject {
     private(set) var mediaItemsByCategories: [String: [MediaItem]]  // Store media items by categories
     private(set) var mediaItemsByTextSearch: [MediaItem]  // Store text-search results
 
-    private(set) var currentMediaItemSelected: MediaItem!  // Store selected media item
+    var currentMediaItemSelected: MediaItem!  // Store selected media item
 
     override init() {
         self.mediaItemsByCategories = [:]

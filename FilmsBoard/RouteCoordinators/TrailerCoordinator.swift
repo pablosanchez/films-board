@@ -8,28 +8,25 @@
 
 import UIKit
 
-@objc class TrailerCoordinator: NSObject {
+@objc
+class TrailerCoordinator: NSObject {
     
     private var navigationController: UIViewController
     private let viewModel: TrailerViewModel
     
     weak var delegate: TrailerCoordinatorDelegate?
-    
-    
+
     @objc
     init(viewModel: TrailerViewModel) {
         self.navigationController = UIViewController()
         self.viewModel = viewModel
         super.init()
-        
-        self.viewModel.delegate = self
-        self.start()
+        self.viewModel.routingDelegate = self
     }
 }
 
-
-
 extension TrailerCoordinator: Coordinable {
+
     var rootViewController: UIViewController {
         return navigationController
     }
@@ -39,7 +36,6 @@ extension TrailerCoordinator: Coordinable {
     }
 }
 
-
 extension TrailerCoordinator {
     
     private func initNavigationController() {
@@ -47,18 +43,18 @@ extension TrailerCoordinator {
     }
 }
 
-extension TrailerCoordinator: TrailerViewModelDelegate {
-    func trailerHasBeenClosed() {
+extension TrailerCoordinator: TrailerViewModelRoutingDelegate {
+
+    // MARK: TrailerViewModelRoutingDelegate methods
+
+    func trailerViewModelDidTapCloseButton(_ viewModel: TrailerViewModel) {
         delegate?.trailerHasBeenClosed()
     }
 }
 
-
-
 protocol TrailerCoordinatorDelegate: class {
     func trailerHasBeenClosed()
 }
-
 
 @objc protocol TrailerCoordinatorProvider: NSObjectProtocol {
     func trailerCoordinator() -> TrailerCoordinator

@@ -17,6 +17,8 @@ protocol MediaItem: Decodable {
     var description: String { get }
     var releaseDate: String { get }
     var rating: Double { get }
+    var type: MediaItemTypes { get }
+    var genres: [String]? { get set }
 
     init(id: Int, posterImageURL: String?, backgroundImageURL: String?, title: String, description: String, releaseDate: String, rating: Double)
 }

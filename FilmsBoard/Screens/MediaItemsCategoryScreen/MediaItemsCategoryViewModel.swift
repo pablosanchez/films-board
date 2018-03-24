@@ -66,7 +66,7 @@ extension MediaItemsCategoryViewModel {
             return
         }
 
-        apiManager.getMediaItems(for: type, category: category, page: currentPage) { [unowned self] (pages, error) in
+        apiManager.getMediaItems(for: type, category: category, page: currentPage) { [unowned self] (error) in
             guard error == nil else {
                 var errorMsg: String
                 if let error = error as? MoviesAPIError {

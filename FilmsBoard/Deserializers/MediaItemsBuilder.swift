@@ -46,4 +46,42 @@ struct MediaItemsBuilder {
 
         return MediaItemsBuilderResult(mediaItems: decodedMediaItems, totalPages: totalPages)
     }
+
+    static func decodeMediaItemGenres(json rawJson: Any) throws -> [String] {
+        guard let dictJson = rawJson as? [String: Any] else {
+            throw MediaItemsBuilderError(errorMessage: "Error parsing media item details json")
+        }
+
+        guard let genresDict = dictJson["genres"] as? [[String: Any]] else {
+            throw MediaItemsBuilderError(errorMessage: "Error parsing genres json key")
+        }
+
+        var genres: [String] = []
+
+        for dict in genresDict {
+            genres.append(dict["name"] as? String ?? "Desconocido")
+        }
+
+        return genres
+    }
+
+    static func decodeMediaItemTrailerURL(json rawJson: Any) throws -> String {
+        guard let dictJson = rawJson as? [String: Any] else {
+            throw MediaItemsBuilderError(errorMessage: "Error parsing media item details json")
+        }
+
+        guard let resultsJson = dictJson["results"] as? [[String: Any]] else {
+            throw MediaItemsBuilderError(errorMessage: "Error parsing results json key")
+        }
+
+        guard resultsJson.count > 0 else {
+            throw MediaItemsBuilderError(errorMessage: "Error: results json is empty")
+        }
+print(resultsJson)
+        guard let url = resultsJson[0]["key"] as? String else {
+            throw MediaItemsBuilderError(errorMessage: "Error getting trailer url")
+        }
+
+        return url
+    }
 }
