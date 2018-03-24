@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.7.0)
+  - CarbonBadgeLabel (0.1.0)
   - Cosmos (15.0.0)
   - SCLAlertView (0.8)
   - SDWebImage (4.3.2):
@@ -19,6 +20,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.7)
+  - CarbonBadgeLabel (~> 0.1)
   - Cosmos (~> 15.0)
   - SCLAlertView
   - SDWebImage (~> 4.0)
@@ -27,12 +29,13 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  CarbonBadgeLabel: 50f97d9274a5c9fde80add1a28014f90c3fafa22
   Cosmos: a6dbd3d0baa0cc8f51f8598f7508d5a09d0a9ade
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
   SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
   Typhoon: 551cc8fae881d0f4b20ddafc6d276da3e867f61f
 
-PODFILE CHECKSUM: 444a350a8877b026ee884775c5cd775d3034f00d
+PODFILE CHECKSUM: b30af7e63f6871300887a4488f2dc1ad71c93237
 
 COCOAPODS: 1.4.0

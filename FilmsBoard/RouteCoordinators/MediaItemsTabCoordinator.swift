@@ -61,7 +61,10 @@ extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
     func cellTapped(mediaItem: MediaItem, isUpcoming: Bool) {
         let viewModel = self.detailFilmViewModelProvider.detailFilmViewModel()
         viewModel.delegate = self
+        
+        let viewModel2 = ListsViewModel(database: SQLiteDatabase())
         let viewController = DetailFilmController(viewModel: viewModel)
+        let viewController2 = ListsController(viewModel: viewModel2)
         
         self.navigationController.pushViewController(viewController, animated: true)
     }

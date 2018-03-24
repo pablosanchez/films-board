@@ -12,4 +12,5 @@ target 'FilmsBoard' do
   pod 'SCLAlertView'
   pod 'Cosmos', '~> 15.0'
   pod 'SQLite.swift'
+  pod "CarbonBadgeLabel", "~>0.1"
 end

@@ -47,6 +47,13 @@
 		C9DA673020643826005C3987 /* TrailerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA672E20643826005C3987 /* TrailerViewController.swift */; };
 		C9DA673120643826005C3987 /* TrailerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DA672F20643826005C3987 /* TrailerViewController.xib */; };
 		C9DA673320643848005C3987 /* TrailerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA673220643848005C3987 /* TrailerViewModel.swift */; };
+		C9DA6737206640F9005C3987 /* ListsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA6735206640F9005C3987 /* ListsController.swift */; };
+		C9DA6738206640F9005C3987 /* ListsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DA6736206640F9005C3987 /* ListsController.xib */; };
+		C9DA673A20664115005C3987 /* ListsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA673920664115005C3987 /* ListsViewModel.swift */; };
+		C9DA673E206644AF005C3987 /* ListsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA673C206644AE005C3987 /* ListsViewCell.swift */; };
+		C9DA673F206644AF005C3987 /* ListsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DA673D206644AE005C3987 /* ListsViewCell.xib */; };
+		C9DA674120664AAB005C3987 /* ListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA674020664AAB005C3987 /* ListCellViewModel.swift */; };
+		C9DA674320664B6A005C3987 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA674220664B6A005C3987 /* List.swift */; };
 		DFBB735B54D6C17C81B216A8 /* Pods_FilmsBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD6C39473E430CF495561E4 /* Pods_FilmsBoard.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +103,13 @@
 		C9DA672E20643826005C3987 /* TrailerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerViewController.swift; sourceTree = "<group>"; };
 		C9DA672F20643826005C3987 /* TrailerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrailerViewController.xib; sourceTree = "<group>"; };
 		C9DA673220643848005C3987 /* TrailerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerViewModel.swift; sourceTree = "<group>"; };
+		C9DA6735206640F9005C3987 /* ListsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsController.swift; sourceTree = "<group>"; };
+		C9DA6736206640F9005C3987 /* ListsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListsController.xib; sourceTree = "<group>"; };
+		C9DA673920664115005C3987 /* ListsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewModel.swift; sourceTree = "<group>"; };
+		C9DA673C206644AE005C3987 /* ListsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewCell.swift; sourceTree = "<group>"; };
+		C9DA673D206644AE005C3987 /* ListsViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListsViewCell.xib; sourceTree = "<group>"; };
+		C9DA674020664AAB005C3987 /* ListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellViewModel.swift; sourceTree = "<group>"; };
+		C9DA674220664B6A005C3987 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +150,7 @@
 		6E63C79A20585D7100914163 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C9DA6734206640BC005C3987 /* ListsScreen */,
 				C9DA672D20643800005C3987 /* TrailerScreen */,
 				C965905A205A9A0900A515E2 /* DetailScreen */,
 				6EB9D7D0205060F60033399D /* MediaItemsScreen */,
@@ -240,6 +255,7 @@
 				6ECA30412056FB0100BB54CC /* MediaItemsStorage.swift */,
 				6E63C7982058242E00914163 /* MediaItemTypes.swift */,
 				6E5BBC752056D94A00410758 /* MovieTypes.swift */,
+				C9DA674220664B6A005C3987 /* List.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -295,6 +311,27 @@
 				C9DA673220643848005C3987 /* TrailerViewModel.swift */,
 			);
 			path = TrailerScreen;
+			sourceTree = "<group>";
+		};
+		C9DA6734206640BC005C3987 /* ListsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C9DA6735206640F9005C3987 /* ListsController.swift */,
+				C9DA6736206640F9005C3987 /* ListsController.xib */,
+				C9DA673920664115005C3987 /* ListsViewModel.swift */,
+				C9DA673B206643E1005C3987 /* TableViewCell */,
+			);
+			path = ListsScreen;
+			sourceTree = "<group>";
+		};
+		C9DA673B206643E1005C3987 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C9DA673C206644AE005C3987 /* ListsViewCell.swift */,
+				C9DA673D206644AE005C3987 /* ListsViewCell.xib */,
+				C9DA674020664AAB005C3987 /* ListCellViewModel.swift */,
+			);
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -363,9 +400,11 @@
 				C965905E205A9A7000A515E2 /* DetailFilmController.xib in Resources */,
 				6ECD18DE205145C300BF2F00 /* MediaItemCell.xib in Resources */,
 				6ECD18DA205143EE00BF2F00 /* MediaItemsRow.xib in Resources */,
+				C9DA673F206644AF005C3987 /* ListsViewCell.xib in Resources */,
 				6EB9D7B82050515E0033399D /* LaunchScreen.storyboard in Resources */,
 				6EB9D7C2205051EB0033399D /* MediaItemsViewController.xib in Resources */,
 				6EB9D7B52050515E0033399D /* Assets.xcassets in Resources */,
+				C9DA6738206640F9005C3987 /* ListsController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +437,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FilmsBoard/Pods-FilmsBoard-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CarbonBadgeLabel/CarbonBadgeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
@@ -407,6 +447,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CarbonBadgeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
@@ -449,18 +490,23 @@
 				6ECA30402056F87200BB54CC /* NowPlayingViewModel.swift in Sources */,
 				6EB9D7D2205061ED0033399D /* MediaItemsViewModel.swift in Sources */,
 				C9DA673020643826005C3987 /* TrailerViewController.swift in Sources */,
+				C9DA6737206640F9005C3987 /* ListsController.swift in Sources */,
 				6ECA30422056FB0100BB54CC /* MediaItemsStorage.swift in Sources */,
 				C9DA672C206406CF005C3987 /* DateUtils.swift in Sources */,
 				6EB9D7CC205058AA0033399D /* Coordinable.swift in Sources */,
 				6ECD18DD205145C300BF2F00 /* MediaItemCell.swift in Sources */,
 				6E63C7992058242E00914163 /* MediaItemTypes.swift in Sources */,
 				6E5BBC742056D0FF00410758 /* MediaItemsBuilder.swift in Sources */,
+				C9DA673E206644AF005C3987 /* ListsViewCell.swift in Sources */,
+				C9DA674320664B6A005C3987 /* List.swift in Sources */,
 				6ECA303C2056E77400BB54CC /* MediaItemViewModel.swift in Sources */,
 				C9DA6729206395BE005C3987 /* SQLiteDatabase.swift in Sources */,
 				6EB9D7C6205057ED0033399D /* AppAssembly.swift in Sources */,
 				6EB9D7CF205060C70033399D /* MediaItemsTabCoordinator.swift in Sources */,
+				C9DA674120664AAB005C3987 /* ListCellViewModel.swift in Sources */,
 				6ECA303E2056EC3400BB54CC /* MediaItem.swift in Sources */,
 				6E63C7932057DF4200914163 /* TopRatedViewModel.swift in Sources */,
+				C9DA673A20664115005C3987 /* ListsViewModel.swift in Sources */,
 				6EDD2C6F20559382009A85B8 /* Movie.swift in Sources */,
 				C9DA673320643848005C3987 /* TrailerViewModel.swift in Sources */,
 				C98A13A520617C680063C741 /* TrailerCoordinator.swift in Sources */,

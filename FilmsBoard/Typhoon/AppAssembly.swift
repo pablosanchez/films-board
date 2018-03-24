@@ -103,6 +103,18 @@ class AppAssembly: TyphoonAssembly {
         }
     }
     
+    
+    @objc
+    public dynamic func listsViewModel() -> Any {
+        return TyphoonDefinition.withClass(ListsViewModel.self) { (definition) in
+            definition?.useInitializer(
+            #selector(ListsViewModel.init(database:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
+            }
+            definition?.scope = .prototype
+        }
+    }
+    
 
     @objc
     public dynamic func mediaItemsStorage() -> Any {

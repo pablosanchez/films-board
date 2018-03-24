@@ -32,6 +32,9 @@ import SQLite
     private let listName = Expression<String>("name")
     
     
+    let BASIC_LISTS: [String] = ["Favoritas", "Pendientes", "Vistas", "Recordatorios"]
+    
+    
     @objc override init() {
         super.init()
         self.initDatabase()
@@ -56,6 +59,7 @@ import SQLite
             let fileURL = doc.appendingPathComponent("media_items").appendingPathExtension("sqlite3")
             
             let database = try Connection(fileURL.path)
+            try database.execute("PRAGMA foreign_keys = ON;")
             
             print(database)
             
@@ -108,15 +112,30 @@ import SQLite
     
     
     private func createBasicLists() {
-        let query1 = self.table_lists.insert(self.listName <- "Favoritas")
-        let query2 = self.table_lists.insert(self.listName <- "Pendientes")
-        let query3 = self.table_lists.insert(self.listName <- "Vistas")
-        let query4 = self.table_lists.insert(self.listName <- "Recordatorios")
+        let query1 = self.table_lists.insert(self.listName <- BASIC_LISTS[0])
+        let query2 = self.table_lists.insert(self.listName <- BASIC_LISTS[1])
+        let query3 = self.table_lists.insert(self.listName <- BASIC_LISTS[2])
+        let query4 = self.table_lists.insert(self.listName <- BASIC_LISTS[3])
         
         do {
             try self.database.run(query1)
+        } catch {
+            print("\(error)")
+        }
+        
+        do {
             try self.database.run(query2)
+        } catch {
+            print("\(error)")
+        }
+        
+        do {
             try self.database.run(query3)
+        } catch {
+            print("\(error)")
+        }
+        
+        do {
             try self.database.run(query4)
         } catch {
             print("\(error)")
@@ -256,6 +275,32 @@ extension SQLiteDatabase {
         }
         
         return isInside
+    }
+    
+    
+    func insertNewList(listName: String) -> Bool {
+        let query1 = self.table_lists.insert(self.listName <- listName)
+        
+        do {
+            try self.database.run(query1)
+            return true
+        } catch {
+            print("\(error)")
+        }
+        
+        return false
+    }
+    
+    func deleteList(listName: String) {
+        let listId = self.getListId(listName: listName)
+        
+        do {
+            let filter = self.table_lists.filter(self.id == listId)
+            
+            try self.database.run(filter.delete())
+        } catch {
+            print("\(error)")
+        }
     }
 }
 

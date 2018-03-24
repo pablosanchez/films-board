@@ -128,7 +128,7 @@ class DetailFilmController: UIViewController {
                 guard let name = alertDelete.textFields?.first?.text
                     else { return }
                 
-                if name.capitalized != "Recordatorio"{
+                if name.capitalized != "Recordatorios"{
                     self.viewModel.deleteFromList(listName: name.capitalized)
                 }
             })
@@ -144,7 +144,7 @@ class DetailFilmController: UIViewController {
         
         
         for listName in self.viewModel.retrieveListNames() {
-            if listName != "Recordatorio" {
+            if listName != "Recordatorios" {
                 let alert = UIAlertAction(title: listName, style: .default, handler: {(accion) in
                     self.viewModel.addFilmToList(listName: listName)
                 })
@@ -169,7 +169,7 @@ class DetailFilmController: UIViewController {
         
         
         let createReminder = UIAlertAction(title: "Crear recordatorio", style: .default, handler: {(accion) in
-            self.viewModel.addFilmToList(listName: "Recordatorio")
+            self.viewModel.addFilmToList(listName: "Recordatorios")
             self.viewModel.createReminder()
         })
         
@@ -179,7 +179,7 @@ class DetailFilmController: UIViewController {
             let alertDelete = UIAlertController(title: "Eliminar recordatorio", message: "¿Desea eliminar el recordatorio?", preferredStyle: .alert)
             
             let actionYes = UIAlertAction(title: "Sí", style: .destructive, handler: {(action) in
-                self.viewModel.deleteFromList(listName: "Recordatorio")
+                self.viewModel.deleteFromList(listName: "Recordatorios")
                 self.viewModel.removeReminder()
             })
             let actionNo = UIAlertAction(title: "No", style: .cancel, handler: nil)
