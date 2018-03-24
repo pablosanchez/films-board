@@ -40,6 +40,7 @@ class DetailedListViewController: UIViewController {
 
         
         self.initCollectionView()
+        self.title = self.viewModel.listName!
         self.viewModel.loadListMediaItems()
         // Do any additional setup after loading the view.
     }
