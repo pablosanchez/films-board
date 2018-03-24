@@ -13,7 +13,7 @@ extension String {
     func formatDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.locale = Locale.current
+        dateFormatter.locale = Locale(identifier: "es")
         
         let dateOpt = dateFormatter.date(from: self)
 

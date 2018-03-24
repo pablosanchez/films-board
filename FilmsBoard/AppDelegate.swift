@@ -7,14 +7,14 @@
 //
 
 import UIKit
-import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
     var appCoordinator: AppCoordinator!
+    var notificationsManager: NotificationsManager!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let assembly = AppAssembly().activate()
@@ -24,34 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window?.rootViewController = self.appCoordinator.rootCoordinator
         window?.makeKeyAndVisible()
         
-        
-        
-        
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.delegate = self
-        
-        let acceptAction = UNNotificationAction(identifier: "ACCEPT",
-                                                  title: "Aceptar",
-                                                  options: [.destructive])
-        
-        
-        let remindAction = UNNotificationAction(identifier: "REMIND",
-                                                title: "Recordar más tarde",
-                                                options: []) //Implement
+        self.notificationsManager = assembly?.notificationsManager() as! NotificationsManager
+        self.notificationsManager.registerNotificationCategories()
 
-        
-        let movieCategory = UNNotificationCategory(identifier: "MOVIE_CATEGORY",
-                                                  actions: [acceptAction],
-                                                  intentIdentifiers: [],
-                                                  options: [.customDismissAction])
-        
-        
-        notificationCenter.setNotificationCategories([movieCategory])
-        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) {
-            (granted, error) in
-            //Parse errors and track state
-        }
-        
         return true
     }
 
@@ -76,31 +51,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        
-        switch (response.actionIdentifier) {
-        case "ACCEPT":
-            let database = SQLiteDatabase()
-            database.deleteMediaFromList(listName: "Recordatorios", id_media: Int(response.notification.request.content.userInfo["movie_id"]! as! String)!, type: 0)
-            
-        case "REMIND":
-            print("")
-            //IMPLEMENT
-        default: // switch statements must be exhaustive - this condition should never be met
-            print("Error: unexpected notification action identifier!")
-        }
-        
-        
-        
-        
-        completionHandler()
-    }
-    
-
-
 }
-

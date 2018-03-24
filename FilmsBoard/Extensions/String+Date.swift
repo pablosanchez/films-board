@@ -12,8 +12,8 @@ extension String {
 
     func toDate() -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = "dd-MM yyyy"
+        dateFormatter.locale = Locale(identifier: "es")
         dateFormatter.timeZone = TimeZone(identifier: "Europe/Madrid")
         return dateFormatter.date(from: self)
     }

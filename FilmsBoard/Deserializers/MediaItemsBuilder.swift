@@ -77,7 +77,7 @@ struct MediaItemsBuilder {
         guard resultsJson.count > 0 else {
             throw MediaItemsBuilderError(errorMessage: "Error: results json is empty")
         }
-print(resultsJson)
+
         guard let url = resultsJson[0]["key"] as? String else {
             throw MediaItemsBuilderError(errorMessage: "Error getting trailer url")
         }

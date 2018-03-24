@@ -7,35 +7,37 @@
 //
 
 import Foundation
-import UserNotifications
 
 @objc
 class DetailFilmViewModel: NSObject {
 
     private let storage: MediaItemsStorage
-    private let database: SQLiteDatabase
+    private let db: SQLiteDatabase
+    private let notificationsManager: NotificationsManager
+
     private var mediaItem: MediaItem
 
     weak var delegate: DetailFilmViewModelDelegate?
     weak var routingDelegate: DetailFilmViewModelRoutingDelegate?
 
     @objc
-    init(storage: MediaItemsStorage, database: SQLiteDatabase) {
+    init(storage: MediaItemsStorage, db: SQLiteDatabase, notificationsManager: NotificationsManager) {
         self.storage = storage
-        self.database = database
+        self.db = db
+        self.notificationsManager = notificationsManager
         self.mediaItem = self.storage.currentMediaItemSelected
     }
 
     func addFilmToList(listName: String) {
-        self.database.insertMediaIntoList(listName: listName, media: self.mediaItem)
+        self.db.insertMediaIntoList(listName: listName, media: self.mediaItem)
     }
     
     func deleteFromList(listName: String) {
-        self.database.deleteMediaFromList(listName: listName, id_media: self.mediaItem.id, type: self.mediaItem.type.rawValue)
+        self.db.deleteMediaFromList(listName: listName, id_media: self.mediaItem.id, type: self.mediaItem.type.rawValue)
     }
 
     func retrieveListNames() -> [String] {
-        return database.listUserLists()
+        return db.listUserLists()
     }
 
     // A reminder can only be added for future movies
@@ -46,7 +48,7 @@ class DetailFilmViewModel: NSObject {
     }
     
     func checkIfIsReminding() -> Bool {
-        let result = self.database.checkMediaIsInList(listName: "Recordatorios", id_media: self.mediaItem.id, type: self.mediaItem.type.rawValue)
+        let result = self.db.checkMediaIsInList(listName: "Recordatorios", id_media: self.mediaItem.id, type: self.mediaItem.type.rawValue)
         
         if result != 0 {
             return true
@@ -56,23 +58,17 @@ class DetailFilmViewModel: NSObject {
     }
     
     func createReminder() {
-        let notificationContent = UNMutableNotificationContent()
-        notificationContent.body = "¡¡La película \(self.mediaItem.title) ya está en los cines!!"
-        notificationContent.sound = UNNotificationSound.default()
-        notificationContent.categoryIdentifier = "MOVIE_CATEGORY"
-        notificationContent.userInfo = ["movie_id": String(self.mediaItem.id)]
-
         let calendar = Calendar.current
-        let dateComponents = calendar.dateComponents([.day, .month, .year, .hour, .minute, .second], from: self.mediaItem.releaseDate.toDate() ?? Date())
-        let notificationTrigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-
-        let request = UNNotificationRequest(identifier: String(self.mediaItem.id), content: notificationContent, trigger: notificationTrigger)
+        var dateComponents = calendar.dateComponents([.day, .month, .year, .hour, .minute, .second], from: self.mediaItem.releaseDate.toDate() ?? Date())
+        dateComponents.hour = 0
+        dateComponents.minute = 0
+        dateComponents.second = 0
         
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        self.notificationsManager.scheduleNotification(id: self.mediaItem.id, title: self.mediaItem.title, time: dateComponents)
     }
 
     func removeReminder() {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [String(self.mediaItem.id)])
+        self.notificationsManager.removeNotification(withId: self.mediaItem.id)
     }
 
     func watchTrailer() {

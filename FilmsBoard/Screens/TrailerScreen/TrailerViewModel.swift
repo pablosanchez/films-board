@@ -30,7 +30,7 @@ class TrailerViewModel: NSObject {
 
 extension TrailerViewModel {
 
-    func getTrailer() {print("id",self.mediaItem.id)
+    func getTrailer() {
         let apiManager = MoviesAPIManager(storage: self.storage)
         apiManager.getMediaItemTrailer(id: self.mediaItem.id, type: self.mediaItem.type) { (key, error) in
             guard error == nil else {

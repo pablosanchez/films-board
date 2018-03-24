@@ -128,9 +128,10 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func detailFilmViewModel() -> Any {
         return TyphoonDefinition.withClass(DetailFilmViewModel.self) { (definition) in
             definition?.useInitializer(
-                #selector(DetailFilmViewModel.init(storage:database:))) { (initializer) in
+            #selector(DetailFilmViewModel.init(storage:db:notificationsManager:))) { (initializer) in
                     initializer?.injectParameter(with: self.mediaItemsStorage())
                     initializer?.injectParameter(with: self.sqliteDatabase())
+                    initializer?.injectParameter(with: self.notificationsManager())
                 }
             definition?.scope = .prototype
         }
@@ -200,6 +201,17 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func sqliteDatabase() -> Any {
         return TyphoonDefinition.withClass(SQLiteDatabase.self) { (definition) in
             definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func notificationsManager() -> Any {
+        return TyphoonDefinition.withClass(NotificationsManager.self) { (definition) in
+            definition?.useInitializer(
+                #selector(NotificationsManager.init(db:))) { (initializer) in
+                    initializer?.injectParameter(with: self.sqliteDatabase())
+                }
+            definition?.scope = .singleton
         }
     }
 }
