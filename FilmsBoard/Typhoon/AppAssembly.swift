@@ -66,8 +66,8 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mapCoordinator() -> Any {
         return TyphoonDefinition.withClass(MapCoordinator.self) { (definition) in
             definition?.useInitializer(
-            #selector(MapCoordinator.init(mapViewModelProvider:))) { (initializer) in
-                initializer?.injectParameter(with: self)
+            #selector(MapCoordinator.init(mapViewModel:))) { (initializer) in
+                initializer?.injectParameter(with: self.mapViewModel())
             }
             definition?.scope = .prototype
         }

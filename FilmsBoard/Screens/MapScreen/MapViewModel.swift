@@ -7,16 +7,31 @@
 //
 
 import Foundation
+import MapKit
 
 @objc
 class MapViewModel: NSObject {
 
-    override init() {
+    weak var delegate: MapViewModelDelegate?
 
+    override init() { }
+}
+
+extension MapViewModel {
+
+    func getMapData(region: MKCoordinateRegion) {
+        MapDataProvider.requestMapAnnotations(region: region) { [unowned self] (annotations, error) in
+            guard let mapAnnotations = annotations else {
+                self.delegate?.mapViewModel(self, didGetError: error?.message ?? "Error desconocido")
+                return
+            }
+
+            self.delegate?.mapViewModel(self, didGetData: mapAnnotations)
+        }
     }
 }
 
-@objc
-protocol MapViewModelProvider: NSObjectProtocol {
-    func mapViewModel() -> MapViewModel
+protocol MapViewModelDelegate: class {
+    func mapViewModel(_ viewModel: MapViewModel, didGetData annotations: [MapAnnotation])
+    func mapViewModel(_ viewModel: MapViewModel, didGetError error: String)
 }

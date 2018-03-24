@@ -12,12 +12,12 @@ import UIKit
 class MapCoordinator: NSObject {
 
     private let navigationController: UINavigationController
-    private let mapViewModelProvider: MapViewModelProvider
+    private let mapViewModel: MapViewModel
 
     @objc
-    init(mapViewModelProvider: MapViewModelProvider) {
+    init(mapViewModel: MapViewModel) {
         self.navigationController = UINavigationController()
-        self.mapViewModelProvider = mapViewModelProvider
+        self.mapViewModel = mapViewModel
         super.init()
     }
 }
@@ -36,8 +36,7 @@ extension MapCoordinator: Coordinable {
 extension MapCoordinator {
 
     private func initNavigationController() {
-        let viewModel = mapViewModelProvider.mapViewModel()
-        let viewController = MapViewController(viewModel: viewModel)
+        let viewController = MapViewController(viewModel: self.mapViewModel)
         viewController.addLeftBarButtonWithImage(UIImage(named: "ic-menu")!)  // Slide menu icon
 
         self.navigationController.pushViewController(viewController, animated: true)
@@ -48,4 +47,3 @@ extension MapCoordinator {
 protocol MapCoordinatorProvider: NSObjectProtocol {
     func mapCoordinator() -> MapCoordinator
 }
-

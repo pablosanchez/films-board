@@ -19,6 +19,9 @@
 		6E63C7952057DF6F00914163 /* PopularViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63C7942057DF6F00914163 /* PopularViewModel.swift */; };
 		6E63C7972057F13700914163 /* MediaItemsBuilderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63C7962057F13700914163 /* MediaItemsBuilderError.swift */; };
 		6E63C7992058242E00914163 /* MediaItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63C7982058242E00914163 /* MediaItemTypes.swift */; };
+		6E64CA2D2065B5F5005E2F25 /* MapDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64CA2C2065B5F5005E2F25 /* MapDataProvider.swift */; };
+		6E64CA2F2065BB7D005E2F25 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64CA2E2065BB7D005E2F25 /* MapAnnotation.swift */; };
+		6E64CA312065C962005E2F25 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64CA302065C962005E2F25 /* RequestError.swift */; };
 		6E65ABE320610B22004F96D3 /* MediaItemsRowViewModelRoutingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65ABE220610B22004F96D3 /* MediaItemsRowViewModelRoutingDelegate.swift */; };
 		6E65ABE520611732004F96D3 /* MediaItemDetailedCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65ABE420611732004F96D3 /* MediaItemDetailedCellViewModel.swift */; };
 		6E65ABE720617994004F96D3 /* String+FormatDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65ABE620617994004F96D3 /* String+FormatDate.swift */; };
@@ -80,6 +83,9 @@
 		6E63C7942057DF6F00914163 /* PopularViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularViewModel.swift; sourceTree = "<group>"; };
 		6E63C7962057F13700914163 /* MediaItemsBuilderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemsBuilderError.swift; sourceTree = "<group>"; };
 		6E63C7982058242E00914163 /* MediaItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemTypes.swift; sourceTree = "<group>"; };
+		6E64CA2C2065B5F5005E2F25 /* MapDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDataProvider.swift; sourceTree = "<group>"; };
+		6E64CA2E2065BB7D005E2F25 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
+		6E64CA302065C962005E2F25 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
 		6E65ABE220610B22004F96D3 /* MediaItemsRowViewModelRoutingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemsRowViewModelRoutingDelegate.swift; sourceTree = "<group>"; };
 		6E65ABE420611732004F96D3 /* MediaItemDetailedCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemDetailedCellViewModel.swift; sourceTree = "<group>"; };
 		6E65ABE620617994004F96D3 /* String+FormatDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+FormatDate.swift"; sourceTree = "<group>"; };
@@ -302,7 +308,9 @@
 			children = (
 				6EDD2C6920553DA6009A85B8 /* MoviesAPIManager.swift */,
 				6EDD2C6B20553DB0009A85B8 /* MoviesAPICommunicator.swift */,
+				6E64CA2C2065B5F5005E2F25 /* MapDataProvider.swift */,
 				6E5BBC6C20569B4000410758 /* MoviesAPIError.swift */,
+				6E64CA302065C962005E2F25 /* RequestError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -316,6 +324,7 @@
 				6ECA30412056FB0100BB54CC /* MediaItemsStorage.swift */,
 				6E63C7982058242E00914163 /* MediaItemTypes.swift */,
 				6E5BBC752056D94A00410758 /* MediaItemCategories.swift */,
+				6E64CA2E2065BB7D005E2F25 /* MapAnnotation.swift */,
 				6E65ABE620617994004F96D3 /* String+FormatDate.swift */,
 			);
 			path = Models;
@@ -525,6 +534,7 @@
 				6ECA30442056FCCF00BB54CC /* UpcomingViewModel.swift in Sources */,
 				6E0B8A7E2059788500F8284E /* MediaItemsCategoryViewController.swift in Sources */,
 				6EB9D7C82050584C0033399D /* AppCoordinator.swift in Sources */,
+				6E64CA2F2065BB7D005E2F25 /* MapAnnotation.swift in Sources */,
 				6E5BBC762056D94A00410758 /* MediaItemCategories.swift in Sources */,
 				6ECA30402056F87200BB54CC /* NowPlayingViewModel.swift in Sources */,
 				6EB9D7D2205061ED0033399D /* MediaItemsViewModel.swift in Sources */,
@@ -556,8 +566,10 @@
 				6E65ABE320610B22004F96D3 /* MediaItemsRowViewModelRoutingDelegate.swift in Sources */,
 				6E65ABE720617994004F96D3 /* String+FormatDate.swift in Sources */,
 				6EB9D7C1205051EB0033399D /* MediaItemsViewController.swift in Sources */,
+				6E64CA312065C962005E2F25 /* RequestError.swift in Sources */,
 				6E63C7972057F13700914163 /* MediaItemsBuilderError.swift in Sources */,
 				6E5BBC6D20569B4000410758 /* MoviesAPIError.swift in Sources */,
+				6E64CA2D2065B5F5005E2F25 /* MapDataProvider.swift in Sources */,
 				6EE9D2E820628D57003BE346 /* TvShow.swift in Sources */,
 				6EB9D7AE2050515E0033399D /* AppDelegate.swift in Sources */,
 			);
