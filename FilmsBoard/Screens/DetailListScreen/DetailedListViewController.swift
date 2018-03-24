@@ -10,6 +10,7 @@ import UIKit
 
 class DetailedListViewController: UIViewController {
     
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var collectionView: UICollectionView!
 
     private let CELL_ID = "media-item-cell"
@@ -29,12 +30,23 @@ class DetailedListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.titleView = self.segmentedControl
+        self.initSegmentedControl()
         self.initCollectionView()
-        self.viewModel.loadListMediaItems()
+        self.requestData()
+    }
+
+    @IBAction func segmentedControlDidChange() {
+        self.requestData()
     }
 }
 
 extension DetailedListViewController {
+
+    private func initSegmentedControl() {
+        self.segmentedControl.setTitle("Películas", forSegmentAt: 0)
+        self.segmentedControl.setTitle("Series", forSegmentAt: 1)
+    }
     
     private func initCollectionView() {
         let cellNib = UINib(nibName: "MediaItemDetailedCell", bundle: nil)
@@ -49,6 +61,15 @@ extension DetailedListViewController {
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
+    }
+}
+
+extension DetailedListViewController {
+
+    private func requestData() {
+        let index = self.segmentedControl.selectedSegmentIndex
+        self.viewModel.loadListMediaItems(index: index)
+        self.collectionView.reloadData()
     }
 }
 

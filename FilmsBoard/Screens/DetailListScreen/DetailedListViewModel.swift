@@ -28,15 +28,16 @@ class DetailedListViewModel: NSObject {
 
 extension DetailedListViewModel {
 
-    func loadListMediaItems() {
+    func loadListMediaItems(index: Int) {
         guard let name = listName else {
             return
         }
 
-        let result = self.database.listMediaFromList(listName: name, type: 0)
+        let result = self.database.listMediaFromList(listName: name, type: index)
 
+        self.cellViewModels = []
         for mediaItem in result {
-            cellViewModels.append(MediaItemDetailedCellViewModel(model: mediaItem))
+            self.cellViewModels.append(MediaItemDetailedCellViewModel(model: mediaItem))
         }
     }
 }

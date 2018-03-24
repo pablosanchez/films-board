@@ -32,7 +32,7 @@ class MediaItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.titleView = segmentedControl
+        self.navigationItem.titleView = self.segmentedControl
         self.initSegmentedControl()
         self.initTableView()
 
