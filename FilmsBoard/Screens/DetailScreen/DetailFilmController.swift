@@ -49,14 +49,6 @@ class DetailFilmController: UIViewController {
 
         
         self.title = "Película"
-
-        
-        navigationController?.navigationBar.barTintColor = UIColor.init(named: "Primary_Dark")
-        navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.isOpaque = true
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
-        
         self.bindViews()
     }
     
