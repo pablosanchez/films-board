@@ -88,7 +88,7 @@ extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
         
         let viewModel2 = ListsViewModel(database: SQLiteDatabase())
         let viewController = DetailFilmController(viewModel: viewModel)
-        let viewController2 = ListsController(viewModel: viewModel2)
+        let viewController2 = ListsViewController(viewModel: viewModel2)
         
         self.navigationController.pushViewController(viewController, animated: true)
     }

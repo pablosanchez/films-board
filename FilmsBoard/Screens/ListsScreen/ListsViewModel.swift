@@ -57,3 +57,8 @@ extension ListsViewModel {
 protocol ListsViewModelDelegate: class {
     func updateTableView()
 }
+
+@objc protocol ListsViewModelProvider: NSObjectProtocol {
+    func listsViewModel() -> ListsViewModel
+}
+

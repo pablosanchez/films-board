@@ -20,6 +20,9 @@ class AppCoordinator: NSObject {
 
     private var tabsCoordinator: TabsCoordinator!
     private var mapCoordinator: MapCoordinator!
+    
+    private var listsCoordinator: ListsCoordinator!
+    private var listsCoordinatorProvider: ListsCoordinatorProvider
 
     // The current root coordinator of the app
     var rootCoordinator: SlideMenuController {
@@ -27,9 +30,10 @@ class AppCoordinator: NSObject {
     }
 
     @objc
-    init(tabsCoordinatorProvider: TabsCoordinatorProvider, mapCoordinatorProvider: MapCoordinatorProvider) {
+    init(tabsCoordinatorProvider: TabsCoordinatorProvider, mapCoordinatorProvider: MapCoordinatorProvider, listsCoordinatorProvider: ListsCoordinatorProvider) {
         self.tabsCoordinatorProvider = tabsCoordinatorProvider
         self.mapCoordinatorProvider = mapCoordinatorProvider
+        self.listsCoordinatorProvider = listsCoordinatorProvider
         super.init()
         self.initSlideMenu()
     }
@@ -67,6 +71,12 @@ extension AppCoordinator: SlideMenuViewControllerDelegate {
 
     func slideMenuViewControllerDidTapListsButton(_ viewController: SlideMenuViewController) {
         self.slideMenuController.closeLeft()
+        
+        
+        let listsCoordinator = listsCoordinatorProvider.listsCoordinator()
+        listsCoordinator.start()
+        self.listsCoordinator = listsCoordinator
+        self.changeSlideMenuRootViewController(self.listsCoordinator.rootViewController)
     }
 
     func slideMenuViewControllerDidTapCloseCinemasButton(_ viewController: SlideMenuViewController) {

@@ -72,13 +72,14 @@
 		C9DA673020643826005C3987 /* TrailerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA672E20643826005C3987 /* TrailerViewController.swift */; };
 		C9DA673120643826005C3987 /* TrailerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DA672F20643826005C3987 /* TrailerViewController.xib */; };
 		C9DA673320643848005C3987 /* TrailerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA673220643848005C3987 /* TrailerViewModel.swift */; };
-		C9DA6737206640F9005C3987 /* ListsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA6735206640F9005C3987 /* ListsController.swift */; };
-		C9DA6738206640F9005C3987 /* ListsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DA6736206640F9005C3987 /* ListsController.xib */; };
+		C9DA6737206640F9005C3987 /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA6735206640F9005C3987 /* ListsViewController.swift */; };
+		C9DA6738206640F9005C3987 /* ListsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DA6736206640F9005C3987 /* ListsViewController.xib */; };
 		C9DA673A20664115005C3987 /* ListsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA673920664115005C3987 /* ListsViewModel.swift */; };
 		C9DA673E206644AF005C3987 /* ListsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA673C206644AE005C3987 /* ListsViewCell.swift */; };
 		C9DA673F206644AF005C3987 /* ListsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DA673D206644AE005C3987 /* ListsViewCell.xib */; };
 		C9DA674120664AAB005C3987 /* ListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA674020664AAB005C3987 /* ListCellViewModel.swift */; };
 		C9DA674320664B6A005C3987 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA674220664B6A005C3987 /* List.swift */; };
+		C9DA67452066ABEF005C3987 /* ListsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA67442066ABEF005C3987 /* ListsCoordinator.swift */; };
 		DFBB735B54D6C17C81B216A8 /* Pods_FilmsBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD6C39473E430CF495561E4 /* Pods_FilmsBoard.framework */; };
 /* End PBXBuildFile section */
 
@@ -153,13 +154,14 @@
 		C9DA672E20643826005C3987 /* TrailerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerViewController.swift; sourceTree = "<group>"; };
 		C9DA672F20643826005C3987 /* TrailerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrailerViewController.xib; sourceTree = "<group>"; };
 		C9DA673220643848005C3987 /* TrailerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailerViewModel.swift; sourceTree = "<group>"; };
-		C9DA6735206640F9005C3987 /* ListsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsController.swift; sourceTree = "<group>"; };
-		C9DA6736206640F9005C3987 /* ListsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListsController.xib; sourceTree = "<group>"; };
+		C9DA6735206640F9005C3987 /* ListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
+		C9DA6736206640F9005C3987 /* ListsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListsViewController.xib; sourceTree = "<group>"; };
 		C9DA673920664115005C3987 /* ListsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewModel.swift; sourceTree = "<group>"; };
 		C9DA673C206644AE005C3987 /* ListsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewCell.swift; sourceTree = "<group>"; };
 		C9DA673D206644AE005C3987 /* ListsViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListsViewCell.xib; sourceTree = "<group>"; };
 		C9DA674020664AAB005C3987 /* ListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellViewModel.swift; sourceTree = "<group>"; };
 		C9DA674220664B6A005C3987 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		C9DA67442066ABEF005C3987 /* ListsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,6 +321,7 @@
 				6EFC150E2064423000C4FF87 /* MapCoordinator.swift */,
 				C98A13A420617C680063C741 /* TrailerCoordinator.swift */,
 				6EB9D7CB205058AA0033399D /* Coordinable.swift */,
+				C9DA67442066ABEF005C3987 /* ListsCoordinator.swift */,
 			);
 			path = RouteCoordinators;
 			sourceTree = "<group>";
@@ -439,8 +442,8 @@
 		C9DA6734206640BC005C3987 /* ListsScreen */ = {
 			isa = PBXGroup;
 			children = (
-				C9DA6735206640F9005C3987 /* ListsController.swift */,
-				C9DA6736206640F9005C3987 /* ListsController.xib */,
+				C9DA6735206640F9005C3987 /* ListsViewController.swift */,
+				C9DA6736206640F9005C3987 /* ListsViewController.xib */,
 				C9DA673920664115005C3987 /* ListsViewModel.swift */,
 				C9DA673B206643E1005C3987 /* TableViewCell */,
 			);
@@ -533,7 +536,7 @@
 				6E65ABEC206186E0004F96D3 /* SearchViewController.xib in Resources */,
 				6EFC150B2064415F00C4FF87 /* MapViewController.xib in Resources */,
 				6E8DF933205FC9EC00B106DF /* MediaItemDetailedCell.xib in Resources */,
-				C9DA6738206640F9005C3987 /* ListsController.xib in Resources */,
+				C9DA6738206640F9005C3987 /* ListsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,7 +631,7 @@
 				6ECA30402056F87200BB54CC /* NowPlayingViewModel.swift in Sources */,
 				6EB9D7D2205061ED0033399D /* MediaItemsViewModel.swift in Sources */,
 				C9DA673020643826005C3987 /* TrailerViewController.swift in Sources */,
-				C9DA6737206640F9005C3987 /* ListsController.swift in Sources */,
+				C9DA6737206640F9005C3987 /* ListsViewController.swift in Sources */,
 				6ECA30422056FB0100BB54CC /* MediaItemsStorage.swift in Sources */,
 				6EFC150F2064423000C4FF87 /* MapCoordinator.swift in Sources */,
 				6EB9D7CC205058AA0033399D /* Coordinable.swift in Sources */,
@@ -662,6 +665,7 @@
 				6E2A841620630A36000066B9 /* SlideMenuViewController.swift in Sources */,
 				6EFC14F92063DA6600C4FF87 /* SCLAlertViewBuilder.swift in Sources */,
 				6E65ABE520611732004F96D3 /* MediaItemDetailedCellViewModel.swift in Sources */,
+				C9DA67452066ABEF005C3987 /* ListsCoordinator.swift in Sources */,
 				6EDD2C6A20553DA6009A85B8 /* MoviesAPIManager.swift in Sources */,
 				6E65ABE320610B22004F96D3 /* MediaItemsRowViewModelRoutingDelegate.swift in Sources */,
 				6E65ABE720617994004F96D3 /* String+FormatDate.swift in Sources */,

@@ -17,7 +17,8 @@ class AppAssembly: TyphoonAssembly {
         return TyphoonDefinition.withClass(AppCoordinator.self) { (definition) in
             definition?.useInitializer(
                 #selector(AppCoordinator.init(
-                    tabsCoordinatorProvider:mapCoordinatorProvider:))) { (initializer) in
+                    tabsCoordinatorProvider:mapCoordinatorProvider:listsCoordinatorProvider:))) { (initializer) in
+                        initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
             }
@@ -74,6 +75,20 @@ class AppAssembly: TyphoonAssembly {
             definition?.scope = .prototype
         }
     }
+    
+    
+    @objc
+    public dynamic func listsCoordinator() -> Any {
+        return TyphoonDefinition.withClass(ListsCoordinator.self) { (definition) in
+            definition?.useInitializer(
+            #selector(ListsCoordinator.init(listsViewModelProvider:))) { (initializer) in
+                initializer?.injectParameter(with: self)
+            }
+            definition?.scope = .prototype
+        }
+    }
+    
+    
 
     @objc
     public dynamic func mediaItemsViewModel() -> Any {
@@ -154,7 +169,7 @@ class AppAssembly: TyphoonAssembly {
         return TyphoonDefinition.withClass(ListsViewModel.self) { (definition) in
             definition?.useInitializer(
             #selector(ListsViewModel.init(database:))) { (initializer) in
-                initializer?.injectParameter(with: self.mediaItemsStorage())
+                initializer?.injectParameter(with: self.sqliteDatabase())
             }
             definition?.scope = .prototype
         }

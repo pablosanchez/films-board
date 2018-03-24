@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListsController: UIViewController {
+class ListsViewController: UIViewController {
 
     @IBOutlet weak var lists: UITableView!
     
@@ -48,7 +48,7 @@ class ListsController: UIViewController {
 
 
 
-extension ListsController {
+extension ListsViewController {
     private func initTableView() {
         let rowNib = UINib(nibName: "ListsViewCell", bundle: nil)
         self.lists.register(rowNib, forCellReuseIdentifier: CELL_ID)
@@ -82,7 +82,7 @@ extension ListsController {
 
 
 
-extension ListsController: ListsViewModelDelegate {
+extension ListsViewController: ListsViewModelDelegate {
     func updateTableView() {
         self.lists.reloadData()
     }
@@ -92,7 +92,7 @@ extension ListsController: ListsViewModelDelegate {
 
 
 
-extension ListsController: UITableViewDataSource {
+extension ListsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel.retrieveListNames().count
     }
@@ -114,7 +114,7 @@ extension ListsController: UITableViewDataSource {
 
 
 
-extension ListsController: UITableViewDelegate {
+extension ListsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let cell = tableView.cellForRow(at: indexPath) as! ListsViewCell
