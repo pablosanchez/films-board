@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         switch (response.actionIdentifier) {
         case "ACCEPT":
             let database = SQLiteDatabase()
-            database.deleteMoviewFromList(listName: "Recordatorios", id_movie: Int(response.notification.request.content.userInfo["movie_id"]! as! String)!)
+            database.deleteMediaFromList(listName: "Recordatorios", id_media: Int(response.notification.request.content.userInfo["movie_id"]! as! String)!, type: 0)
             
         case "REMIND":
             print("")

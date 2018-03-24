@@ -29,6 +29,8 @@ struct Movie: MediaItem {
     let description: String
     let releaseDate: String
     let rating: Double
+    let type: MediaItemTypes
+    
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: Keys.self)
@@ -50,7 +52,9 @@ struct Movie: MediaItem {
         self.releaseDate = unformattedReleaseDate.formatDate()
         self.rating = try values.decode(Double.self, forKey: .rating) / 2
         self.id = try values.decode(Int.self, forKey: .id)
+        self.type = MediaItemTypes.movies
     }
+    
     
     init(id: Int, posterImageURL: String?, backgroundImageURL: String?, title: String, description: String, releaseDate: String, rating: Double) {
         self.id = id
@@ -60,5 +64,6 @@ struct Movie: MediaItem {
         self.description = description
         self.releaseDate = releaseDate
         self.rating = rating
+        self.type = MediaItemTypes.movies
     }
 }

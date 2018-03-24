@@ -90,7 +90,7 @@ extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
         let viewController = DetailFilmController(viewModel: viewModel)
         let viewController2 = ListsController(viewModel: viewModel2)
         
-        self.navigationController.pushViewController(viewController2, animated: true)
+        self.navigationController.pushViewController(viewController, animated: true)
     }
 }
 

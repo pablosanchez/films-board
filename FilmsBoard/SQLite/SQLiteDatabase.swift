@@ -14,7 +14,7 @@ import SQLite
     
     private var database: Connection!
     
-    private let table_movies = Table("movies")
+    private let table_media = Table("media")
     private let table_lists = Table("lists")
     
     
@@ -28,6 +28,7 @@ import SQLite
     private let rating = Expression<Double>("rating")
     private let id_movie = Expression<Int>("id_movie")
     private let id_list = Expression<Int>("id_list")
+    private let type = Expression<Int>("type")
     
     private let listName = Expression<String>("name")
     
@@ -71,7 +72,7 @@ import SQLite
     
     
     private func createTableMovies(){
-        let createTable = self.table_movies.create{(table) in
+        let createTable = self.table_media.create{(table) in
             table.column(self.id, primaryKey: true)
             table.column(self.id_movie)
             table.column(self.id_list)
@@ -81,8 +82,9 @@ import SQLite
             table.column(self.releaseDate)
             table.column(self.overview)
             table.column(self.rating)
+            table.column(self.type)
             
-            table.unique(self.id_movie, self.id_list)
+            table.unique(self.id_movie, self.id_list, self.type)
             table.foreignKey(self.id_list, references: self.table_lists, self.id, delete: .cascade)
         }
         
@@ -152,8 +154,8 @@ extension SQLiteDatabase {
     func getListRowsCount(listName: String) -> Int {
         var rows: Int = 0
         
-        let query = self.table_movies.join(self.table_lists,
-                                           on: self.table_movies[self.id_list] == self.table_lists[self.id]).where(self.listName == listName)
+        let query = self.table_media.join(self.table_lists,
+                                           on: self.table_media[self.id_list] == self.table_lists[self.id]).where(self.listName == listName)
         
         do {
             rows = try self.database.scalar(query.count)
@@ -166,24 +168,24 @@ extension SQLiteDatabase {
     
     
     
-    func listMoviesFromList(listName: String) -> [MediaItem] {
-        var movies: [MediaItem] = []
+    func listMediaFromList(listName: String, type: Int) -> [MediaItem] {
+        var mediaItems: [MediaItem] = []
         
-        let query = self.table_movies.join(self.table_lists,
-                                           on: self.table_movies[self.id_list] ==
-                                            self.table_lists[self.id]).where(self.listName == listName)
+        let query = self.table_media.join(self.table_lists,
+                                           on: self.table_media[self.id_list] ==
+                                            self.table_lists[self.id]).where(self.listName == listName).where(self.type == type)
         
         do {
             let result = try self.database.prepare(query)
             
-            for movie in result {
-                movies.append(self.fromRowToMediaItem(item: movie))
+            for mediaItem in result {
+                mediaItems.append(self.fromRowToMediaItem(item: mediaItem))
             }
         } catch {
             print("\(error)")
         }
         
-        return movies
+        return mediaItems
     }
     
     
@@ -209,17 +211,18 @@ extension SQLiteDatabase {
     
     
     
-    func insertMovieIntoList(listName: String, movie: MediaItem) {
+    func insertMediaIntoList(listName: String, media: MediaItem) {
         let listId = self.getListId(listName: listName)
         
-        let query = self.table_movies.insert(self.id_movie <- movie.id,
+        let query = self.table_media.insert(self.id_movie <- media.id,
                                              self.id_list <- listId,
-                                             self.posterImageURL <- movie.posterImageURL,
-                                             self.backgroundImageURL <- movie.backgroundImageURL,
-                                             self.title <- movie.title,
-                                             self.releaseDate <- movie.releaseDate,
-                                             self.overview <- movie.description,
-                                             self.rating <- Double(movie.rating))
+                                             self.posterImageURL <- media.posterImageURL,
+                                             self.backgroundImageURL <- media.backgroundImageURL,
+                                             self.title <- media.title,
+                                             self.releaseDate <- media.releaseDate,
+                                             self.overview <- media.description,
+                                             self.rating <- Double(media.rating),
+                                             self.type <- media.type.rawValue)
         
         
         do {
@@ -248,12 +251,12 @@ extension SQLiteDatabase {
     }
     
     
-    func deleteMoviewFromList(listName: String, id_movie: Int) {
+    func deleteMediaFromList(listName: String, id_media: Int, type: Int) {
         let listId = self.getListId(listName: listName)
         
         
         do {
-            let filter = self.table_movies.filter(self.id_movie == id_movie).filter(self.id_list == listId)
+            let filter = self.table_media.filter(self.id_movie == id_movie).filter(self.id_list == listId).filter(self.type == type)
             
             try self.database.run(filter.delete())
         } catch {
@@ -262,11 +265,11 @@ extension SQLiteDatabase {
     }
     
     
-    func checkMovieIsInList(listName: String, id_movie: Int) -> Int{
+    func checkMediaIsInList(listName: String, id_media: Int, type: Int) -> Int{
         var isInside: Int = 0
         let listId = self.getListId(listName: listName)
         
-        let query = self.table_movies.where(self.id_list == listId).where(self.id_movie == id_movie)
+        let query = self.table_media.where(self.id_list == listId).where(self.id_movie == id_movie).where(self.type == type)
         
         do {
             isInside = try self.database.scalar(query.count)
@@ -314,7 +317,12 @@ extension SQLiteDatabase {
         let overview = item[self.overview]
         let rating = item[self.rating]
         let id = item[self.id_movie]
-
-        return Movie(id: id, posterImageURL: posterImageURL, backgroundImageURL: backgroundImageURL, title: title, description: overview, releaseDate: releaseDate, rating: rating)
+        
+        
+        if item[self.type] == 0 {
+            return Movie(id: id, posterImageURL: posterImageURL, backgroundImageURL: backgroundImageURL, title: title, description: overview, releaseDate: releaseDate, rating: rating)
+        } else {
+            return TvShow(id: id, posterImageURL: posterImageURL, backgroundImageURL: backgroundImageURL, title: title, description: overview, releaseDate: releaseDate, rating: rating)
+        }
     }
 }

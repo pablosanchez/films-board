@@ -24,11 +24,11 @@ class DetailFilmViewModel: NSObject {
     }
 
     func addFilmToList(listName: String) {
-        self.database.insertMovieIntoList(listName: listName, movie: self.mediaItem)
+        self.database.insertMediaIntoList(listName: listName, media: self.mediaItem)
     }
     
     func deleteFromList(listName: String) {
-        self.database.deleteMoviewFromList(listName: listName, id_movie: self.mediaItem.id)
+        self.database.deleteMediaFromList(listName: listName, id_media: self.mediaItem.id, type: self.mediaItem.type.rawValue)
     }
 
     func retrieveListNames() -> [String] {
@@ -42,7 +42,7 @@ class DetailFilmViewModel: NSObject {
     }
     
     func checkIfIsReminding() -> Bool {
-        let result = self.database.checkMovieIsInList(listName: "Recordatorios", id_movie: self.mediaItem.id)
+        let result = self.database.checkMediaIsInList(listName: "Recordatorios", id_media: self.mediaItem.id, type: self.mediaItem.type.rawValue)
         
         if result != 0 {
             return true
