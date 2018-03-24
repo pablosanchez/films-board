@@ -15,6 +15,7 @@ class ListsViewController: UIViewController {
     private let CELL_ID = "list_item"
     
     private let viewModel: ListsViewModel
+    weak var delegate: ListsViewControllerDelegate?
     
     
     init(viewModel: ListsViewModel) {
@@ -117,8 +118,12 @@ extension ListsViewController: UITableViewDataSource {
 extension ListsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! ListsViewCell
         
         
+        if let vm = cell.viewModel {
+            self.delegate?.cellLitsTapped(listName: vm.title)
+        }
     }
     
     
@@ -150,5 +155,8 @@ extension ListsViewController: UITableViewDelegate {
 
 
 
+protocol ListsViewControllerDelegate: class {
+    func cellLitsTapped(listName: String)
+}
 
 

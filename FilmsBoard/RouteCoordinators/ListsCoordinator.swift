@@ -14,13 +14,15 @@ import UIKit
     
     private let navigationController: UINavigationController
     private let listsViewModelProvider: ListsViewModelProvider
+    private let detailedListViewModelProvider: DetailedListViewModelProvider
 
     
     
-    @objc init(listsViewModelProvider: ListsViewModelProvider)
+    @objc init(listsViewModelProvider: ListsViewModelProvider, detailedListViewModelProvider: DetailedListViewModelProvider)
     {
         self.navigationController = UINavigationController()
         self.listsViewModelProvider = listsViewModelProvider
+        self.detailedListViewModelProvider = detailedListViewModelProvider
         super.init()
     }
     
@@ -42,6 +44,21 @@ extension ListsCoordinator {
     
     private func initNavigationController() {
         let viewController = ListsViewController(viewModel: self.listsViewModelProvider.listsViewModel())
+        viewController.addLeftBarButtonWithImage(UIImage(named: "ic-menu")!)
+        viewController.delegate = self
+        
+        
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+}
+
+
+extension ListsCoordinator: ListsViewControllerDelegate {
+    func cellLitsTapped(listName: String) {
+        let viewModel = self.detailedListViewModelProvider.detailedListViewModel()
+        viewModel.setListName(name: listName)
+        
+        let viewController = DetailedListViewController(viewModel: viewModel)
         
         self.navigationController.pushViewController(viewController, animated: true)
     }

@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="KZf-Rm-JyM">
-                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pBG-Zb-nZq">
                         <size key="itemSize" width="50" height="50"/>
@@ -34,10 +34,10 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="KZf-Rm-JyM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="X0C-i1-ncI"/>
-                <constraint firstItem="KZf-Rm-JyM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="cfD-fL-fUD"/>
-                <constraint firstItem="KZf-Rm-JyM" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="sJk-A3-tWf"/>
-                <constraint firstItem="KZf-Rm-JyM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="tEt-XS-set"/>
+                <constraint firstItem="KZf-Rm-JyM" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="2gg-GO-Prk"/>
+                <constraint firstItem="KZf-Rm-JyM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6Hf-V6-EZy"/>
+                <constraint firstItem="KZf-Rm-JyM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="T9w-EA-tPa"/>
+                <constraint firstItem="KZf-Rm-JyM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="e1m-AE-ywt"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="84.5" y="53.5"/>
