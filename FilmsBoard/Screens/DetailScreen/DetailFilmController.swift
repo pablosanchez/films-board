@@ -108,9 +108,9 @@ class DetailFilmController: UIViewController {
         let actionCancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
         
         
-        let deleteFromLists = UIAlertAction(title: "Borrar de las lista", style: .destructive  , handler: {(accion) in
+        let deleteFromLists = UIAlertAction(title: "Borrar unna lista", style: .destructive  , handler: {(accion) in
             
-            let alertDelete = UIAlertController(title: "Borrar de las lista", message: "Nombre de la lista: ", preferredStyle: .alert)
+            let alertDelete = UIAlertController(title: "Borrar una lista", message: "Nombre de la lista: ", preferredStyle: .alert)
             
             alertDelete.addTextField{ (tf) in
                 tf.placeholder = "Nombre"
