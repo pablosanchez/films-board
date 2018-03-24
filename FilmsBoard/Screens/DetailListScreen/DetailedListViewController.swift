@@ -34,6 +34,10 @@ class DetailedListViewController: UIViewController {
         self.initSegmentedControl()
         self.initCollectionView()
         self.requestData()
+
+        self.title = self.viewModel.listName!
+        // Do any additional setup after loading the view.
+
     }
 
     @IBAction func segmentedControlDidChange() {

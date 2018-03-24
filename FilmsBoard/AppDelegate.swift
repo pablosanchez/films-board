@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
 
     var appCoordinator: AppCoordinator!
+    
+    
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let assembly = AppAssembly().activate()
@@ -26,6 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         
         
+        UINavigationBar.appearance().barTintColor = UIColor.init(named: "Primary_Dark")
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().isOpaque = true
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        
+        
+        UIApplication.shared.statusBarStyle = .lightContent
         
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.delegate = self

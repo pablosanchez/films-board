@@ -22,6 +22,9 @@ class TabsCoordinator: NSObject {
     init(mediaItemsTabCoordinatorProvider: MediaItemsTabCoordinatorProvider,
          searchTabCoordinatorProvider: SearchTabCoordinatorProvider) {
         self.tabBarController = UITabBarController()
+        self.tabBarController.tabBar.tintColor = UIColor(named: "Secondary")
+        self.tabBarController.tabBar.barTintColor = UIColor.black
+        
         self.mediaItemsTabCoordinatorProvider = mediaItemsTabCoordinatorProvider
         self.searchTabCoordinatorProvider = searchTabCoordinatorProvider
         super.init()

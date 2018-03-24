@@ -16,6 +16,13 @@ class DetailFilmController: UIViewController {
     @IBOutlet weak var backImageLandscape: UIImageView!
     @IBOutlet weak var mainImagePortrait: UIImageView!
     @IBOutlet weak var mainImageLandscape: UIImageView!
+
+    
+    
+    
+    @IBOutlet weak var buttonStyle: UIButton!
+
+    
     @IBOutlet weak var mediaTitle: UILabel!
     @IBOutlet weak var mediaYear: UILabel!
     @IBOutlet weak var mediaDescription: UILabel!
@@ -39,17 +46,59 @@ class DetailFilmController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+
         self.title = "Película"
 
-        navigationController?.navigationBar.barTintColor = UIColor.init(named: "Primary_Dark")
-        navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.isOpaque = true
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
 
-        self.initNavigationItem()
+        self.buttonStyler()
         self.requestData()
     }
+    
+    
+    
+    private func buttonStyler()
+    {
+        self.buttonStyle.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 15.0, bottom: 5.0, right: 15.0)
+        
+        self.buttonStyle.layer.cornerRadius = 2
+        self.buttonStyle.layer.borderWidth = CGFloat(1.0)
+        self.buttonStyle.layer.borderColor = UIColor(named: "Primary_Dark")?.cgColor
+    }
+    
+    
+    private func bindViews() {
+        self.backImagePortrait.sd_setImage(with: URL(string: self.viewModel.backImage), completed: nil)
+        self.backImageLandscape.sd_setImage(with: URL(string: self.viewModel.backImage), completed: nil)
+        self.mainImagePortrait.sd_setImage(with: URL(string: self.viewModel.mainImage), completed: nil)
+        self.mainImageLandscape.sd_setImage(with: URL(string: self.viewModel.mainImage), completed: nil)
+        
+        
+        self.mediaTitle.text = self.viewModel.title
+        self.mediaYear.text = self.viewModel.releaseDate
+        self.mediaDescription.text = self.viewModel.overview
+        self.mediaGenres.text = self.viewModel.genres
+        self.mediaRating.rating = self.viewModel.rating
+        
+        
+        
+        
+        var buttons: [UIBarButtonItem] = []
+        
+        buttons.append(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToList)))
+        
+        if viewModel.checkIfCanRemind() {
+            buttons.append(UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(addReminder)))
+        }
+        
+        
+        navigationItem.rightBarButtonItems = buttons
+    }
+    
+    
+
+
+    
+    
 
     @IBAction func watchTrailer(_ sender: Any) {
         viewModel.watchTrailer()
@@ -151,20 +200,8 @@ extension DetailFilmController {
         self.progressIndicator = MBProgressHUDBuilder.makeProgressIndicator(view: self.view)
         self.viewModel.getDetails()
     }
-
-    private func bindViews() {
-        self.backImagePortrait.sd_setImage(with: URL(string: self.viewModel.backImage), completed: nil)
-        self.backImageLandscape.sd_setImage(with: URL(string: self.viewModel.backImage), completed: nil)
-        self.mainImagePortrait.sd_setImage(with: URL(string: self.viewModel.mainImage), completed: nil)
-        self.mainImageLandscape.sd_setImage(with: URL(string: self.viewModel.mainImage), completed: nil)
-
-        self.mediaTitle.text = self.viewModel.title
-        self.mediaYear.text = self.viewModel.releaseDate
-        self.mediaDescription.text = self.viewModel.overview
-        self.mediaGenres.text = self.viewModel.genres
-        self.mediaRating.rating = self.viewModel.rating
-    }
 }
+
 
 extension DetailFilmController: DetailFilmViewModelDelegate {
 
