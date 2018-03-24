@@ -11,6 +11,7 @@ import Foundation
 struct MoviesAPIManager {
 
     typealias Completion = ([Int]?, Error?) -> ()  // Array of total pages for each category and if there's error
+    typealias ErrorHandler = (Error?) -> ()
 
     private let apiCommunicator = MoviesAPICommunicator()
     private let dispatchGroup = DispatchGroup()
@@ -64,19 +65,19 @@ struct MoviesAPIManager {
     }
 
     func getMediaItems(for type: MediaItemTypes, category: MediaItemCategories,
-                       page: Int, completion: @escaping Completion) {
+                       page: Int, completion: @escaping ErrorHandler) {
         apiCommunicator.getMediaItems(type: type, category: category, page: page) { (jsonData, error) in
             guard let json = jsonData else {
-                completion(nil, error)
+                completion(error)
                 return
             }
 
             do {
                 let decodedJson = try MediaItemsBuilder.decodeMediaItems(type: type, json: json)
                 self.storage.appendMediaItemsArray(decodedJson.mediaItems, forKey: category.rawValue)
-                completion(nil, nil)
+                completion(nil)
             } catch {
-                completion(nil, error)
+                completion(error)
             }
         }
     }
@@ -98,6 +99,39 @@ struct MoviesAPIManager {
                     self.storage.appendMediaItemsArray(decodedJson)
                 }
                 completion(totalPages, nil)
+            } catch {
+                completion(nil, error)
+            }
+        }
+    }
+
+    func getMediaItemData(id: Int, type: MediaItemTypes, completion: @escaping ErrorHandler) {
+        apiCommunicator.getMediaItemDetails(id: id, type: type) { (jsonData, error) in
+            guard let json = jsonData else {
+                completion(error)
+                return
+            }
+
+            do {
+                let decodedGenres = try MediaItemsBuilder.decodeMediaItemGenres(json: json)
+                self.storage.currentMediaItemSelected.genres = decodedGenres
+                completion(nil)
+            } catch {
+                completion(error)
+            }
+        }
+    }
+
+    func getMediaItemTrailer(id: Int, type: MediaItemTypes, completion: @escaping (String?, Error?) -> ()) {
+        apiCommunicator.getMediaItemTrailer(id: id, type: type) { (jsonData, error) in
+            guard let json = jsonData else {
+                completion(nil, error)
+                return
+            }
+
+            do {
+                let url = try MediaItemsBuilder.decodeMediaItemTrailerURL(json: json)
+                completion(url, nil)
             } catch {
                 completion(nil, error)
             }

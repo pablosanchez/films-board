@@ -11,16 +11,12 @@ import UIKit
 class DetailedListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    
-    private let viewModel: DetailedListViewModel
-    
+
     private let CELL_ID = "media-item-cell"
     private let margin: CGFloat = 10
-    
 
-    
-    
+    private let viewModel: DetailedListViewModel
+
     init(viewModel: DetailedListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -29,29 +25,14 @@ class DetailedListViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         self.initCollectionView()
         self.viewModel.loadListMediaItems()
-        // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
 }
-
 
 extension DetailedListViewController {
     
@@ -71,9 +52,9 @@ extension DetailedListViewController {
     }
 }
 
-
-
 extension DetailedListViewController: UICollectionViewDataSource {
+
+    // MARK: UICollectionViewDataSource methods
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.cellViewModels.count
@@ -82,13 +63,14 @@ extension DetailedListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_ID, for: indexPath) as! MediaItemDetailedCell
         cell.viewModel = viewModel.cellViewModels[indexPath.row]
-        
-        
+
         return cell
     }
 }
 
 extension DetailedListViewController: UICollectionViewDelegateFlowLayout {
+
+    // MARK: UICollectionViewDelegateFlowLayout methods
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var itemsPerRow: CGFloat
@@ -109,5 +91,3 @@ extension DetailedListViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: itemWidth, height: itemHeight)
     }
 }
-
-

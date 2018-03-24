@@ -18,14 +18,13 @@ class MediaItemsTabCoordinator: NSObject {
     private let detailFilmViewModelProvider: DetailFilmViewModelProvider
     private let trailerCoordinatorProvider: TrailerCoordinatorProvider
 
-    private var trailerCoordinator: TrailerCoordinator?
+    private var trailerCoordinator: TrailerCoordinator!
 
-
-    
-    
     @objc
     init(mediaItemsViewModelProvider: MediaItemsViewModelProvider,
-         mediaItemsCategoryViewModelProvider: MediaItemsCategoryViewModelProvider, detailFilmViewModelProvider: DetailFilmViewModelProvider, trailerCoordinatorProvider: TrailerCoordinatorProvider) {
+         mediaItemsCategoryViewModelProvider: MediaItemsCategoryViewModelProvider,
+         detailFilmViewModelProvider: DetailFilmViewModelProvider,
+         trailerCoordinatorProvider: TrailerCoordinatorProvider) {
         self.navigationController = UINavigationController()
         self.mediaItemsViewModelProvider = mediaItemsViewModelProvider
         self.mediaItemsCategoryViewModelProvider = mediaItemsCategoryViewModelProvider
@@ -82,9 +81,12 @@ extension MediaItemsTabCoordinator: MediaItemsViewModelRoutingDelegate {
 
 
 extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
+
+    // MARK: MediaItemsCellSelectedDelegate methods
+
     func cellTapped(mediaItem: MediaItem) {
         let viewModel = self.detailFilmViewModelProvider.detailFilmViewModel()
-        viewModel.delegate = self
+        viewModel.routingDelegate = self
         
         let viewModel2 = ListsViewModel(database: SQLiteDatabase())
         let viewController = DetailFilmController(viewModel: viewModel)
@@ -94,26 +96,26 @@ extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
     }
 }
 
+extension MediaItemsTabCoordinator: DetailFilmViewModelRoutingDelegate {
 
-extension MediaItemsTabCoordinator: TrailerButtonTappedDelegate {
-    func trailerButtonTapped() {
-        let trailerCoordinator = self.trailerCoordinatorProvider.trailerCoordinator()
-        self.trailerCoordinator = trailerCoordinator
-        self.trailerCoordinator?.delegate = self
+    // MARK: DetailFilmViewModelRoutingDelegate methods
+
+    func detailFilmViewModelDidTapTrailerButton() {
+        self.trailerCoordinator = self.trailerCoordinatorProvider.trailerCoordinator()
+        self.trailerCoordinator.delegate = self
+        self.trailerCoordinator.start()
         
         self.navigationController.present(trailerCoordinator.rootViewController, animated: true, completion: nil)
     }
 }
 
-
 extension MediaItemsTabCoordinator: TrailerCoordinatorDelegate {
+    
     func trailerHasBeenClosed() {
         self.navigationController.dismiss(animated: true, completion: nil)
         self.trailerCoordinator = nil
     }
 }
-
-
 
 @objc
 protocol MediaItemsTabCoordinatorProvider: NSObjectProtocol {

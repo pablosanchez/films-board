@@ -11,16 +11,19 @@ import UserNotifications
 
 @objc
 class DetailFilmViewModel: NSObject {
-    
+
+    private let storage: MediaItemsStorage
     private let database: SQLiteDatabase
-    private let mediaItem: MediaItem
-    
-    weak var delegate: TrailerButtonTappedDelegate?
-    
+    private var mediaItem: MediaItem
+
+    weak var delegate: DetailFilmViewModelDelegate?
+    weak var routingDelegate: DetailFilmViewModelRoutingDelegate?
+
     @objc
     init(storage: MediaItemsStorage, database: SQLiteDatabase) {
+        self.storage = storage
         self.database = database
-        self.mediaItem = storage.currentMediaItemSelected
+        self.mediaItem = self.storage.currentMediaItemSelected
     }
 
     func addFilmToList(listName: String) {
@@ -35,6 +38,7 @@ class DetailFilmViewModel: NSObject {
         return database.listUserLists()
     }
 
+    // A reminder can only be added for future movies
     func checkIfCanRemind() -> Bool {
         let now = Date()
 
@@ -72,13 +76,13 @@ class DetailFilmViewModel: NSObject {
     }
 
     func watchTrailer() {
-        delegate?.trailerButtonTapped()
+        routingDelegate?.detailFilmViewModelDidTapTrailerButton()
     }
 
     var mainImage: String {
         return self.mediaItem.posterImageURL
     }
-    
+
     var backImage: String {
         return self.mediaItem.backgroundImageURL
     }
@@ -87,7 +91,7 @@ class DetailFilmViewModel: NSObject {
         return self.mediaItem.title
     }
     
-    var year: String {
+    var releaseDate: String {
         return self.mediaItem.releaseDate
     }
     
@@ -98,9 +102,49 @@ class DetailFilmViewModel: NSObject {
     var rating: Double {
         return self.mediaItem.rating
     }
+
+    var genres: String {
+        return self.mediaItem.genres?.joined(separator: ", ") ?? ""
+    }
 }
-protocol TrailerButtonTappedDelegate: class {
-    func trailerButtonTapped()
+
+extension DetailFilmViewModel {
+
+    func getDetails() {
+        let apiManager = MoviesAPIManager(storage: self.storage)
+        apiManager.getMediaItemData(id: self.mediaItem.id, type: self.mediaItem.type) { [unowned self] (error) in
+            guard error == nil else {
+                var errorMsg = ""
+                if let error = error as? MoviesAPIError {
+                    switch error {
+                    case .networkUnavailable(let errorMessage):
+                        errorMsg = errorMessage
+                    case .apiError(let code):
+                        errorMsg = "Error de red: código HTTP \(code)"
+                    }
+                } else if let error = error as? MediaItemsBuilderError {
+                    errorMsg = error.errorMessage
+                } else {
+                    errorMsg = "Error desconocido"
+                }
+
+                self.delegate?.detailFilmViewModel(self, didGetError: errorMsg)
+                return
+            }
+
+            self.mediaItem = self.storage.currentMediaItemSelected  // Update media item selected
+            self.delegate?.detailFilmViewModelDidUpdateData(self)
+        }
+    }
+}
+
+protocol DetailFilmViewModelDelegate: class {
+    func detailFilmViewModelDidUpdateData(_ viewModel: DetailFilmViewModel)
+    func detailFilmViewModel(_ viewModel: DetailFilmViewModel, didGetError error: String)
+}
+
+protocol DetailFilmViewModelRoutingDelegate: class {
+    func detailFilmViewModelDidTapTrailerButton()
 }
 
 @objc protocol DetailFilmViewModelProvider: NSObjectProtocol {

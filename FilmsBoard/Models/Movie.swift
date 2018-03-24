@@ -30,10 +30,11 @@ struct Movie: MediaItem {
     let releaseDate: String
     let rating: Double
     let type: MediaItemTypes
-    
+    var genres: [String]?
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: Keys.self)
+        self.id = try values.decode(Int.self, forKey: .id)
         do {
             let imagePath = try values.decode(String.self, forKey: .imageURL)
             self.posterImageURL = "\(self.imageBaseURL)\(imagePath)"
@@ -51,7 +52,6 @@ struct Movie: MediaItem {
         let unformattedReleaseDate = try values.decode(String.self, forKey: .releaseDate)
         self.releaseDate = unformattedReleaseDate.formatDate()
         self.rating = try values.decode(Double.self, forKey: .rating) / 2
-        self.id = try values.decode(Int.self, forKey: .id)
         self.type = MediaItemTypes.movies
     }
     

@@ -51,6 +51,41 @@ struct MoviesAPICommunicator {
         }
     }
 
+    func getMediaItemDetails(id: Int, type: MediaItemTypes, completion: @escaping Completion) {
+        var url: String
+
+        switch type {
+        case .movies:
+            url = "\(baseURL)/movie/\(id)"
+        case .tvShows:
+            url = "\(baseURL)/tv/\(id)"
+        }
+
+        let params: [String: Any] = ["api_key": self.apiKey, "language": "es"]
+
+        self.doRequest(url: url, parameters: params) { (jsonData, error) in
+            completion(jsonData, error)
+        }
+    }
+
+    func getMediaItemTrailer(id: Int, type: MediaItemTypes, completion: @escaping Completion) {
+        var url: String
+
+        switch type {
+        case .movies:
+            url = "\(baseURL)/movie"
+        case .tvShows:
+            url = "\(baseURL)/tv"
+        }
+
+        url.append("/\(id)/videos")
+        let params: [String: Any] = ["api_key": self.apiKey, "language": "en"]
+
+        self.doRequest(url: url, parameters: params) { (jsonData, error) in
+            completion(jsonData, error)
+        }
+    }
+
     private func getUrl(for type: MediaItemTypes, category: MediaItemCategories) -> String {
         var url: String
 
