@@ -32,13 +32,13 @@ class MapViewController: UIViewController {
         self.navigationItem.titleView = self.segmentedControl
         self.initSegmentedControl()
         self.mapView.delegate = self
+        self.mapView.showsUserLocation = true
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        let initialLocation = CLLocation(latitude: 40.9690231, longitude: -5.6653289)
-        self.centerMapOnLocation(initialLocation, withSpan: 0.08)
+        self.viewModel.getUserLocation()
     }
     
     @IBAction func segmentedControlDidChange(_ sender: UISegmentedControl) {
@@ -63,11 +63,11 @@ extension MapViewController {
         self.segmentedControl.setTitle("Híbrido", forSegmentAt: 2)
     }
 
-    private func centerMapOnLocation(_ location: CLLocation, withSpan span: Double) {
+    private func centerMapOnLocation(_ location: CLLocation, withSpan span: Double) -> MKCoordinateRegion {
         let spanRegion = MKCoordinateSpan(latitudeDelta: span, longitudeDelta: span)
         let mapRegion = MKCoordinateRegion(center: location.coordinate, span: spanRegion)
         self.mapView.setRegion(mapRegion, animated: true)
-        self.viewModel.getMapData(region: mapRegion)
+        return mapRegion
     }
 }
 
@@ -75,7 +75,12 @@ extension MapViewController: MapViewModelDelegate {
 
     // MARK: MapViewModelDelegate methods
 
-    func mapViewModel(_ viewModel: MapViewModel, didGetData annotations: [MapAnnotation]) {
+    func mapViewModel(_ viewModel: MapViewModel, didReceiveUserLocation location: CLLocation) {
+        let mapRegion = self.centerMapOnLocation(location, withSpan: 0.05)
+        self.viewModel.getMapData(region: mapRegion)
+    }
+
+    func mapViewModel(_ viewModel: MapViewModel, didGetMapAnnotations annotations: [MapAnnotation]) {
         self.mapView.addAnnotations(annotations)
     }
 
@@ -98,12 +103,12 @@ extension MapViewController: MKMapViewDelegate {
         }
 
         let identifier = "map-marker"
-        var view: MKMarkerAnnotationView
+        var view: MKPinAnnotationView
 
-        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
-            view = dequeuedView
+        if let reusedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+            view = reusedView
         } else {
-            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
             view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)

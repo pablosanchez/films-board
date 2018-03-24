@@ -13,9 +13,9 @@ struct MapDataProvider {
 
     typealias Completion = ([MapAnnotation]?, RequestError?) -> ()
 
-    static func requestMapAnnotations(region: MKCoordinateRegion, completion: @escaping Completion) {
+    static func requestMapData(forRegion region: MKCoordinateRegion, query: String, completion: @escaping Completion) {
         let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = "Cinemas"
+        request.naturalLanguageQuery = query
         request.region = region
 
         let search = MKLocalSearch(request: request)

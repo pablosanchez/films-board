@@ -48,7 +48,7 @@ extension SearchViewModel {
             return
         }
 
-        if self.searchText ?? "" != text || self.index ?? 2 != index {
+        if self.searchText ?? "" != text || self.index ?? -1 != index {
             self.currentPage = 1  // Reset current page to 1 when search request has changed
         }
 
