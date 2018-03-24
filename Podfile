@@ -13,5 +13,7 @@ target 'FilmsBoard' do
   pod 'Cosmos', '~> 15.0'
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'SlideMenuControllerSwift'
+  pod 'SQLite.swift'
+  pod 'CarbonBadgeLabel', '~> 0.1'
 
 end

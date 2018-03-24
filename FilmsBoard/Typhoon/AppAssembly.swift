@@ -43,7 +43,9 @@ class AppAssembly: TyphoonAssembly {
         return TyphoonDefinition.withClass(MediaItemsTabCoordinator.self) { (definition) in
             definition?.useInitializer(
                 #selector(MediaItemsTabCoordinator.init(mediaItemsViewModelProvider:
-                    mediaItemsCategoryViewModelProvider:))) { (initializer) in
+                    mediaItemsCategoryViewModelProvider:detailFilmViewModelProvider:trailerCoordinatorProvider:))) { (initializer) in
+                        initializer?.injectParameter(with: self)
+                        initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
             }
@@ -66,9 +68,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mapCoordinator() -> Any {
         return TyphoonDefinition.withClass(MapCoordinator.self) { (definition) in
             definition?.useInitializer(
-            #selector(MapCoordinator.init(mapViewModel:))) { (initializer) in
-                initializer?.injectParameter(with: self.mapViewModel())
-            }
+                #selector(MapCoordinator.init(mapViewModel:))) { (initializer) in
+                    initializer?.injectParameter(with: self.mapViewModel())
+                }
             definition?.scope = .prototype
         }
     }
@@ -107,8 +109,53 @@ class AppAssembly: TyphoonAssembly {
     }
 
     @objc
+    public dynamic func detailFilmViewModel() -> Any {
+        return TyphoonDefinition.withClass(DetailFilmViewModel.self) { (definition) in
+            definition?.useInitializer(
+                #selector(DetailFilmViewModel.init(storage:database:))) { (initializer) in
+                    initializer?.injectParameter(with: self.mediaItemsStorage())
+                    initializer?.injectParameter(with: self.sqliteDatabase())
+                }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
     public dynamic func mapViewModel() -> Any {
         return TyphoonDefinition.withClass(MapViewModel.self) { (definition) in
+            definition?.scope = .prototype
+        }
+    }
+    
+    @objc
+    public dynamic func trailerCoordinator() -> Any {
+        return TyphoonDefinition.withClass(TrailerCoordinator.self) { (definition) in
+            definition?.useInitializer(
+            #selector(TrailerCoordinator.init(viewModel:))) { (initializer) in
+                initializer?.injectParameter(with: self.trailerViewModel())
+            }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func trailerViewModel() -> Any {
+        return TyphoonDefinition.withClass(TrailerViewModel.self) { (definition) in
+            definition?.useInitializer(
+            #selector(TrailerViewModel.init(storage:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
+            }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func listsViewModel() -> Any {
+        return TyphoonDefinition.withClass(ListsViewModel.self) { (definition) in
+            definition?.useInitializer(
+            #selector(ListsViewModel.init(database:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
+            }
             definition?.scope = .prototype
         }
     }
@@ -117,6 +164,13 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsStorage() -> Any {
         return TyphoonDefinition.withClass(MediaItemsStorage.self) { (definition) in
             definition?.scope = .singleton
+        }
+    }
+
+    @objc
+    public dynamic func sqliteDatabase() -> Any {
+        return TyphoonDefinition.withClass(SQLiteDatabase.self) { (definition) in
+            definition?.scope = .prototype
         }
     }
 }

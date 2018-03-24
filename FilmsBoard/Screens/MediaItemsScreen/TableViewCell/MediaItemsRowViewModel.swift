@@ -12,6 +12,8 @@ protocol MediaItemsRowViewModel {
 
     // The title for the cell
     var title: String { get }
+    
+    var delegate: MediaItemsRowDidSelectCell { get }
 
     // Array of collection view cell view models
     var viewModels: [MediaItemViewModel] { get }
@@ -20,11 +22,19 @@ protocol MediaItemsRowViewModel {
     var numPages: Int? { get }
 
     // Designated initializer
-    init(model: [MediaItem], numPages: Int?, delegate: MediaItemsRowViewModelRoutingDelegate)
+    init(model: [MediaItem], numPages: Int?, delegate: MediaItemsRowDidSelectCell, routingDelegate: MediaItemsRowViewModelRoutingDelegate)
 
     // Handle "Show more" button tap
     func handleShowMoreButtonTap()
 
     // Entity that will receive "Show more" button tap event
-    var delegate: MediaItemsRowViewModelRoutingDelegate { get }
+    var routingDelegate: MediaItemsRowViewModelRoutingDelegate { get }
+
+    // Handle click cell
+    func selectedItem(index: Int)
+}
+
+
+protocol MediaItemsRowDidSelectCell {
+    func handleCellTap(mediaItem: MediaItem)
 }

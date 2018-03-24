@@ -14,6 +14,8 @@ class MediaItemsStorage: NSObject {
     private(set) var mediaItemsByCategories: [String: [MediaItem]]  // Store media items by categories
     private(set) var mediaItemsByTextSearch: [MediaItem]  // Store text-search results
 
+    private(set) var currentMediaItemSelected: MediaItem!  // Store selected media item
+
     override init() {
         self.mediaItemsByCategories = [:]
         self.mediaItemsByTextSearch = []
@@ -35,5 +37,9 @@ class MediaItemsStorage: NSObject {
 
     func appendMediaItemsArray(_ mediaItems: [MediaItem]) {
         self.mediaItemsByTextSearch.append(contentsOf: mediaItems)
+    }
+
+    func setCurrentMediaItem(mediaItem: MediaItem) {
+        self.currentMediaItemSelected = mediaItem
     }
 }

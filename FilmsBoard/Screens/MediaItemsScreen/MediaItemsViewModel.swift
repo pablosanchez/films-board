@@ -18,6 +18,7 @@ class MediaItemsViewModel: NSObject {
 
     weak var delegate: MediaItemsViewModelDelegate?
     weak var routingDelegate: MediaItemsViewModelRoutingDelegate?
+    weak var cellDelegate: MediaItemsCellSelectedDelegate?       //weak
 
     @objc
     init(storage: MediaItemsStorage) {
@@ -58,22 +59,26 @@ extension MediaItemsViewModel {
                 NowPlayingViewModel(
                     model: self.storage.mediaItemsByCategories[MediaItemCategories.nowPlaying.rawValue] ?? [],
                     numPages: pages[0],
-                    delegate: self
+                    delegate: self,
+                    routingDelegate: self
                 ),
                 UpcomingViewModel(
                     model: self.storage.mediaItemsByCategories[MediaItemCategories.upcoming.rawValue] ?? [],
                     numPages: pages[1],
-                    delegate: self
+                    delegate: self,
+                    routingDelegate: self
                 ),
                 TopRatedViewModel(
                     model: self.storage.mediaItemsByCategories[MediaItemCategories.topRated.rawValue] ?? [],
                     numPages: pages[2],
-                    delegate: self
+                    delegate: self,
+                    routingDelegate: self
                 ),
                 PopularViewModel(
                     model: self.storage.mediaItemsByCategories[MediaItemCategories.popular.rawValue] ?? [],
                     numPages: pages[3],
-                    delegate: self
+                    delegate: self,
+                    routingDelegate: self
                 )
             ]
 
@@ -91,6 +96,17 @@ extension MediaItemsViewModel: MediaItemsRowViewModelRoutingDelegate {
 
 protocol MediaItemsViewModelRoutingDelegate: class {
     func mediaItemsDidTapShowMoreButton(totalPages: Int?, type: MediaItemTypes, category: MediaItemCategories)
+}
+
+extension MediaItemsViewModel: MediaItemsRowDidSelectCell {
+    func handleCellTap(mediaItem: MediaItem) {
+        self.storage.setCurrentMediaItem(mediaItem: mediaItem)
+        cellDelegate?.cellTapped(mediaItem: mediaItem)
+    }
+}
+
+protocol MediaItemsCellSelectedDelegate: class {
+    func cellTapped(mediaItem: MediaItem)
 }
 
 protocol MediaItemsViewModelDelegate: class {

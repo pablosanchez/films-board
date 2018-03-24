@@ -42,6 +42,7 @@ extension MediaItemsRow {
         self.collectionView.setCollectionViewLayout(layout, animated: false)
 
         self.collectionView.dataSource = self
+        self.collectionView.delegate = self
     }
 
     @IBAction func showMoreTapped() {
@@ -59,5 +60,12 @@ extension MediaItemsRow: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_ID, for: indexPath) as! MediaItemCell
         cell.viewModel = viewModel?.viewModels[indexPath.row]
         return cell
+    }
+}
+
+extension MediaItemsRow: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel?.selectedItem(index: indexPath.row)
     }
 }

@@ -12,15 +12,25 @@ import UIKit
 class MediaItemsTabCoordinator: NSObject {
 
     private let navigationController: UINavigationController
+
     private let mediaItemsViewModelProvider: MediaItemsViewModelProvider
     private let mediaItemsCategoryViewModelProvider: MediaItemsCategoryViewModelProvider
+    private let detailFilmViewModelProvider: DetailFilmViewModelProvider
+    private let trailerCoordinatorProvider: TrailerCoordinatorProvider
 
+    private var trailerCoordinator: TrailerCoordinator?
+
+
+    
+    
     @objc
     init(mediaItemsViewModelProvider: MediaItemsViewModelProvider,
-         mediaItemsCategoryViewModelProvider: MediaItemsCategoryViewModelProvider) {
+         mediaItemsCategoryViewModelProvider: MediaItemsCategoryViewModelProvider, detailFilmViewModelProvider: DetailFilmViewModelProvider, trailerCoordinatorProvider: TrailerCoordinatorProvider) {
         self.navigationController = UINavigationController()
         self.mediaItemsViewModelProvider = mediaItemsViewModelProvider
         self.mediaItemsCategoryViewModelProvider = mediaItemsCategoryViewModelProvider
+        self.detailFilmViewModelProvider = detailFilmViewModelProvider
+        self.trailerCoordinatorProvider = trailerCoordinatorProvider
         super.init()
     }
 }
@@ -40,6 +50,7 @@ extension MediaItemsTabCoordinator {
 
     private func initNavigationController() {
         let viewModel = self.mediaItemsViewModelProvider.mediaItemsViewModel()
+        viewModel.cellDelegate = self
         viewModel.routingDelegate = self
 
         let viewController = MediaItemsViewController(viewModel: viewModel)
@@ -68,6 +79,41 @@ extension MediaItemsTabCoordinator: MediaItemsViewModelRoutingDelegate {
         self.navigationController.pushViewController(viewController, animated: true)
     }
 }
+
+
+extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
+    func cellTapped(mediaItem: MediaItem) {
+        let viewModel = self.detailFilmViewModelProvider.detailFilmViewModel()
+        viewModel.delegate = self
+        
+        let viewModel2 = ListsViewModel(database: SQLiteDatabase())
+        let viewController = DetailFilmController(viewModel: viewModel)
+        let viewController2 = ListsController(viewModel: viewModel2)
+        
+        self.navigationController.pushViewController(viewController2, animated: true)
+    }
+}
+
+
+extension MediaItemsTabCoordinator: TrailerButtonTappedDelegate {
+    func trailerButtonTapped() {
+        let trailerCoordinator = self.trailerCoordinatorProvider.trailerCoordinator()
+        self.trailerCoordinator = trailerCoordinator
+        self.trailerCoordinator?.delegate = self
+        
+        self.navigationController.present(trailerCoordinator.rootViewController, animated: true, completion: nil)
+    }
+}
+
+
+extension MediaItemsTabCoordinator: TrailerCoordinatorDelegate {
+    func trailerHasBeenClosed() {
+        self.navigationController.dismiss(animated: true, completion: nil)
+        self.trailerCoordinator = nil
+    }
+}
+
+
 
 @objc
 protocol MediaItemsTabCoordinatorProvider: NSObjectProtocol {

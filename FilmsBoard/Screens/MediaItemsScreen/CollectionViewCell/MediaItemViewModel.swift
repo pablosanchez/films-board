@@ -24,4 +24,8 @@ struct MediaItemViewModel {
     var title: String {
         return model.title
     }
+    
+    var id: Int {
+        return model.id
+    }
 }

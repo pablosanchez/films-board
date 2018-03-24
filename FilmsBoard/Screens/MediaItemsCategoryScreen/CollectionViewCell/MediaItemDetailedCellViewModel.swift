@@ -18,7 +18,6 @@ struct MediaItemDetailedCellViewModel {
 
     var posterImageURL: String {
         return model.posterImageURL
-            ?? "https://upload.wikimedia.org/wikipedia/commons/2/2b/No-Photo-Available-240x300.jpg"
     }
 
     var title: String {

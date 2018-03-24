@@ -10,26 +10,34 @@ import Foundation
 
 struct PopularViewModel: MediaItemsRowViewModel {
 
-    let delegate: MediaItemsRowViewModelRoutingDelegate
-
     let title = MediaItemCategories.popular.getTitle()
-
+    let models: [MediaItem]
     let viewModels: [MediaItemViewModel]
 
     var numPages: Int?
 
-    init(model: [MediaItem], numPages: Int? = nil, delegate: MediaItemsRowViewModelRoutingDelegate) {
+    let delegate: MediaItemsRowDidSelectCell
+    let routingDelegate: MediaItemsRowViewModelRoutingDelegate
+
+    init(model: [MediaItem], numPages: Int? = nil, delegate: MediaItemsRowDidSelectCell, routingDelegate: MediaItemsRowViewModelRoutingDelegate) {
+        self.models = model
         self.viewModels = model.map { (mediaItem) -> MediaItemViewModel in
             return MediaItemViewModel(model: mediaItem)
         }
         self.numPages = numPages
         self.delegate = delegate
+        self.routingDelegate = routingDelegate
     }
 }
 
 extension PopularViewModel {
 
     func handleShowMoreButtonTap() {
-        delegate.mediaItemsRowDidTapShowMoreButton(totalPages: numPages, category: MediaItemCategories.popular)
+        routingDelegate.mediaItemsRowDidTapShowMoreButton(totalPages: numPages, category: MediaItemCategories.popular)
+    }
+    
+    func selectedItem(index: Int) {
+        let mediaItem = self.models[index]
+        self.delegate.handleCellTap(mediaItem: mediaItem)
     }
 }
