@@ -59,6 +59,10 @@ extension MediaItemsRow: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CELL_ID, for: indexPath) as! MediaItemCell
         cell.viewModel = viewModel?.viewModels[indexPath.row]
+        
+        cell.layer.borderWidth = CGFloat(1.0)
+        cell.layer.borderColor = UIColor(named: "Primary_Dark")?.cgColor
+        
         return cell
     }
 }

@@ -20,6 +20,7 @@ class DetailFilmController: UIViewController {
     
     
     
+    @IBOutlet weak var buttonStyle: UIButton!
     @IBOutlet weak var mediaTitle: UILabel!
     @IBOutlet weak var mediaYear: UILabel!
     @IBOutlet weak var mediaDescription: UILabel!
@@ -47,11 +48,21 @@ class DetailFilmController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        self.buttonStyler()
         self.title = "Película"
         self.bindViews()
     }
     
+    
+    
+    private func buttonStyler()
+    {
+        self.buttonStyle.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 15.0, bottom: 5.0, right: 15.0)
+        
+        self.buttonStyle.layer.cornerRadius = 2
+        self.buttonStyle.layer.borderWidth = CGFloat(1.0)
+        self.buttonStyle.layer.borderColor = UIColor(named: "Primary_Dark")?.cgColor
+    }
     
     
     private func bindViews() {
