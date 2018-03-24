@@ -22,19 +22,23 @@ class SlideMenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.red
+    }
+
+    @IBAction func homeButtonTapped() {
+        delegate?.slideMenuViewControllerDidTapHomeButton(self)
     }
 
     @IBAction func myListsButtonTapped() {
         delegate?.slideMenuViewControllerDidTapListsButton(self)
     }
-    
+
     @IBAction func closeCinemasButtonTapped() {
         delegate?.slideMenuViewControllerDidTapCloseCinemasButton(self)
     }
 }
 
 protocol SlideMenuViewControllerDelegate: class {
+    func slideMenuViewControllerDidTapHomeButton(_ viewController: SlideMenuViewController)
     func slideMenuViewControllerDidTapListsButton(_ viewController: SlideMenuViewController)
     func slideMenuViewControllerDidTapCloseCinemasButton(_ viewController: SlideMenuViewController)
 }

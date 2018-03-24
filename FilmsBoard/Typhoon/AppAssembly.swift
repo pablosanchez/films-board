@@ -16,9 +16,11 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func appCoordinator() -> Any {
         return TyphoonDefinition.withClass(AppCoordinator.self) { (definition) in
             definition?.useInitializer(
-                #selector(AppCoordinator.init(tabsCoordinatorProvider:))) { (initializer) in
-                    initializer?.injectParameter(with: self)
-                }
+                #selector(AppCoordinator.init(
+                    tabsCoordinatorProvider:mapCoordinatorProvider:))) { (initializer) in
+                        initializer?.injectParameter(with: self)
+                        initializer?.injectParameter(with: self)
+            }
             definition?.scope = .singleton
         }
     }
@@ -31,7 +33,7 @@ class AppAssembly: TyphoonAssembly {
                     mediaItemsTabCoordinatorProvider:searchTabCoordinatorProvider:))) { (initializer) in
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
-                    }
+            }
             definition?.scope = .prototype
         }
     }
@@ -44,7 +46,7 @@ class AppAssembly: TyphoonAssembly {
                     mediaItemsCategoryViewModelProvider:))) { (initializer) in
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
-                    }
+            }
             definition?.scope = .prototype
         }
     }
@@ -53,9 +55,20 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func searchTabCoordinator() -> Any {
         return TyphoonDefinition.withClass(SearchTabCoordinator.self) { (definition) in
             definition?.useInitializer(
-                #selector(SearchTabCoordinator.init(searchViewModelProvider:))) { (initializer) in
-                    initializer?.injectParameter(with: self)
-                }
+            #selector(SearchTabCoordinator.init(searchViewModelProvider:))) { (initializer) in
+                initializer?.injectParameter(with: self)
+            }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func mapCoordinator() -> Any {
+        return TyphoonDefinition.withClass(MapCoordinator.self) { (definition) in
+            definition?.useInitializer(
+            #selector(MapCoordinator.init(mapViewModel:))) { (initializer) in
+                initializer?.injectParameter(with: self.mapViewModel())
+            }
             definition?.scope = .prototype
         }
     }
@@ -64,9 +77,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsViewModel() -> Any {
         return TyphoonDefinition.withClass(MediaItemsViewModel.self) { (definition) in
             definition?.useInitializer(
-                #selector(MediaItemsViewModel.init(storage:))) { (initializer) in
-                    initializer?.injectParameter(with: self.mediaItemsStorage())
-                }
+            #selector(MediaItemsViewModel.init(storage:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
+            }
             definition?.scope = .prototype
         }
     }
@@ -75,9 +88,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsCategoryViewModel() -> Any {
         return TyphoonDefinition.withClass(MediaItemsCategoryViewModel.self) { (definition) in
             definition?.useInitializer(
-                #selector(MediaItemsCategoryViewModel.init(storage:))) { (initializer) in
-                    initializer?.injectParameter(with: self.mediaItemsStorage())
-                }
+            #selector(MediaItemsCategoryViewModel.init(storage:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
+            }
             definition?.scope = .prototype
         }
     }
@@ -86,9 +99,16 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func searchViewModel() -> Any {
         return TyphoonDefinition.withClass(SearchViewModel.self) { (definition) in
             definition?.useInitializer(
-                #selector(SearchViewModel.init(storage:))) { (initializer) in
-                    initializer?.injectParameter(with: self.mediaItemsStorage())
-                }
+            #selector(SearchViewModel.init(storage:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
+            }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func mapViewModel() -> Any {
+        return TyphoonDefinition.withClass(MapViewModel.self) { (definition) in
             definition?.scope = .prototype
         }
     }
