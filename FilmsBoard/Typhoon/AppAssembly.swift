@@ -59,7 +59,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func searchTabCoordinator() -> Any {
         return TyphoonDefinition.withClass(SearchTabCoordinator.self) { (definition) in
             definition?.useInitializer(
-                #selector(SearchTabCoordinator.init(searchViewModelProvider:))) { (initializer) in
+                #selector(SearchTabCoordinator.init(searchViewModelProvider:detailFilmViewModelProvider:trailerCoordinatorProvider:))) { (initializer) in
+                    initializer?.injectParameter(with: self)
+                    initializer?.injectParameter(with: self)
                     initializer?.injectParameter(with: self)
                 }
             definition?.scope = .prototype
@@ -81,7 +83,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func listsCoordinator() -> Any {
         return TyphoonDefinition.withClass(ListsCoordinator.self) { (definition) in
             definition?.useInitializer(
-            #selector(ListsCoordinator.init(listsViewModelProvider:detailedListViewModelProvider:))) { (initializer) in
+            #selector(ListsCoordinator.init(listsViewModelProvider:detailedListViewModelProvider:detailFilmViewModelProvider:trailerCoordinatorProvider:))) { (initializer) in
+                initializer?.injectParameter(with: self)
+                initializer?.injectParameter(with: self)
                 initializer?.injectParameter(with: self)
                 initializer?.injectParameter(with: self)
             }
@@ -191,7 +195,8 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func detailedListViewModel() -> Any {
         return TyphoonDefinition.withClass(DetailedListViewModel.self) { (definition) in
             definition?.useInitializer(
-            #selector(DetailedListViewModel.init(database:))) { (initializer) in
+            #selector(DetailedListViewModel.init(storage:database:))) { (initializer) in
+                initializer?.injectParameter(with: self.mediaItemsStorage())
                 initializer?.injectParameter(with: self.sqliteDatabase())
             }
             definition?.scope = .prototype

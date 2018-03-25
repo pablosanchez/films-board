@@ -33,6 +33,7 @@
 		6E7F1F2D206792CB00AB9907 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F1F2B206792CB00AB9907 /* AboutViewController.swift */; };
 		6E7F1F2E206792CB00AB9907 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E7F1F2C206792CB00AB9907 /* AboutViewController.xib */; };
 		6E7F1F302067933200AB9907 /* AboutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F1F2F2067933200AB9907 /* AboutCoordinator.swift */; };
+		6E7F1F312067AEAC00AB9907 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E7F1F322067AEAC00AB9907 /* Alamofire.framework */; };
 		6E8DF932205FC9EC00B106DF /* MediaItemDetailedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8DF930205FC9EC00B106DF /* MediaItemDetailedCell.swift */; };
 		6E8DF933205FC9EC00B106DF /* MediaItemDetailedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E8DF931205FC9EC00B106DF /* MediaItemDetailedCell.xib */; };
 		6E8DF935205FCB5100B106DF /* MediaItemsCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8DF934205FCB5100B106DF /* MediaItemsCategoryViewModel.swift */; };
@@ -118,6 +119,7 @@
 		6E7F1F2B206792CB00AB9907 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		6E7F1F2C206792CB00AB9907 /* AboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		6E7F1F2F2067933200AB9907 /* AboutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCoordinator.swift; sourceTree = "<group>"; };
+		6E7F1F322067AEAC00AB9907 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E8DF930205FC9EC00B106DF /* MediaItemDetailedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemDetailedCell.swift; sourceTree = "<group>"; };
 		6E8DF931205FC9EC00B106DF /* MediaItemDetailedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaItemDetailedCell.xib; sourceTree = "<group>"; };
 		6E8DF934205FCB5100B106DF /* MediaItemsCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemsCategoryViewModel.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E7F1F312067AEAC00AB9907 /* Alamofire.framework in Frameworks */,
 				DFBB735B54D6C17C81B216A8 /* Pods_FilmsBoard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +432,7 @@
 		82672B4FDE203313AC1170F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6E7F1F322067AEAC00AB9907 /* Alamofire.framework */,
 				5FD6C39473E430CF495561E4 /* Pods_FilmsBoard.framework */,
 			);
 			name = Frameworks;
@@ -859,10 +863,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A5UCFNWB8C;
+				DEVELOPMENT_TEAM = DNU96T24MS;
 				INFOPLIST_FILE = FilmsBoard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = es.upsa.mimo.FilmBoard;
+				PRODUCT_BUNDLE_IDENTIFIER = es.upsa.mimo.FilmsBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -878,10 +882,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A5UCFNWB8C;
+				DEVELOPMENT_TEAM = DNU96T24MS;
 				INFOPLIST_FILE = FilmsBoard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = es.upsa.mimo.FilmBoard;
+				PRODUCT_BUNDLE_IDENTIFIER = es.upsa.mimo.FilmsBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;

@@ -73,6 +73,7 @@ extension MediaItemsTabCoordinator: MediaItemsViewModelRoutingDelegate {
         viewModel.totalPages = totalPages
         viewModel.type = type
         viewModel.category = category
+        viewModel.routingDelegate = self
 
         let viewController = MediaItemsCategoryViewController(viewModel: viewModel)
         self.navigationController.pushViewController(viewController, animated: true)
@@ -88,6 +89,19 @@ extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
         viewModel.routingDelegate = self
         let viewController = DetailFilmController(viewModel: viewModel)
         
+        self.navigationController.pushViewController(viewController, animated: true)
+    }
+}
+
+extension MediaItemsTabCoordinator: MediaItemsCategoryViewModelRoutingDelegate {
+
+    // MARK: MediaItemsCategoryViewModelRoutingDelegate methods
+
+    func mediaItemsCategoryViewModelDidTapCell(_ viewModel: MediaItemsCategoryViewModel) {
+        let viewModel = self.detailFilmViewModelProvider.detailFilmViewModel()
+        viewModel.routingDelegate = self
+        let viewController = DetailFilmController(viewModel: viewModel)
+
         self.navigationController.pushViewController(viewController, animated: true)
     }
 }

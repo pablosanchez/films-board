@@ -14,6 +14,7 @@ class SearchViewModel: NSObject {
     private(set) var cellViewModels: [MediaItemDetailedCellViewModel] = []
     private let storage: MediaItemsStorage
     private let apiManager: MoviesAPIManager
+    private var mediaItems: [MediaItem] = []
 
     private var currentPage: Int
     var totalPages: Int?  // To handle infinite scrolling
@@ -22,6 +23,7 @@ class SearchViewModel: NSObject {
     var index: Int?
 
     weak var delegate: SearchViewModelDelegate?
+    weak var routingDelegate: SearchViewModelRoutingDelegate?
 
     @objc
     init(storage: MediaItemsStorage, apiManagerProvider: MoviesAPIManagerProvider) {
@@ -35,6 +37,7 @@ extension SearchViewModel {
 
     private func updateCellViewModels() {
         let mediaItems = storage.mediaItemsByTextSearch
+        self.mediaItems = mediaItems
         self.cellViewModels = mediaItems.map { (mediaItem) -> MediaItemDetailedCellViewModel in
             return MediaItemDetailedCellViewModel(model: mediaItem)
         }
@@ -90,6 +93,15 @@ extension SearchViewModel {
 
 extension SearchViewModel {
 
+    func selectedCell(withIndex index: Int) {
+        let mediaItem = self.mediaItems[index]
+        self.storage.setCurrentMediaItem(mediaItem: mediaItem)
+        routingDelegate?.searchViewModelDidTapCell(self)
+    }
+}
+
+extension SearchViewModel {
+
     // Map segmented control selected index to corresponding MediaItemTypes
     private func type(forIndex index: Int) -> MediaItemTypes? {
         return MediaItemTypes(rawValue: index)
@@ -100,6 +112,10 @@ protocol SearchViewModelDelegate: class {
     func searchViewModelDidUpdateData(_ viewModel: SearchViewModel)
     func searchViewModelDidFinishUpdatingData(_ viewModel: SearchViewModel)
     func searchViewModel(_ viewModel: SearchViewModel, didGetError errorMessage: String)
+}
+
+protocol SearchViewModelRoutingDelegate: class {
+    func searchViewModelDidTapCell(_ viewModel: SearchViewModel)
 }
 
 @objc

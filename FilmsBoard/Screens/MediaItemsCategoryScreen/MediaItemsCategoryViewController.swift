@@ -103,6 +103,13 @@ extension MediaItemsCategoryViewController: UICollectionViewDataSource {
     }
 }
 
+extension MediaItemsCategoryViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.viewModel.selectedCell(withIndex: indexPath.row)
+    }
+}
+
 extension MediaItemsCategoryViewController: UICollectionViewDelegateFlowLayout {
 
     // MARK: UICollectionViewDelegateFlowLayout methods

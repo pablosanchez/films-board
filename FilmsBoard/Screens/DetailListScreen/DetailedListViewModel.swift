@@ -10,14 +10,19 @@ import Foundation
 
 @objc
 class DetailedListViewModel: NSObject {
-    
+
+    private let storage: MediaItemsStorage
     private let database: SQLiteDatabase
     private(set) var cellViewModels: [MediaItemDetailedCellViewModel] = []
+    private var mediaItems: [MediaItem] = []
     
     var listName: String?
 
+    weak var routingDelegate: DetailedListViewModelRoutingDelegate?
+
     @objc
-    init(database: SQLiteDatabase) {
+    init(storage: MediaItemsStorage, database: SQLiteDatabase) {
+        self.storage = storage
         self.database = database
     }
 
@@ -34,12 +39,26 @@ extension DetailedListViewModel {
         }
 
         let result = self.database.listMediaFromList(listName: name, type: index)
+        self.mediaItems = result
 
         self.cellViewModels = []
         for mediaItem in result {
             self.cellViewModels.append(MediaItemDetailedCellViewModel(model: mediaItem))
         }
     }
+}
+
+extension DetailedListViewModel {
+
+    func selectedCell(withIndex index: Int) {
+        let mediaItem = self.mediaItems[index]
+        self.storage.setCurrentMediaItem(mediaItem: mediaItem)
+        routingDelegate?.detailedListViewModelDidTapCell(self)
+    }
+}
+
+protocol DetailedListViewModelRoutingDelegate: class {
+    func detailedListViewModelDidTapCell(_ viewModel: DetailedListViewModel)
 }
 
 @objc

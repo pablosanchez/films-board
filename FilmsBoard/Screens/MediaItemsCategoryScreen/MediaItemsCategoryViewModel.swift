@@ -14,6 +14,7 @@ class MediaItemsCategoryViewModel: NSObject {
     private let storage: MediaItemsStorage
     private(set) var cellViewModels: [MediaItemDetailedCellViewModel] = []
     private let apiManager: MoviesAPIManager
+    private var mediaItems: [MediaItem] = []
 
     private var currentPage: Int
     var totalPages: Int?  // To handle infinite scrolling
@@ -30,6 +31,7 @@ class MediaItemsCategoryViewModel: NSObject {
     var title: String!
 
     weak var delegate: MediaItemsCategoryViewModelDelegate?
+    weak var routingDelegate: MediaItemsCategoryViewModelRoutingDelegate?
 
     @objc
     init(storage: MediaItemsStorage, apiManagerProvider: MoviesAPIManagerProvider) {
@@ -51,6 +53,7 @@ extension MediaItemsCategoryViewModel {
             return
         }
 
+        self.mediaItems = mediaItems
         self.cellViewModels = mediaItems.map { (mediaItem) -> MediaItemDetailedCellViewModel in
             return MediaItemDetailedCellViewModel(model: mediaItem)
         }
@@ -86,10 +89,23 @@ extension MediaItemsCategoryViewModel {
     }
 }
 
+extension MediaItemsCategoryViewModel {
+
+    func selectedCell(withIndex index: Int) {
+        let mediaItem = self.mediaItems[index]
+        self.storage.setCurrentMediaItem(mediaItem: mediaItem)
+        routingDelegate?.mediaItemsCategoryViewModelDidTapCell(self)
+    }
+}
+
 protocol MediaItemsCategoryViewModelDelegate: class {
     func mediaItemsCategoryViewModelDidUpdateData(_ viewModel: MediaItemsCategoryViewModel)
     func mediaItemsCategoryViewModelDidFinishUpdatingData(_ viewModel: MediaItemsCategoryViewModel)
     func mediaItemsCategoryViewModel(_ viewModel: MediaItemsCategoryViewModel, didGetError errorMessage: String)
+}
+
+protocol MediaItemsCategoryViewModelRoutingDelegate: class {
+    func mediaItemsCategoryViewModelDidTapCell(_ viewModel: MediaItemsCategoryViewModel)
 }
 
 @objc

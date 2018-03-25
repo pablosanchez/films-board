@@ -143,6 +143,13 @@ extension SearchViewController: UICollectionViewDataSource {
     }
 }
 
+extension SearchViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.viewModel.selectedCell(withIndex: indexPath.row)
+    }
+}
+
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
 
     // MARK: UICollectionViewDelegateFlowLayout methods

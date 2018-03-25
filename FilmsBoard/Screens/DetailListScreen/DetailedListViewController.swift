@@ -91,6 +91,13 @@ extension DetailedListViewController: UICollectionViewDataSource {
     }
 }
 
+extension DetailedListViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.viewModel.selectedCell(withIndex: indexPath.row)
+    }
+}
+
 extension DetailedListViewController: UICollectionViewDelegateFlowLayout {
 
     // MARK: UICollectionViewDelegateFlowLayout methods
