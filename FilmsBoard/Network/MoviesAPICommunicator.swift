@@ -12,7 +12,7 @@ import Alamofire
 @objc
 class MoviesAPICommunicator: NSObject {
 
-    typealias Completion = (Any?, HTTPRequestError?) -> ()
+    typealias Completion = (Any?, RequestError?) -> ()
 
     private let baseURL: String
     private let apiKey: String
@@ -122,7 +122,7 @@ class MoviesAPICommunicator: NSObject {
     private func doRequest(url: String, parameters: Parameters? = nil, completion: @escaping Completion) {
         guard self.networkReachability.connection else {  // There is no network connection
             let error = "No hay conexion de red disponible. Vuelve a intentarlo más tarde"
-            completion(nil, HTTPRequestError(message: error))
+            completion(nil, RequestError(message: error))
             return
         }
 
@@ -140,7 +140,7 @@ class MoviesAPICommunicator: NSObject {
                     } else {
                         error = "Error desconocido"
                     }
-                    completion(nil, HTTPRequestError(message: error))
+                    completion(nil, RequestError(message: error))
                 case .success(let json):
                     completion(json, nil)
                 }

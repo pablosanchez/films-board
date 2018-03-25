@@ -24,7 +24,7 @@ class MapAnnotation: NSObject, MKAnnotation {
 
 extension MapAnnotation {
 
-    // https://www.raywenderlich.com/160517/mapkit-tutorial-getting-started
+    // Source: https://www.raywenderlich.com/160517/mapkit-tutorial-getting-started
     func toMapItem() -> MKMapItem {
         let placemark = MKPlacemark(coordinate: coordinate)
         let mapItem = MKMapItem(placemark: placemark)

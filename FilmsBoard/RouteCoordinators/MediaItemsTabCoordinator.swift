@@ -79,7 +79,6 @@ extension MediaItemsTabCoordinator: MediaItemsViewModelRoutingDelegate {
     }
 }
 
-
 extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
 
     // MARK: MediaItemsCellSelectedDelegate methods
@@ -87,10 +86,7 @@ extension MediaItemsTabCoordinator: MediaItemsCellSelectedDelegate {
     func cellTapped(mediaItem: MediaItem) {
         let viewModel = self.detailFilmViewModelProvider.detailFilmViewModel()
         viewModel.routingDelegate = self
-        
-        let viewModel2 = ListsViewModel(database: SQLiteDatabase())
         let viewController = DetailFilmController(viewModel: viewModel)
-        let viewController2 = ListsViewController(viewModel: viewModel2)
         
         self.navigationController.pushViewController(viewController, animated: true)
     }
@@ -110,6 +106,8 @@ extension MediaItemsTabCoordinator: DetailFilmViewModelRoutingDelegate {
 }
 
 extension MediaItemsTabCoordinator: TrailerCoordinatorDelegate {
+
+    // MARK: TrailerCoordinatorDelegate methods
     
     func trailerHasBeenClosed() {
         self.navigationController.dismiss(animated: true, completion: nil)

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 struct ListCellViewModel {
     
     private let model: List
@@ -25,4 +24,3 @@ struct ListCellViewModel {
         return model.count
     }
 }
-

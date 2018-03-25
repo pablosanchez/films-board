@@ -62,7 +62,7 @@ extension NotificationsManager {
         self.notificationCenter.add(request, withCompletionHandler: nil)
     }
 
-    func removeNotification(withId id: Int) {
+    func unscheduleNotification(withId id: Int) {
         self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [String(id)])
     }
 }

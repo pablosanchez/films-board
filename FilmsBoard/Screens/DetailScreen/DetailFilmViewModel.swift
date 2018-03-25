@@ -62,6 +62,7 @@ class DetailFilmViewModel: NSObject {
     func createReminder() {
         let calendar = Calendar.current
         var dateComponents = calendar.dateComponents([.day, .month, .year, .hour, .minute, .second], from: self.mediaItem.releaseDate.toDate() ?? Date())
+        // Reminder should be at 00:00 am
         dateComponents.hour = 0
         dateComponents.minute = 0
         dateComponents.second = 0
@@ -70,7 +71,7 @@ class DetailFilmViewModel: NSObject {
     }
 
     func removeReminder() {
-        self.notificationsManager.removeNotification(withId: self.mediaItem.id)
+        self.notificationsManager.unscheduleNotification(withId: self.mediaItem.id)
     }
 
     func watchTrailer() {
@@ -112,10 +113,8 @@ extension DetailFilmViewModel {
         self.apiManager.getMediaItemData(id: self.mediaItem.id, type: self.mediaItem.type) { [unowned self] (error) in
             guard error == nil else {
                 var errorMsg = ""
-                if let error = error as? HTTPRequestError {
+                if let error = error as? RequestError {
                     errorMsg = error.message
-                } else if let error = error as? MediaItemsBuilderError {
-                    errorMsg = error.errorMessage
                 } else {
                     errorMsg = "Error desconocido"
                 }
@@ -139,6 +138,7 @@ protocol DetailFilmViewModelRoutingDelegate: class {
     func detailFilmViewModelDidTapTrailerButton()
 }
 
-@objc protocol DetailFilmViewModelProvider: NSObjectProtocol {
+@objc
+protocol DetailFilmViewModelProvider: NSObjectProtocol {
     func detailFilmViewModel() -> DetailFilmViewModel
 }

@@ -8,20 +8,20 @@
 
 import Foundation
 
-
-@objc class ListsViewModel: NSObject {
+@objc
+class ListsViewModel: NSObject {
     
     private let database: SQLiteDatabase
     weak var delegate: ListsViewModelDelegate?
     
-    @objc init(database: SQLiteDatabase){
+    @objc
+    init(database: SQLiteDatabase){
         self.database = database
     }
-    
 }
 
-
 extension ListsViewModel {
+
     func retrieveListNames() -> [String] {
         return self.database.listUserLists()
     }
@@ -41,24 +41,17 @@ extension ListsViewModel {
     func deleteList(listName: String) {
         self.database.deleteList(listName: listName)
     }
-    
-    
+
     func checkBasicList(listName: String) -> Bool{
-        if self.database.BASIC_LISTS.contains(listName)
-        {
-            return true
-        }
-        
-        return false
+        return self.database.BASIC_LISTS.contains(listName)
     }
 }
-
 
 protocol ListsViewModelDelegate: class {
     func updateTableView()
 }
 
-@objc protocol ListsViewModelProvider: NSObjectProtocol {
+@objc
+protocol ListsViewModelProvider: NSObjectProtocol {
     func listsViewModel() -> ListsViewModel
 }
-

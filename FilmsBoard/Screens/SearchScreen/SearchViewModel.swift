@@ -60,10 +60,8 @@ extension SearchViewModel {
         self.apiManager.getMediaItemsByText(text: text, type: type, page: currentPage) { [unowned self] (pages, error) in
             guard error == nil else {
                 var errorMsg = ""
-                if let error = error as? HTTPRequestError {
+                if let error = error as? RequestError {
                     errorMsg = error.message
-                } else if let error = error as? MediaItemsBuilderError {
-                    errorMsg = error.errorMessage
                 } else {
                     errorMsg = "Error desconocido"
                 }

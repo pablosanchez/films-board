@@ -58,9 +58,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func searchTabCoordinator() -> Any {
         return TyphoonDefinition.withClass(SearchTabCoordinator.self) { (definition) in
             definition?.useInitializer(
-            #selector(SearchTabCoordinator.init(searchViewModelProvider:))) { (initializer) in
-                initializer?.injectParameter(with: self)
-            }
+                #selector(SearchTabCoordinator.init(searchViewModelProvider:))) { (initializer) in
+                    initializer?.injectParameter(with: self)
+                }
             definition?.scope = .prototype
         }
     }
@@ -75,8 +75,7 @@ class AppAssembly: TyphoonAssembly {
             definition?.scope = .prototype
         }
     }
-    
-    
+
     @objc
     public dynamic func listsCoordinator() -> Any {
         return TyphoonDefinition.withClass(ListsCoordinator.self) { (definition) in
@@ -88,17 +87,15 @@ class AppAssembly: TyphoonAssembly {
             definition?.scope = .prototype
         }
     }
-    
-    
 
     @objc
     public dynamic func mediaItemsViewModel() -> Any {
         return TyphoonDefinition.withClass(MediaItemsViewModel.self) { (definition) in
             definition?.useInitializer(
-            #selector(MediaItemsViewModel.init(storage:apiManagerProvider:))) { (initializer) in
-                initializer?.injectParameter(with: self.mediaItemsStorage())
-                initializer?.injectParameter(with: self)
-            }
+                #selector(MediaItemsViewModel.init(storage:apiManagerProvider:))) { (initializer) in
+                    initializer?.injectParameter(with: self.mediaItemsStorage())
+                    initializer?.injectParameter(with: self)
+                }
             definition?.scope = .prototype
         }
     }
@@ -107,10 +104,10 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsCategoryViewModel() -> Any {
         return TyphoonDefinition.withClass(MediaItemsCategoryViewModel.self) { (definition) in
             definition?.useInitializer(
-            #selector(MediaItemsCategoryViewModel.init(storage:apiManagerProvider:))) { (initializer) in
-                initializer?.injectParameter(with: self.mediaItemsStorage())
-                initializer?.injectParameter(with: self)
-            }
+                #selector(MediaItemsCategoryViewModel.init(storage:apiManagerProvider:))) { (initializer) in
+                    initializer?.injectParameter(with: self.mediaItemsStorage())
+                    initializer?.injectParameter(with: self)
+                }
             definition?.scope = .prototype
         }
     }
@@ -152,8 +149,8 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func trailerCoordinator() -> Any {
         return TyphoonDefinition.withClass(TrailerCoordinator.self) { (definition) in
             definition?.useInitializer(
-            #selector(TrailerCoordinator.init(viewModel:))) { (initializer) in
-                initializer?.injectParameter(with: self.trailerViewModel())
+            #selector(TrailerCoordinator.init(viewModelProvider:))) { (initializer) in
+                initializer?.injectParameter(with: self)
             }
             definition?.scope = .prototype
         }
@@ -225,7 +222,6 @@ class AppAssembly: TyphoonAssembly {
             definition?.useInitializer(
                 #selector(MoviesAPICommunicator.init(networkReachability:))) { (initializer) in
                     initializer?.injectParameter(with: self.networkReachability())
-
                 }
             definition?.scope = .singleton
         }
@@ -244,7 +240,8 @@ class AppAssembly: TyphoonAssembly {
             definition?.useInitializer(
                 #selector(NotificationsManager.init(db:))) { (initializer) in
                     initializer?.injectParameter(with: self.sqliteDatabase())
-            }
+                }
+            definition?.scope = .singleton
         }
     }
 }

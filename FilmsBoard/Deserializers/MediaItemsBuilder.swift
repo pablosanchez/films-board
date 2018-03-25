@@ -12,19 +12,19 @@ struct MediaItemsBuilder {
 
     static func decodeMediaItems(type: MediaItemTypes, json rawJson: Any) throws -> MediaItemsBuilderResult {
         guard let dictJson = rawJson as? [String: Any] else {
-            throw MediaItemsBuilderError(errorMessage: "Error parsing media items json")
+            throw RequestError(message: "Error parsing media items json")
         }
 
         guard let totalPages = dictJson["total_pages"] as? Int else {
-            throw MediaItemsBuilderError(errorMessage: "Error parsing media items json")
+            throw RequestError(message: "Error parsing media items json")
         }
 
         guard let mediaItemsJson = dictJson["results"] as? [[String: Any]] else {
-            throw MediaItemsBuilderError(errorMessage: "Error parsing results json key")
+            throw RequestError(message: "Error parsing results json key")
         }
 
         guard let mediaItemsData = try? JSONSerialization.data(withJSONObject: mediaItemsJson, options: []) else {
-            throw MediaItemsBuilderError(errorMessage: "Error serializing json to data")
+            throw RequestError(message: "Error serializing json to data")
         }
 
         var decodedMediaItems: [MediaItem]
@@ -32,13 +32,13 @@ struct MediaItemsBuilder {
         switch type {
         case .movies:
             guard let mediaItems = try? JSONDecoder().decode([Movie].self, from: mediaItemsData) else {
-                throw MediaItemsBuilderError(errorMessage: "Error building movies from json")
+                throw RequestError(message: "Error building movies from json")
             }
 
             decodedMediaItems = mediaItems
         case .tvShows:
             guard let mediaItems = try? JSONDecoder().decode([TvShow].self, from: mediaItemsData) else {
-                throw MediaItemsBuilderError(errorMessage: "Error building series from json")
+                throw RequestError(message: "Error building series from json")
             }
 
             decodedMediaItems = mediaItems
@@ -49,11 +49,11 @@ struct MediaItemsBuilder {
 
     static func decodeMediaItemGenres(json rawJson: Any) throws -> [String] {
         guard let dictJson = rawJson as? [String: Any] else {
-            throw MediaItemsBuilderError(errorMessage: "Error parsing media item details json")
+            throw RequestError(message: "Error parsing media item details json")
         }
 
         guard let genresDict = dictJson["genres"] as? [[String: Any]] else {
-            throw MediaItemsBuilderError(errorMessage: "Error parsing genres json key")
+            throw RequestError(message: "Error parsing genres json key")
         }
 
         var genres: [String] = []
@@ -67,19 +67,19 @@ struct MediaItemsBuilder {
 
     static func decodeMediaItemTrailerURL(json rawJson: Any) throws -> String {
         guard let dictJson = rawJson as? [String: Any] else {
-            throw MediaItemsBuilderError(errorMessage: "Error parsing media item details json")
+            throw RequestError(message: "Error parsing media item details json")
         }
 
         guard let resultsJson = dictJson["results"] as? [[String: Any]] else {
-            throw MediaItemsBuilderError(errorMessage: "Error parsing results json key")
+            throw RequestError(message: "Error parsing results json key")
         }
 
         guard resultsJson.count > 0 else {
-            throw MediaItemsBuilderError(errorMessage: "Error: results json is empty")
+            throw RequestError(message: "Error: results json is empty")
         }
 
         guard let url = resultsJson[0]["key"] as? String else {
-            throw MediaItemsBuilderError(errorMessage: "Error getting trailer url")
+            throw RequestError(message: "Error getting trailer url")
         }
 
         return url

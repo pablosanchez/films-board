@@ -9,15 +9,14 @@
 import Foundation
 import SQLite
 
-
-@objc class SQLiteDatabase: NSObject {
+@objc
+class SQLiteDatabase: NSObject {
     
     private var database: Connection!
     
     private let table_media = Table("media")
     private let table_lists = Table("lists")
-    
-    
+
     private let id = Expression<Int>("id")
     
     private let posterImageURL = Expression<String>("posterImageULR")
@@ -31,29 +30,24 @@ import SQLite
     private let type = Expression<Int>("type")
     
     private let listName = Expression<String>("name")
-    
-    
-    let BASIC_LISTS: [String] = ["Favoritas", "Pendientes", "Vistas", "Recordatorios"]
-    
-    
-    @objc override init() {
+
+    let BASIC_LISTS = ["Favoritas", "Pendientes", "Vistas", "Recordatorios"]
+
+    @objc
+    override init() {
         super.init()
         self.initDatabase()
     }
-    
-    
-    
+
     private func initDatabase() {
         self.getDatabase()
         self.createTableMovies()
         self.createTableLists()
         self.createBasicLists()
     }
-    
-    
-    
-    private func getDatabase(){
-        do{
+
+    private func getDatabase() {
+        do {
             let doc = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask,
                                                   appropriateFor: nil, create: true)
             
@@ -65,13 +59,10 @@ import SQLite
             print(database)
             
             self.database = database
-        } catch {
-            print("ERROR 1: \(error)")
-        }
+        } catch { }
     }
-    
-    
-    private func createTableMovies(){
+
+    private func createTableMovies() {
         let createTable = self.table_media.create{(table) in
             table.column(self.id, primaryKey: true)
             table.column(self.id_media)
@@ -90,15 +81,10 @@ import SQLite
         
         do {
             try self.database.run(createTable)
-        } catch {
-            print("ERROR: \(error)")
-        }
-        
+        } catch { }
     }
-    
-    
-    
-    private func createTableLists(){
+
+    private func createTableLists() {
         let createTable = self.table_lists.create{(table) in
             table.column(self.id, primaryKey: true)
             table.column(self.listName, unique: true)
@@ -106,12 +92,8 @@ import SQLite
         
         do {
             try self.database.run(createTable)
-        } catch {
-            print("ERROR: \(error)")
-        }
-        
+        } catch { }
     }
-    
     
     private func createBasicLists() {
         let query1 = self.table_lists.insert(self.listName <- BASIC_LISTS[0])
@@ -121,33 +103,21 @@ import SQLite
         
         do {
             try self.database.run(query1)
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         do {
             try self.database.run(query2)
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         do {
             try self.database.run(query3)
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         do {
             try self.database.run(query4)
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
     }
-    
 }
-
-
-
 
 extension SQLiteDatabase {
     
@@ -159,14 +129,10 @@ extension SQLiteDatabase {
         
         do {
             rows = try self.database.scalar(query.count)
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         return rows
     }
-    
-    
     
     func listMediaFromList(listName: String, type: Int) -> [MediaItem] {
         var mediaItems: [MediaItem] = []
@@ -181,14 +147,10 @@ extension SQLiteDatabase {
             for mediaItem in result {
                 mediaItems.append(self.fromRowToMediaItem(item: mediaItem))
             }
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         return mediaItems
     }
-    
-    
     
     func getListId(listName: String) -> Int {
         var id: Int = 0
@@ -202,15 +164,11 @@ extension SQLiteDatabase {
                 id = i[self.id]
             }
             
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         return id
     }
-    
-    
-    
+
     func insertMediaIntoList(listName: String, media: MediaItem) {
         let listId = self.getListId(listName: listName)
         
@@ -227,12 +185,8 @@ extension SQLiteDatabase {
         
         do {
             try self.database.run(query)
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
     }
-    
-    
     
     func listUserLists() -> [String] {
         var lists: [String] = []
@@ -243,28 +197,21 @@ extension SQLiteDatabase {
             for list in result {
                 lists.append(list[self.listName])
             }
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         return lists
     }
-    
-    
+
     func deleteMediaFromList(listName: String, id_media: Int, type: Int) {
         let listId = self.getListId(listName: listName)
-        
         
         do {
             let filter = self.table_media.filter(self.id_media == id_media).filter(self.id_list == listId).filter(self.type == type)
             
             try self.database.run(filter.delete())
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
     }
-    
-    
+
     func checkMediaIsInList(listName: String, id_media: Int, type: Int) -> Int{
         var isInside: Int = 0
         let listId = self.getListId(listName: listName)
@@ -273,13 +220,10 @@ extension SQLiteDatabase {
         
         do {
             isInside = try self.database.scalar(query.count)
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         return isInside
     }
-    
     
     func insertNewList(listName: String) -> Bool {
         let query1 = self.table_lists.insert(self.listName <- listName)
@@ -287,9 +231,7 @@ extension SQLiteDatabase {
         do {
             try self.database.run(query1)
             return true
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
         
         return false
     }
@@ -301,9 +243,7 @@ extension SQLiteDatabase {
             let filter = self.table_lists.filter(self.id == listId)
             
             try self.database.run(filter.delete())
-        } catch {
-            print("\(error)")
-        }
+        } catch { }
     }
 }
 
@@ -317,7 +257,6 @@ extension SQLiteDatabase {
         let overview = item[self.overview]
         let rating = item[self.rating]
         let id = item[self.id_media]
-        
         
         if item[self.type] == 0 {
             return Movie(id: id, posterImageURL: posterImageURL, backgroundImageURL: backgroundImageURL, title: title, description: overview, releaseDate: releaseDate, rating: rating)

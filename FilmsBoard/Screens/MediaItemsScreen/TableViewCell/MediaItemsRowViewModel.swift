@@ -34,7 +34,6 @@ protocol MediaItemsRowViewModel {
     func selectedItem(index: Int)
 }
 
-
 protocol MediaItemsRowDidSelectCell {
     func handleCellTap(mediaItem: MediaItem)
 }

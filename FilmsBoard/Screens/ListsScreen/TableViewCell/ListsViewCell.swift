@@ -14,7 +14,6 @@ class ListsViewCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var count: CarbonBadgeLabel!
     
-    
     var viewModel: ListCellViewModel? {
         didSet {
             self.bindViews()

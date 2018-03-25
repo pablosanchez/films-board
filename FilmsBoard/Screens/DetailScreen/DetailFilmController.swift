@@ -16,13 +16,7 @@ class DetailFilmController: UIViewController {
     @IBOutlet weak var backImageLandscape: UIImageView!
     @IBOutlet weak var mainImagePortrait: UIImageView!
     @IBOutlet weak var mainImageLandscape: UIImageView!
-
-    
-    
-    
     @IBOutlet weak var buttonStyle: UIButton!
-
-    
     @IBOutlet weak var mediaTitle: UILabel!
     @IBOutlet weak var mediaYear: UILabel!
     @IBOutlet weak var mediaDescription: UILabel!
@@ -46,59 +40,32 @@ class DetailFilmController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
         self.title = "Película"
 
-
         self.buttonStyler()
+        self.initNavigationItem()
         self.requestData()
     }
-    
-    
-    
-    private func buttonStyler()
-    {
+
+    private func buttonStyler() {
         self.buttonStyle.contentEdgeInsets = UIEdgeInsets(top: 5.0, left: 15.0, bottom: 5.0, right: 15.0)
-        
         self.buttonStyle.layer.cornerRadius = 2
         self.buttonStyle.layer.borderWidth = CGFloat(1.0)
         self.buttonStyle.layer.borderColor = UIColor(named: "Primary_Dark")?.cgColor
     }
-    
-    
+
     private func bindViews() {
         self.backImagePortrait.sd_setImage(with: URL(string: self.viewModel.backImage), completed: nil)
         self.backImageLandscape.sd_setImage(with: URL(string: self.viewModel.backImage), completed: nil)
         self.mainImagePortrait.sd_setImage(with: URL(string: self.viewModel.mainImage), completed: nil)
         self.mainImageLandscape.sd_setImage(with: URL(string: self.viewModel.mainImage), completed: nil)
-        
-        
+
         self.mediaTitle.text = self.viewModel.title
         self.mediaYear.text = self.viewModel.releaseDate
         self.mediaDescription.text = self.viewModel.overview
         self.mediaGenres.text = self.viewModel.genres
         self.mediaRating.rating = self.viewModel.rating
-        
-        
-        
-        
-        var buttons: [UIBarButtonItem] = []
-        
-        buttons.append(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToList)))
-        
-        if viewModel.checkIfCanRemind() {
-            buttons.append(UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(addReminder)))
-        }
-        
-        
-        navigationItem.rightBarButtonItems = buttons
     }
-    
-    
-
-
-    
-    
 
     @IBAction func watchTrailer(_ sender: Any) {
         viewModel.watchTrailer()
@@ -107,7 +74,8 @@ class DetailFilmController: UIViewController {
 
 extension DetailFilmController {
 
-    @objc func addToList() {
+    @objc
+    func addToList() {
         let alertController = UIAlertController(title: "Añadir a la lista:", message: nil, preferredStyle: .actionSheet)
         let actionCancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
 
@@ -136,9 +104,9 @@ extension DetailFilmController {
 
         for listName in self.viewModel.retrieveListNames() {
             if listName != "Recordatorios" {
-                let alert = UIAlertAction(title: listName, style: .default, handler: {(accion) in
+                let alert = UIAlertAction(title: listName, style: .default) { (action) in
                     self.viewModel.addFilmToList(listName: listName)
-                })
+                }
                 alertController.addAction(alert)
             }
         }
@@ -149,7 +117,8 @@ extension DetailFilmController {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    @objc func addReminder() {
+    @objc
+    func addReminder() {
         let alertController = UIAlertController(title: "Crear recordatorio", message: nil, preferredStyle: .actionSheet)
         let actionCancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
 
@@ -202,8 +171,9 @@ extension DetailFilmController {
     }
 }
 
-
 extension DetailFilmController: DetailFilmViewModelDelegate {
+
+    // MARK: DetailFilmViewModelDelegate methods
 
     func detailFilmViewModelDidUpdateData(_ viewModel: DetailFilmViewModel) {
         self.progressIndicator.hide(animated: true)

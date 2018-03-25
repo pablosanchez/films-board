@@ -39,10 +39,8 @@ extension MediaItemsViewModel {
             guard let pages = totalPages, pages.count == MediaItemCategories.values.count, error == nil,
                 self.storage.mediaItemsByCategories.count == MediaItemCategories.values.count else {
                 var errorMsg = ""
-                if let error = error as? HTTPRequestError {
+                if let error = error as? RequestError {
                     errorMsg = error.message
-                } else if let error = error as? MediaItemsBuilderError {
-                    errorMsg = error.errorMessage
                 } else {
                     errorMsg = "Error desconocido"
                 }

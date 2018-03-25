@@ -35,9 +35,7 @@ class DetailedListViewController: UIViewController {
         self.initCollectionView()
         self.requestData()
 
-        self.title = self.viewModel.listName!
-        // Do any additional setup after loading the view.
-
+        self.title = self.viewModel.listName ?? "Desconocida"
     }
 
     @IBAction func segmentedControlDidChange() {

@@ -8,28 +8,24 @@
 
 import UIKit
 
-
-
-@objc class ListsCoordinator: NSObject {
+@objc
+class ListsCoordinator: NSObject {
     
     private let navigationController: UINavigationController
     private let listsViewModelProvider: ListsViewModelProvider
     private let detailedListViewModelProvider: DetailedListViewModelProvider
 
-    
-    
-    @objc init(listsViewModelProvider: ListsViewModelProvider, detailedListViewModelProvider: DetailedListViewModelProvider)
-    {
+    @objc
+    init(listsViewModelProvider: ListsViewModelProvider, detailedListViewModelProvider: DetailedListViewModelProvider) {
         self.navigationController = UINavigationController()
         self.listsViewModelProvider = listsViewModelProvider
         self.detailedListViewModelProvider = detailedListViewModelProvider
         super.init()
     }
-    
 }
 
-
 extension ListsCoordinator: Coordinable {
+
     var rootViewController: UIViewController {
         return navigationController
     }
@@ -39,34 +35,32 @@ extension ListsCoordinator: Coordinable {
     }
 }
 
-
 extension ListsCoordinator {
     
     private func initNavigationController() {
-        let viewController = ListsViewController(viewModel: self.listsViewModelProvider.listsViewModel())
-        viewController.addLeftBarButtonWithImage(UIImage(named: "ic-menu")!)
+        let viewModel = self.listsViewModelProvider.listsViewModel()
+        let viewController = ListsViewController(viewModel: viewModel)
+        viewController.addLeftBarButtonWithImage(UIImage(named: "ic-menu")!)  // Slide menu icon
         viewController.delegate = self
-        
         
         self.navigationController.pushViewController(viewController, animated: true)
     }
 }
 
-
 extension ListsCoordinator: ListsViewControllerDelegate {
+
+    // MARK: ListsViewControllerDelegate methods
+
     func cellLitsTapped(listName: String) {
         let viewModel = self.detailedListViewModelProvider.detailedListViewModel()
         viewModel.setListName(name: listName)
-        
         let viewController = DetailedListViewController(viewModel: viewModel)
         
         self.navigationController.pushViewController(viewController, animated: true)
     }
 }
 
-
-
-
-@objc protocol ListsCoordinatorProvider: NSObjectProtocol {
+@objc
+protocol ListsCoordinatorProvider: NSObjectProtocol {
     func listsCoordinator() -> ListsCoordinator
 }

@@ -81,6 +81,8 @@ extension MediaItemsCategoryViewController: MediaItemsCategoryViewModelDelegate 
 
 extension MediaItemsCategoryViewController: UICollectionViewDataSource {
 
+    // MARK: UICollectionViewDataSource methods
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.cellViewModels.count
     }
@@ -102,6 +104,8 @@ extension MediaItemsCategoryViewController: UICollectionViewDataSource {
 }
 
 extension MediaItemsCategoryViewController: UICollectionViewDelegateFlowLayout {
+
+    // MARK: UICollectionViewDelegateFlowLayout methods
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var itemsPerRow: CGFloat

@@ -36,10 +36,8 @@ extension TrailerViewModel {
         self.apiManager.getMediaItemTrailer(id: self.mediaItem.id, type: self.mediaItem.type) { (key, error) in
             guard error == nil else {
                 var errorMsg = ""
-                if let error = error as? HTTPRequestError {
+                if let error = error as? RequestError {
                     errorMsg = error.message
-                } else if let error = error as? MediaItemsBuilderError {
-                    errorMsg = error.errorMessage
                 } else {
                     errorMsg = "Error desconocido"
                 }
@@ -65,4 +63,9 @@ protocol TrailerViewModelDelegate: class {
 
 protocol TrailerViewModelRoutingDelegate: class {
     func trailerViewModelDidTapCloseButton(_ viewModel: TrailerViewModel)
+}
+
+@objc
+protocol TrailerViewModelProvider: NSObjectProtocol {
+    func trailerViewModel() -> TrailerViewModel
 }

@@ -31,11 +31,9 @@ class TrailerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(TrailerViewController.closeButtonTapped))
+        self.navigationItem.leftBarButtonItem = closeButton
         self.requestData()
-    }
-    
-    @IBAction func closeTrailer(_ sender: Any) {
-        self.viewModel.closeTrailer()
     }
 }
 
@@ -44,6 +42,11 @@ extension TrailerViewController {
     private func requestData() {
         self.progressIndicator = MBProgressHUDBuilder.makeProgressIndicator(view: self.view)
         self.viewModel.getTrailer()
+    }
+
+    @objc
+    private func closeButtonTapped() {
+        self.viewModel.closeTrailer()
     }
 }
 
