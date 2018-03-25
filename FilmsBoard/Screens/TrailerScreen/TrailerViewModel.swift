@@ -13,14 +13,16 @@ class TrailerViewModel: NSObject {
     
     private let storage: MediaItemsStorage
     private let mediaItem: MediaItem
+    private let apiManager: MoviesAPIManager
 
     weak var delegate: TrailerViewModelDelegate?
     weak var routingDelegate: TrailerViewModelRoutingDelegate?
 
     @objc
-    init(storage: MediaItemsStorage) {
+    init(storage: MediaItemsStorage, apiManagerProvider: MoviesAPIManagerProvider) {
         self.storage = storage
         self.mediaItem = storage.currentMediaItemSelected
+        self.apiManager = apiManagerProvider.moviesAPIManager()
     }
 
     func closeTrailer() {
@@ -31,17 +33,11 @@ class TrailerViewModel: NSObject {
 extension TrailerViewModel {
 
     func getTrailer() {
-        let apiManager = MoviesAPIManager(storage: self.storage)
-        apiManager.getMediaItemTrailer(id: self.mediaItem.id, type: self.mediaItem.type) { (key, error) in
+        self.apiManager.getMediaItemTrailer(id: self.mediaItem.id, type: self.mediaItem.type) { (key, error) in
             guard error == nil else {
                 var errorMsg = ""
-                if let error = error as? MoviesAPIError {
-                    switch error {
-                    case .networkUnavailable(let errorMessage):
-                        errorMsg = errorMessage
-                    case .apiError(let code):
-                        errorMsg = "Error de red: código HTTP \(code)"
-                    }
+                if let error = error as? HTTPRequestError {
+                    errorMsg = error.message
                 } else if let error = error as? MediaItemsBuilderError {
                     errorMsg = error.errorMessage
                 } else {

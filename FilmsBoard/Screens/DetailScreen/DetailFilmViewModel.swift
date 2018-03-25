@@ -14,6 +14,7 @@ class DetailFilmViewModel: NSObject {
     private let storage: MediaItemsStorage
     private let db: SQLiteDatabase
     private let notificationsManager: NotificationsManager
+    private let apiManager: MoviesAPIManager
 
     private var mediaItem: MediaItem
 
@@ -21,9 +22,10 @@ class DetailFilmViewModel: NSObject {
     weak var routingDelegate: DetailFilmViewModelRoutingDelegate?
 
     @objc
-    init(storage: MediaItemsStorage, db: SQLiteDatabase, notificationsManager: NotificationsManager) {
+    init(storage: MediaItemsStorage, db: SQLiteDatabase, apiManagerProvider: MoviesAPIManagerProvider, notificationsManager: NotificationsManager) {
         self.storage = storage
         self.db = db
+        self.apiManager = apiManagerProvider.moviesAPIManager()
         self.notificationsManager = notificationsManager
         self.mediaItem = self.storage.currentMediaItemSelected
     }
@@ -107,17 +109,11 @@ class DetailFilmViewModel: NSObject {
 extension DetailFilmViewModel {
 
     func getDetails() {
-        let apiManager = MoviesAPIManager(storage: self.storage)
-        apiManager.getMediaItemData(id: self.mediaItem.id, type: self.mediaItem.type) { [unowned self] (error) in
+        self.apiManager.getMediaItemData(id: self.mediaItem.id, type: self.mediaItem.type) { [unowned self] (error) in
             guard error == nil else {
                 var errorMsg = ""
-                if let error = error as? MoviesAPIError {
-                    switch error {
-                    case .networkUnavailable(let errorMessage):
-                        errorMsg = errorMessage
-                    case .apiError(let code):
-                        errorMsg = "Error de red: código HTTP \(code)"
-                    }
+                if let error = error as? HTTPRequestError {
+                    errorMsg = error.message
                 } else if let error = error as? MediaItemsBuilderError {
                     errorMsg = error.errorMessage
                 } else {

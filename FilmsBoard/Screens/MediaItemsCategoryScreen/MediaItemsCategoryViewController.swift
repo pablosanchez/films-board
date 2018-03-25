@@ -8,9 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import MaterialComponents
-
-
 
 class MediaItemsCategoryViewController: UIViewController {
 
@@ -19,9 +16,7 @@ class MediaItemsCategoryViewController: UIViewController {
     private var progressIndicator: MBProgressHUD!
 
     private let CELL_ID = "media-item-cell"
-    private let margin_vertical: CGFloat = 10  // Collection view margin
-    private let margin_horizontal: CGFloat = 5
-    
+    private let margin: CGFloat = 10  // Collection view margin
     
     private let viewModel: MediaItemsCategoryViewModel
 
@@ -49,7 +44,12 @@ extension MediaItemsCategoryViewController {
         let cellNib = UINib(nibName: "MediaItemDetailedCell", bundle: nil)
         self.collectionView.register(cellNib, forCellWithReuseIdentifier: CELL_ID)
 
-        self.assignLayout()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin)
+        layout.minimumInteritemSpacing = margin
+        layout.minimumLineSpacing = margin
+        self.collectionView.setCollectionViewLayout(layout, animated: false)
 
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
@@ -91,9 +91,7 @@ extension MediaItemsCategoryViewController: UICollectionViewDataSource {
         
         cell.layer.borderWidth = CGFloat(1.0)
         cell.layer.borderColor = UIColor(named: "Primary_Dark")?.cgColor
-        
-        
-        
+
         if indexPath.row == (viewModel.cellViewModels.count - 1) {  // Infinite scroll
             self.progressIndicator = MBProgressHUDBuilder.makeProgressIndicator(view: self.view)
             viewModel.getNextMediaItemsPage()
@@ -116,25 +114,11 @@ extension MediaItemsCategoryViewController: UICollectionViewDelegateFlowLayout {
             itemsPerRow = 3
         }
 
-        let availableWidth = collectionView.bounds.width - (margin_vertical * (itemsPerRow + 1))
+        let availableWidth = collectionView.bounds.width - (margin * (itemsPerRow + 1))
         let itemWidth = availableWidth / itemsPerRow
 
         // Item height is equal to image view height (4th part of cell width and 2:3 aspect ratio)
         let itemHeight = itemWidth * 0.25 * 3 / 2
         return CGSize(width: itemWidth, height: itemHeight)
-    }
-    
-    
-}
-
-
-extension MediaItemsCategoryViewController {
-    private func assignLayout() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: margin_vertical, left: margin_horizontal, bottom: margin_vertical, right: margin_horizontal)
-        layout.minimumInteritemSpacing = margin_vertical
-        layout.minimumLineSpacing = margin_vertical
-        self.collectionView.setCollectionViewLayout(layout, animated: false)
     }
 }

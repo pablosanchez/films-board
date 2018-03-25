@@ -15,6 +15,6 @@ target 'FilmsBoard' do
   pod 'SlideMenuControllerSwift'
   pod 'SQLite.swift'
   pod 'CarbonBadgeLabel', '~> 0.1'
-  pod 'MaterialComponents/ShadowElevations'
+  pod 'ReachabilitySwift'
 
 end

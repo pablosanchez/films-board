@@ -21,7 +21,7 @@ class AppAssembly: TyphoonAssembly {
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
-            }
+                }
             definition?.scope = .singleton
         }
     }
@@ -95,8 +95,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsViewModel() -> Any {
         return TyphoonDefinition.withClass(MediaItemsViewModel.self) { (definition) in
             definition?.useInitializer(
-            #selector(MediaItemsViewModel.init(storage:))) { (initializer) in
+            #selector(MediaItemsViewModel.init(storage:apiManagerProvider:))) { (initializer) in
                 initializer?.injectParameter(with: self.mediaItemsStorage())
+                initializer?.injectParameter(with: self)
             }
             definition?.scope = .prototype
         }
@@ -106,8 +107,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func mediaItemsCategoryViewModel() -> Any {
         return TyphoonDefinition.withClass(MediaItemsCategoryViewModel.self) { (definition) in
             definition?.useInitializer(
-            #selector(MediaItemsCategoryViewModel.init(storage:))) { (initializer) in
+            #selector(MediaItemsCategoryViewModel.init(storage:apiManagerProvider:))) { (initializer) in
                 initializer?.injectParameter(with: self.mediaItemsStorage())
+                initializer?.injectParameter(with: self)
             }
             definition?.scope = .prototype
         }
@@ -117,8 +119,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func searchViewModel() -> Any {
         return TyphoonDefinition.withClass(SearchViewModel.self) { (definition) in
             definition?.useInitializer(
-            #selector(SearchViewModel.init(storage:))) { (initializer) in
+            #selector(SearchViewModel.init(storage:apiManagerProvider:))) { (initializer) in
                 initializer?.injectParameter(with: self.mediaItemsStorage())
+                initializer?.injectParameter(with: self)
             }
             definition?.scope = .prototype
         }
@@ -128,9 +131,10 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func detailFilmViewModel() -> Any {
         return TyphoonDefinition.withClass(DetailFilmViewModel.self) { (definition) in
             definition?.useInitializer(
-            #selector(DetailFilmViewModel.init(storage:db:notificationsManager:))) { (initializer) in
+            #selector(DetailFilmViewModel.init(storage:db:apiManagerProvider:notificationsManager:))) { (initializer) in
                     initializer?.injectParameter(with: self.mediaItemsStorage())
                     initializer?.injectParameter(with: self.sqliteDatabase())
+                    initializer?.injectParameter(with: self)
                     initializer?.injectParameter(with: self.notificationsManager())
                 }
             definition?.scope = .prototype
@@ -159,8 +163,9 @@ class AppAssembly: TyphoonAssembly {
     public dynamic func trailerViewModel() -> Any {
         return TyphoonDefinition.withClass(TrailerViewModel.self) { (definition) in
             definition?.useInitializer(
-            #selector(TrailerViewModel.init(storage:))) { (initializer) in
+            #selector(TrailerViewModel.init(storage:apiManagerProvider:))) { (initializer) in
                 initializer?.injectParameter(with: self.mediaItemsStorage())
+                initializer?.injectParameter(with: self)
             }
             definition?.scope = .prototype
         }
@@ -176,8 +181,7 @@ class AppAssembly: TyphoonAssembly {
             definition?.scope = .prototype
         }
     }
-    
-    
+
     @objc
     public dynamic func detailedListViewModel() -> Any {
         return TyphoonDefinition.withClass(DetailedListViewModel.self) { (definition) in
@@ -188,7 +192,6 @@ class AppAssembly: TyphoonAssembly {
             definition?.scope = .prototype
         }
     }
-    
 
     @objc
     public dynamic func mediaItemsStorage() -> Any {
@@ -205,13 +208,43 @@ class AppAssembly: TyphoonAssembly {
     }
 
     @objc
+    public dynamic func moviesAPIManager() -> Any {
+        return TyphoonDefinition.withClass(MoviesAPIManager.self) { (definition) in
+            definition?.useInitializer(
+                #selector(MoviesAPIManager.init(storage:apiCommunicatorProvider:))) { (initializer) in
+                    initializer?.injectParameter(with: self.mediaItemsStorage())
+                    initializer?.injectParameter(with: self)
+                }
+            definition?.scope = .singleton
+        }
+    }
+
+    @objc
+    public dynamic func moviesAPICommunicator() -> Any {
+        return TyphoonDefinition.withClass(MoviesAPICommunicator.self) { (definition) in
+            definition?.useInitializer(
+                #selector(MoviesAPICommunicator.init(networkReachability:))) { (initializer) in
+                    initializer?.injectParameter(with: self.networkReachability())
+
+                }
+            definition?.scope = .singleton
+        }
+    }
+
+    @objc
+    public dynamic func networkReachability() -> Any {
+        return TyphoonDefinition.withClass(NetworkReachability.self) { (definition) in
+            definition?.scope = .singleton
+        }
+    }
+
+    @objc
     public dynamic func notificationsManager() -> Any {
         return TyphoonDefinition.withClass(NotificationsManager.self) { (definition) in
             definition?.useInitializer(
                 #selector(NotificationsManager.init(db:))) { (initializer) in
                     initializer?.injectParameter(with: self.sqliteDatabase())
-                }
-            definition?.scope = .singleton
+            }
         }
     }
 }

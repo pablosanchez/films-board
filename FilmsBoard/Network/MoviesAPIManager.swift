@@ -8,18 +8,22 @@
 
 import Foundation
 
-struct MoviesAPIManager {
+@objc
+class MoviesAPIManager: NSObject {
 
     typealias Completion = ([Int]?, Error?) -> ()  // Array of total pages for each category and if there's error
     typealias ErrorHandler = (Error?) -> ()
 
-    private let apiCommunicator = MoviesAPICommunicator()
-    private let dispatchGroup = DispatchGroup()
+    private let dispatchGroup: DispatchGroup
 
-    let storage: MediaItemsStorage
+    private let storage: MediaItemsStorage
+    private let apiCommunicator: MoviesAPICommunicator
 
-    init(storage: MediaItemsStorage) {
+    @objc
+    init(storage: MediaItemsStorage, apiCommunicatorProvider: MoviesAPICommunicatorProvider) {
+        self.dispatchGroup = DispatchGroup()
         self.storage = storage
+        self.apiCommunicator = apiCommunicatorProvider.moviesAPICommunicator()
     }
 
     func getMediaItemsByCategories(type: MediaItemTypes, completion: @escaping Completion) {
@@ -137,4 +141,9 @@ struct MoviesAPIManager {
             }
         }
     }
+}
+
+@objc
+protocol MoviesAPIManagerProvider: NSObjectProtocol {
+    func moviesAPIManager() -> MoviesAPIManager
 }
