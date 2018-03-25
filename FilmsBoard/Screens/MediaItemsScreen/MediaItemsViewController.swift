@@ -58,7 +58,9 @@ extension MediaItemsViewController {
         self.tableView.register(rowNib, forCellReuseIdentifier: CELL_ID)
 
         self.tableView.dataSource = self
-        self.tableView.rowHeight = 240
+        let isIpad = self.traitCollection.horizontalSizeClass == .regular
+            && self.traitCollection.verticalSizeClass == .regular
+        self.tableView.rowHeight = isIpad ? 360 : 240
         self.tableView.separatorStyle = .none
     }
 }

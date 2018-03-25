@@ -84,9 +84,9 @@ extension NotificationsManager: UNUserNotificationCenterDelegate {
 
         switch (response.actionIdentifier) {
         case NotificationActions.accept.rawValue, UNNotificationDismissActionIdentifier:
-            self.db.deleteMediaFromList(listName: "Recordatorios", id_media: id, type: MediaItemTypes.movies.rawValue)
+            let _ = self.db.deleteMediaFromList(listName: "Recordatorios", id_media: id, type: MediaItemTypes.movies.rawValue)
         case NotificationActions.remind.rawValue:
-            self.db.deleteMediaFromList(listName: "Recordatorios", id_media: id, type: MediaItemTypes.movies.rawValue)
+            let _ = self.db.deleteMediaFromList(listName: "Recordatorios", id_media: id, type: MediaItemTypes.movies.rawValue)
             let calendar = Calendar.current
             let remindRelativeHours: Double = 9
             let dateComponents = calendar.dateComponents([.day, .month, .year, .hour, .minute, .second], from: Date(timeIntervalSinceNow: remindRelativeHours * 3600))

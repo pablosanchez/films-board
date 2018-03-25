@@ -12,7 +12,6 @@ import MBProgressHUD
 struct ToastsBuilder {
     
     static func makeToast(text: String, view: UIView) {
-        
         let toast = MBProgressHUD.showAdded(to: view, animated: true)
         toast.label.text = text
         toast.mode = .text
@@ -22,5 +21,4 @@ struct ToastsBuilder {
         
         toast.hide(animated: true, afterDelay: 3)
     }
-    
 }

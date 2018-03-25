@@ -37,8 +37,6 @@ extension MediaItemsRow {
 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 100, height: 180)
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.collectionView.setCollectionViewLayout(layout, animated: false)
 
         self.collectionView.dataSource = self
@@ -71,5 +69,21 @@ extension MediaItemsRow: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel?.selectedItem(index: indexPath.row)
+    }
+}
+
+extension MediaItemsRow: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let isIpad = traitCollection.horizontalSizeClass == .regular
+            && traitCollection.verticalSizeClass == .regular
+        return CGSize(width: isIpad ? 160 : 100, height: isIpad ? 280 : 180)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let isIpad = traitCollection.horizontalSizeClass == .regular
+            && traitCollection.verticalSizeClass == .regular
+        let inset: CGFloat = isIpad ? 20 : 10
+        return UIEdgeInsets(top: inset, left: 10, bottom: inset, right: 10)
     }
 }
