@@ -13,6 +13,8 @@ class ListsViewController: UIViewController {
     @IBOutlet weak var lists: UITableView!
     
     private let CELL_ID = "list_item"
+
+    private var addButton: UIBarButtonItem!
     
     private let viewModel: ListsViewModel
 
@@ -33,7 +35,7 @@ class ListsViewController: UIViewController {
 
         self.title = "Mis listas"
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ListsViewController.addNewList))
+        self.addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(ListsViewController.addNewList))
         navigationItem.rightBarButtonItem = addButton
         
         self.initTableView()
@@ -68,7 +70,17 @@ extension ListsViewController {
 
         alertDelete.addAction(actionAccept)
         alertDelete.addAction(actionCancel)
-        self.present(alertDelete, animated: true, completion: nil)
+
+        let isIpad = self.traitCollection.horizontalSizeClass == .regular
+            && self.traitCollection.verticalSizeClass == .regular
+
+        if !isIpad {
+            self.present(alertDelete, animated: true, completion: nil)
+        } else {
+            alertDelete.popoverPresentationController?.barButtonItem = self.addButton
+
+            self.present(alertDelete, animated: true, completion: nil)
+        }
     }
 }
 

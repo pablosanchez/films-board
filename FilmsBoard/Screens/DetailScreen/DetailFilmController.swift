@@ -25,6 +25,9 @@ class DetailFilmController: UIViewController {
 
     private var progressIndicator: MBProgressHUD!
 
+    private var addButton: UIBarButtonItem!
+    private var remindButton: UIBarButtonItem?
+
     private let viewModel: DetailFilmViewModel
 
     init(viewModel: DetailFilmViewModel) {
@@ -74,6 +77,17 @@ class DetailFilmController: UIViewController {
 
 extension DetailFilmController {
 
+    private func initNavigationItem() {
+        self.addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToList))
+
+        if viewModel.checkIfCanRemind() {
+            self.remindButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(addReminder))
+            self.navigationItem.rightBarButtonItems = [addButton, remindButton!]
+        } else {
+            self.navigationItem.rightBarButtonItem = addButton
+        }
+    }
+
     @objc
     func addToList() {
         let alertController = UIAlertController(title: "Añadir a la lista:", message: nil, preferredStyle: .actionSheet)
@@ -115,7 +129,16 @@ extension DetailFilmController {
         alertController.addAction(actionCancel)
         alertController.addAction(deleteFromLists)
 
-        self.present(alertController, animated: true, completion: nil)
+        let isIpad = self.traitCollection.horizontalSizeClass == .regular
+            && self.traitCollection.verticalSizeClass == .regular
+
+        if !isIpad {
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            alertController.popoverPresentationController?.barButtonItem = self.addButton
+
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 
     @objc
@@ -149,22 +172,21 @@ extension DetailFilmController {
         }
 
         alertController.addAction(actionCancel)
-        self.present(alertController, animated: true, completion: nil)
+
+        let isIpad = self.traitCollection.horizontalSizeClass == .regular
+            && self.traitCollection.verticalSizeClass == .regular
+
+        if !isIpad {
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            alertController.popoverPresentationController?.barButtonItem = self.remindButton
+
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }
 
 extension DetailFilmController {
-
-    private func initNavigationItem() {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToList))
-
-        if viewModel.checkIfCanRemind() {
-            let remindButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(addReminder))
-            self.navigationItem.rightBarButtonItems = [addButton, remindButton]
-        } else {
-            self.navigationItem.rightBarButtonItem = addButton
-        }
-    }
 
     private func requestData() {
         self.progressIndicator = MBProgressHUDBuilder.makeProgressIndicator(view: self.view)
