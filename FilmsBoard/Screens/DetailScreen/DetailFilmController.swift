@@ -92,7 +92,7 @@ extension DetailFilmController {
                     else { return }
 
                 if name.capitalized != "Recordatorios"{
-                    self.viewModel.deleteFromList(listName: name.capitalized)
+                    self.viewModel.deleteFromList(listName: name.capitalized, view: self.view)
                 }
             }
             let actionNo = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
@@ -106,6 +106,7 @@ extension DetailFilmController {
             if listName != "Recordatorios" {
                 let alert = UIAlertAction(title: listName, style: .default) { (action) in
                     self.viewModel.addFilmToList(listName: listName)
+                    ToastsBuilder.makeToast(text: "Añadido a \(listName)", view: self.view)
                 }
                 alertController.addAction(alert)
             }
@@ -131,7 +132,7 @@ extension DetailFilmController {
             let alertDelete = UIAlertController(title: "Eliminar recordatorio", message: "¿Desea eliminar el recordatorio?", preferredStyle: .alert)
 
             let actionYes = UIAlertAction(title: "Sí", style: .destructive) { (action) in
-                self.viewModel.deleteFromList(listName: "Recordatorios")
+                self.viewModel.deleteFromList(listName: "Recordatorios", view: self.view)
                 self.viewModel.removeReminder()
             }
             let actionNo = UIAlertAction(title: "No", style: .cancel, handler: nil)

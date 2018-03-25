@@ -200,14 +200,20 @@ extension SQLiteDatabase {
         return lists
     }
 
-    func deleteMediaFromList(listName: String, id_media: Int, type: Int) {
+    func deleteMediaFromList(listName: String, id_media: Int, type: Int) -> Bool{
         let listId = self.getListId(listName: listName)
+        
         
         do {
             let filter = self.table_media.filter(self.id_media == id_media).filter(self.id_list == listId).filter(self.type == type)
             
             try self.database.run(filter.delete())
         } catch { }
+        
+        if listId == 0 {
+            return false
+        }
+        return true
     }
 
     func checkMediaIsInList(listName: String, id_media: Int, type: Int) -> Int{

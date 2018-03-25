@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 @objc
 class DetailFilmViewModel: NSObject {
@@ -34,8 +35,16 @@ class DetailFilmViewModel: NSObject {
         self.db.insertMediaIntoList(listName: listName, media: self.mediaItem)
     }
     
-    func deleteFromList(listName: String) {
-        self.db.deleteMediaFromList(listName: listName, id_media: self.mediaItem.id, type: self.mediaItem.type.rawValue)
+    func deleteFromList(listName: String, view: UIView) {
+        if self.db.deleteMediaFromList(listName: listName, id_media: self.mediaItem.id, type: self.mediaItem.type.rawValue) {
+            if listName != "Recordatorios" {
+                ToastsBuilder.makeToast(text: "Eliminado de \(listName)", view: view)
+            }
+        } else {
+            if listName != "Recordatorios" {
+                ToastsBuilder.makeToast(text: "\(listName) no existe", view: view)
+            }
+        }
     }
 
     func retrieveListNames() -> [String] {
