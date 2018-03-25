@@ -16,5 +16,6 @@ target 'FilmsBoard' do
   pod 'SQLite.swift'
   pod 'CarbonBadgeLabel', '~> 0.1'
   pod 'ReachabilitySwift'
+  pod 'Licensy'
 
 end

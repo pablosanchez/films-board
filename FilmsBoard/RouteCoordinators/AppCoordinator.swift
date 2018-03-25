@@ -14,15 +14,16 @@ class AppCoordinator: NSObject {
 
     private let tabsCoordinatorProvider: TabsCoordinatorProvider
     private let mapCoordinatorProvider: MapCoordinatorProvider
+    private let listsCoordinatorProvider: ListsCoordinatorProvider
+    private let aboutCoordinatorProvider: AboutCoordinatorProvider
 
     private var slideMenuController: SlideMenuController!
     private var slideMenu: SlideMenuViewController!
 
     private var tabsCoordinator: TabsCoordinator!
     private var mapCoordinator: MapCoordinator!
-    
     private var listsCoordinator: ListsCoordinator!
-    private var listsCoordinatorProvider: ListsCoordinatorProvider
+    private var aboutCoordinator: AboutCoordinator!
 
     // The current root coordinator of the app
     var rootCoordinator: SlideMenuController {
@@ -30,10 +31,11 @@ class AppCoordinator: NSObject {
     }
 
     @objc
-    init(tabsCoordinatorProvider: TabsCoordinatorProvider, mapCoordinatorProvider: MapCoordinatorProvider, listsCoordinatorProvider: ListsCoordinatorProvider) {
+    init(tabsCoordinatorProvider: TabsCoordinatorProvider, mapCoordinatorProvider: MapCoordinatorProvider, listsCoordinatorProvider: ListsCoordinatorProvider, aboutCoordinatorProvider: AboutCoordinatorProvider) {
         self.tabsCoordinatorProvider = tabsCoordinatorProvider
         self.mapCoordinatorProvider = mapCoordinatorProvider
         self.listsCoordinatorProvider = listsCoordinatorProvider
+        self.aboutCoordinatorProvider = aboutCoordinatorProvider
         super.init()
         self.initSlideMenu()
     }
@@ -72,7 +74,6 @@ extension AppCoordinator: SlideMenuViewControllerDelegate {
     func slideMenuViewControllerDidTapListsButton(_ viewController: SlideMenuViewController) {
         self.slideMenuController.closeLeft()
         
-        
         let listsCoordinator = listsCoordinatorProvider.listsCoordinator()
         listsCoordinator.start()
         self.listsCoordinator = listsCoordinator
@@ -86,5 +87,14 @@ extension AppCoordinator: SlideMenuViewControllerDelegate {
         mapCoordinator.start()
         self.mapCoordinator = mapCoordinator
         self.changeSlideMenuRootViewController(self.mapCoordinator.rootViewController)
+    }
+
+    func slideMenuViewControllerDidTapLicenciesButton(_ viewController: SlideMenuViewController) {
+        self.slideMenuController.closeLeft()
+
+        let aboutCoordinator = aboutCoordinatorProvider.aboutCoordinator()
+        aboutCoordinator.start()
+        self.aboutCoordinator = aboutCoordinator
+        self.changeSlideMenuRootViewController(self.aboutCoordinator.rootViewController)
     }
 }

@@ -17,7 +17,8 @@ class AppAssembly: TyphoonAssembly {
         return TyphoonDefinition.withClass(AppCoordinator.self) { (definition) in
             definition?.useInitializer(
                 #selector(AppCoordinator.init(
-                    tabsCoordinatorProvider:mapCoordinatorProvider:listsCoordinatorProvider:))) { (initializer) in
+                    tabsCoordinatorProvider:mapCoordinatorProvider:listsCoordinatorProvider:aboutCoordinatorProvider:))) { (initializer) in
+                        initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
                         initializer?.injectParameter(with: self)
@@ -84,6 +85,13 @@ class AppAssembly: TyphoonAssembly {
                 initializer?.injectParameter(with: self)
                 initializer?.injectParameter(with: self)
             }
+            definition?.scope = .prototype
+        }
+    }
+
+    @objc
+    public dynamic func aboutCoordinator() -> Any {
+        return TyphoonDefinition.withClass(AboutCoordinator.self) { (definition) in
             definition?.scope = .prototype
         }
     }

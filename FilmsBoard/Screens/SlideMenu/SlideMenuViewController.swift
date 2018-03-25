@@ -35,10 +35,15 @@ class SlideMenuViewController: UIViewController {
     @IBAction func closeCinemasButtonTapped() {
         delegate?.slideMenuViewControllerDidTapCloseCinemasButton(self)
     }
+    
+    @IBAction func licensiesButtonTapped() {
+        delegate?.slideMenuViewControllerDidTapLicenciesButton(self)
+    }
 }
 
 protocol SlideMenuViewControllerDelegate: class {
     func slideMenuViewControllerDidTapHomeButton(_ viewController: SlideMenuViewController)
     func slideMenuViewControllerDidTapListsButton(_ viewController: SlideMenuViewController)
     func slideMenuViewControllerDidTapCloseCinemasButton(_ viewController: SlideMenuViewController)
+    func slideMenuViewControllerDidTapLicenciesButton(_ viewController: SlideMenuViewController)
 }

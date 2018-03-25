@@ -30,6 +30,9 @@
 		6E6A8C4A2066944D00EB7F37 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6A8C492066944D00EB7F37 /* String+Date.swift */; };
 		6E6A8C4D206701EC00EB7F37 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6A8C4C206701EC00EB7F37 /* NotificationsManager.swift */; };
 		6E7F1F292067902200AB9907 /* RequestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F1F282067902200AB9907 /* RequestError.swift */; };
+		6E7F1F2D206792CB00AB9907 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F1F2B206792CB00AB9907 /* AboutViewController.swift */; };
+		6E7F1F2E206792CB00AB9907 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E7F1F2C206792CB00AB9907 /* AboutViewController.xib */; };
+		6E7F1F302067933200AB9907 /* AboutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7F1F2F2067933200AB9907 /* AboutCoordinator.swift */; };
 		6E8DF932205FC9EC00B106DF /* MediaItemDetailedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8DF930205FC9EC00B106DF /* MediaItemDetailedCell.swift */; };
 		6E8DF933205FC9EC00B106DF /* MediaItemDetailedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E8DF931205FC9EC00B106DF /* MediaItemDetailedCell.xib */; };
 		6E8DF935205FCB5100B106DF /* MediaItemsCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8DF934205FCB5100B106DF /* MediaItemsCategoryViewModel.swift */; };
@@ -112,6 +115,9 @@
 		6E6A8C492066944D00EB7F37 /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		6E6A8C4C206701EC00EB7F37 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
 		6E7F1F282067902200AB9907 /* RequestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestError.swift; sourceTree = "<group>"; };
+		6E7F1F2B206792CB00AB9907 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		6E7F1F2C206792CB00AB9907 /* AboutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		6E7F1F2F2067933200AB9907 /* AboutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCoordinator.swift; sourceTree = "<group>"; };
 		6E8DF930205FC9EC00B106DF /* MediaItemDetailedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemDetailedCell.swift; sourceTree = "<group>"; };
 		6E8DF931205FC9EC00B106DF /* MediaItemDetailedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaItemDetailedCell.xib; sourceTree = "<group>"; };
 		6E8DF934205FCB5100B106DF /* MediaItemsCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemsCategoryViewModel.swift; sourceTree = "<group>"; };
@@ -238,6 +244,7 @@
 				6E0B8A7B2059784C00F8284E /* MediaItemsCategoryScreen */,
 				6E65ABE820618691004F96D3 /* SearchScreen */,
 				6EFC15072064413300C4FF87 /* MapScreen */,
+				6E7F1F2A206792AE00AB9907 /* AboutScreen */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -267,6 +274,15 @@
 				6E6A8C4C206701EC00EB7F37 /* NotificationsManager.swift */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		6E7F1F2A206792AE00AB9907 /* AboutScreen */ = {
+			isa = PBXGroup;
+			children = (
+				6E7F1F2B206792CB00AB9907 /* AboutViewController.swift */,
+				6E7F1F2C206792CB00AB9907 /* AboutViewController.xib */,
+			);
+			path = AboutScreen;
 			sourceTree = "<group>";
 		};
 		6E8DF92F205FC75D00B106DF /* CollectionViewCell */ = {
@@ -333,10 +349,11 @@
 				6EB9D7C9205058600033399D /* TabsCoordinator.swift */,
 				6EB9D7CE205060C70033399D /* MediaItemsTabCoordinator.swift */,
 				6E65ABEF206187D8004F96D3 /* SearchTabCoordinator.swift */,
-				6EFC150E2064423000C4FF87 /* MapCoordinator.swift */,
 				C98A13A420617C680063C741 /* TrailerCoordinator.swift */,
-				6EB9D7CB205058AA0033399D /* Coordinable.swift */,
 				C9DA67442066ABEF005C3987 /* ListsCoordinator.swift */,
+				6EFC150E2064423000C4FF87 /* MapCoordinator.swift */,
+				6E7F1F2F2067933200AB9907 /* AboutCoordinator.swift */,
+				6EB9D7CB205058AA0033399D /* Coordinable.swift */,
 			);
 			path = RouteCoordinators;
 			sourceTree = "<group>";
@@ -550,6 +567,7 @@
 			files = (
 				C9DA673120643826005C3987 /* TrailerViewController.xib in Resources */,
 				C965905E205A9A7000A515E2 /* DetailFilmController.xib in Resources */,
+				6E7F1F2E206792CB00AB9907 /* AboutViewController.xib in Resources */,
 				6ECD18DE205145C300BF2F00 /* MediaItemCell.xib in Resources */,
 				6ECD18DA205143EE00BF2F00 /* MediaItemsRow.xib in Resources */,
 				C9DA674E2066B7A4005C3987 /* DetailedListViewController.xib in Resources */,
@@ -597,6 +615,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CarbonBadgeLabel/CarbonBadgeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
+				"${BUILT_PRODUCTS_DIR}/Licensy/Licensy.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
@@ -610,6 +629,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CarbonBadgeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Licensy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
@@ -648,11 +668,13 @@
 				6EFC150D2064419400C4FF87 /* MapViewModel.swift in Sources */,
 				6E65ABF0206187D8004F96D3 /* SearchTabCoordinator.swift in Sources */,
 				6E63C7952057DF6F00914163 /* PopularViewModel.swift in Sources */,
+				6E7F1F302067933200AB9907 /* AboutCoordinator.swift in Sources */,
 				6EFC14F62063B75100C4FF87 /* MediaItemsBuilderResult.swift in Sources */,
 				6EB9D7CA205058600033399D /* TabsCoordinator.swift in Sources */,
 				6ECD18D9205143EE00BF2F00 /* MediaItemsRow.swift in Sources */,
 				6ECA30442056FCCF00BB54CC /* UpcomingViewModel.swift in Sources */,
 				6E0B8A7E2059788500F8284E /* MediaItemsCategoryViewController.swift in Sources */,
+				6E7F1F2D206792CB00AB9907 /* AboutViewController.swift in Sources */,
 				6EB9D7C82050584C0033399D /* AppCoordinator.swift in Sources */,
 				6E64CA2F2065BB7D005E2F25 /* MapAnnotation.swift in Sources */,
 				6E6A8C4D206701EC00EB7F37 /* NotificationsManager.swift in Sources */,
@@ -837,10 +859,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DNU96T24MS;
+				DEVELOPMENT_TEAM = A5UCFNWB8C;
 				INFOPLIST_FILE = FilmsBoard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = es.upsa.mimo.FilmsBoard;
+				PRODUCT_BUNDLE_IDENTIFIER = es.upsa.mimo.FilmBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -856,10 +878,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DNU96T24MS;
+				DEVELOPMENT_TEAM = A5UCFNWB8C;
 				INFOPLIST_FILE = FilmsBoard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = es.upsa.mimo.FilmsBoard;
+				PRODUCT_BUNDLE_IDENTIFIER = es.upsa.mimo.FilmBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;

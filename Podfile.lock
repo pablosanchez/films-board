@@ -2,6 +2,7 @@ PODS:
   - Alamofire (4.7.0)
   - CarbonBadgeLabel (0.1.0)
   - Cosmos (15.0.0)
+  - Licensy (1.0.9)
   - MBProgressHUD (1.1.0)
   - ReachabilitySwift (4.1.0)
   - SCLAlertView (0.8)
@@ -25,6 +26,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - CarbonBadgeLabel (~> 0.1)
   - Cosmos (~> 15.0)
+  - Licensy
   - MBProgressHUD (~> 1.1.0)
   - ReachabilitySwift
   - SCLAlertView
@@ -37,6 +39,7 @@ SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
   CarbonBadgeLabel: 50f97d9274a5c9fde80add1a28014f90c3fafa22
   Cosmos: a6dbd3d0baa0cc8f51f8598f7508d5a09d0a9ade
+  Licensy: 2b34f3d5d79e112a4832654338480d8e2df4847f
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
@@ -45,6 +48,6 @@ SPEC CHECKSUMS:
   SQLite.swift: 3e3bee21da701b5b9f87c4a672cb54f233505692
   Typhoon: 551cc8fae881d0f4b20ddafc6d276da3e867f61f
 
-PODFILE CHECKSUM: 2cb91d1b48dfdbeaf1941aa31ce7cd2ca196f4c8
+PODFILE CHECKSUM: f5582a09be352c98ba261d1dca55bd0f1a249b58
 
 COCOAPODS: 1.4.0
