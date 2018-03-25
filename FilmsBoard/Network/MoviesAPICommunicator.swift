@@ -9,12 +9,21 @@
 import Foundation
 import Alamofire
 
-struct MoviesAPICommunicator {
+@objc
+class MoviesAPICommunicator: NSObject {
 
-    typealias Completion = (Any?, MoviesAPIError?) -> ()
+    typealias Completion = (Any?, HTTPRequestError?) -> ()
 
-    private let baseURL = "https://api.themoviedb.org/3"
-    private let apiKey = "0d06d23f426db55f6986eea80871323f"
+    private let baseURL: String
+    private let apiKey: String
+    private let networkReachability: NetworkReachability
+
+    @objc
+    init(networkReachability: NetworkReachability) {
+        self.baseURL = "https://api.themoviedb.org/3"
+        self.apiKey = "0d06d23f426db55f6986eea80871323f"
+        self.networkReachability = networkReachability
+    }
 
     func getMediaItems(type: MediaItemTypes, category: MediaItemCategories,
                        page: Int = 1, completion: @escaping Completion) {
@@ -76,6 +85,12 @@ struct MoviesAPICommunicator {
     }
 
     private func doRequest(url: String, parameters: Parameters? = nil, completion: @escaping Completion) {
+        guard self.networkReachability.connection else {  // There is no network connection
+            let error = "No hay conexion de red disponible. Vuelve a intentarlo más tarde"
+            completion(nil, HTTPRequestError(message: error))
+            return
+        }
+
         Alamofire
             .request(url,
                      parameters: parameters,
@@ -84,14 +99,21 @@ struct MoviesAPICommunicator {
             .responseJSON { (json) in
                 switch json.result {
                 case .failure:
+                    var error = ""
                     if let response = json.response {
-                        completion(nil, MoviesAPIError.apiError(code: response.statusCode))
+                        error = "Código de error \(response.statusCode)"
                     } else {
-                        completion(nil, MoviesAPIError.networkUnavailable(errorMessage: "No hay conectividad de red disponible. Compruebe conexión de red y vuelva a intentarlo"))
+                        error = "Error desconocido"
                     }
+                    completion(nil, HTTPRequestError(message: error))
                 case .success(let json):
                     completion(json, nil)
                 }
             }
     }
+}
+
+@objc
+protocol MoviesAPICommunicatorProvider: NSObjectProtocol {
+    func moviesAPICommunicator() -> MoviesAPICommunicator
 }

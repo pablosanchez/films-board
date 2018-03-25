@@ -13,5 +13,6 @@ target 'FilmsBoard' do
   pod 'Cosmos', '~> 15.0'
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'SlideMenuControllerSwift'
+  pod 'ReachabilitySwift'
 
 end

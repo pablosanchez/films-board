@@ -13,6 +13,7 @@ class SearchViewModel: NSObject {
 
     private(set) var cellViewModels: [MediaItemDetailedCellViewModel] = []
     private let storage: MediaItemsStorage
+    private let apiManager: MoviesAPIManager
 
     private var currentPage: Int
     var totalPages: Int?  // To handle infinite scrolling
@@ -23,9 +24,10 @@ class SearchViewModel: NSObject {
     weak var delegate: SearchViewModelDelegate?
 
     @objc
-    init(storage: MediaItemsStorage) {
+    init(storage: MediaItemsStorage, apiManagerProvider: MoviesAPIManagerProvider) {
         self.storage = storage
         self.currentPage = 1
+        self.apiManager = apiManagerProvider.moviesAPIManager()
     }
 }
 
@@ -55,17 +57,11 @@ extension SearchViewModel {
         self.searchText = text
         self.index = index
 
-        let apiManager = MoviesAPIManager(storage: storage)
-        apiManager.getMediaItemsByText(text: text, type: type, page: currentPage) { [unowned self] (pages, error) in
+        self.apiManager.getMediaItemsByText(text: text, type: type, page: currentPage) { [unowned self] (pages, error) in
             guard error == nil else {
-                var errorMsg: String
-                if let error = error as? MoviesAPIError {
-                    switch error {
-                    case .apiError(let code):
-                        errorMsg = "Error de red: código HTTP \(code)"
-                    case .networkUnavailable(let errorMessage):
-                        errorMsg = errorMessage
-                    }
+                var errorMsg = ""
+                if let error = error as? HTTPRequestError {
+                    errorMsg = error.message
                 } else if let error = error as? MediaItemsBuilderError {
                     errorMsg = error.errorMessage
                 } else {

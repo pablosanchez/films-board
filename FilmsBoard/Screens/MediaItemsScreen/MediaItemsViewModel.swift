@@ -13,6 +13,7 @@ class MediaItemsViewModel: NSObject {
 
     private(set) var tableCellViewModels: [MediaItemsRowViewModel]
     private let storage: MediaItemsStorage
+    private let apiManager: MoviesAPIManager
 
     private(set) var type: MediaItemTypes!
 
@@ -20,9 +21,10 @@ class MediaItemsViewModel: NSObject {
     weak var routingDelegate: MediaItemsViewModelRoutingDelegate?
 
     @objc
-    init(storage: MediaItemsStorage) {
+    init(storage: MediaItemsStorage, apiManagerProvider: MoviesAPIManagerProvider) {
         self.storage = storage
         self.tableCellViewModels = []
+        self.apiManager = apiManagerProvider.moviesAPIManager()
     }
 }
 
@@ -31,19 +33,13 @@ extension MediaItemsViewModel {
     func getMediaItemsByCategories(index: Int) {
         self.type = MediaItemTypes(rawValue: index) ?? MediaItemTypes.movies
 
-        let apiManager = MoviesAPIManager(storage: storage)
-        apiManager.getMediaItemsByCategories(type: type) { [unowned self] (totalPages, error) in
+        self.apiManager.getMediaItemsByCategories(type: type) { [unowned self] (totalPages, error) in
             // Be sure there's no error and totalPages array size is just number of media item types
             guard let pages = totalPages, pages.count == MediaItemCategories.values.count, error == nil,
                 self.storage.mediaItemsByCategories.count == MediaItemCategories.values.count else {
                 var errorMsg = ""
-                if let error = error as? MoviesAPIError {
-                    switch error {
-                    case .networkUnavailable(let errorMessage):
-                        errorMsg = errorMessage
-                    case .apiError(let code):
-                        errorMsg = "Error de red: código HTTP \(code)"
-                    }
+                if let error = error as? HTTPRequestError {
+                    errorMsg = error.message
                 } else if let error = error as? MediaItemsBuilderError {
                     errorMsg = error.errorMessage
                 } else {

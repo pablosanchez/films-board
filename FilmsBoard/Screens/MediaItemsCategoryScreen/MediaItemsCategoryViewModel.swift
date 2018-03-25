@@ -13,6 +13,7 @@ class MediaItemsCategoryViewModel: NSObject {
 
     private let storage: MediaItemsStorage
     private(set) var cellViewModels: [MediaItemDetailedCellViewModel] = []
+    private let apiManager: MoviesAPIManager
 
     private var currentPage: Int
     var totalPages: Int?  // To handle infinite scrolling
@@ -31,9 +32,10 @@ class MediaItemsCategoryViewModel: NSObject {
     weak var delegate: MediaItemsCategoryViewModelDelegate?
 
     @objc
-    init(storage: MediaItemsStorage) {
+    init(storage: MediaItemsStorage, apiManagerProvider: MoviesAPIManagerProvider) {
         self.storage = storage
         currentPage = 1
+        self.apiManager = apiManagerProvider.moviesAPIManager()
         super.init()
     }
 }
@@ -58,7 +60,6 @@ extension MediaItemsCategoryViewModel {
 extension MediaItemsCategoryViewModel {
 
     func getNextMediaItemsPage() {
-        let apiManager = MoviesAPIManager(storage: storage)
         self.currentPage += 1
 
         if currentPage > self.totalPages ?? 1 {  // If there were no pages, give a default value of 1
@@ -66,16 +67,11 @@ extension MediaItemsCategoryViewModel {
             return
         }
 
-        apiManager.getMediaItems(for: type, category: category, page: currentPage) { [unowned self] (pages, error) in
+        self.apiManager.getMediaItems(for: type, category: category, page: currentPage) { [unowned self] (pages, error) in
             guard error == nil else {
-                var errorMsg: String
-                if let error = error as? MoviesAPIError {
-                    switch error {
-                    case .apiError(let code):
-                        errorMsg = "Error de red: código HTTP \(code)"
-                    case .networkUnavailable(let errorMessage):
-                        errorMsg = errorMessage
-                    }
+                var errorMsg = ""
+                if let error = error as? HTTPRequestError {
+                    errorMsg = error.message
                 } else if let error = error as? MediaItemsBuilderError {
                     errorMsg = error.errorMessage
                 } else {
