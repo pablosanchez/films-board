@@ -56,8 +56,6 @@ class SQLiteDatabase: NSObject {
             let database = try Connection(fileURL.path)
             try database.execute("PRAGMA foreign_keys = ON;")
             
-            print(database)
-            
             self.database = database
         } catch { }
     }
