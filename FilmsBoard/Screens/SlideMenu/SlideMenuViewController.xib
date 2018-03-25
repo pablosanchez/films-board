@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14092" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14081.1"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,45 +17,75 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view clearsContextBeforeDrawing="NO" alpha="0.75" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guQ-tL-EOc">
-                    <rect key="frame" x="27" y="123" width="69" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Mis Listas"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guQ-tL-EOc">
+                    <rect key="frame" x="20" y="122" width="355" height="32"/>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                    <state key="normal" title="Mis Listas">
+                        <color key="titleColor" name="Secondary"/>
+                    </state>
                     <connections>
                         <action selector="myListsButtonTapped" destination="-1" eventType="touchUpInside" id="8QZ-4c-H6y"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="edL-5t-8EM">
-                    <rect key="frame" x="27" y="171" width="106" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Cines cercanos"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="edL-5t-8EM">
+                    <rect key="frame" x="20" y="174" width="355" height="32"/>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                    <state key="normal" title="Cines cercanos">
+                        <color key="titleColor" name="Secondary"/>
+                    </state>
                     <connections>
                         <action selector="closeCinemasButtonTapped" destination="-1" eventType="touchUpInside" id="f38-Gb-cou"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gX-eZ-D3u">
-                    <rect key="frame" x="27" y="72" width="36" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Inicio"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5gX-eZ-D3u">
+                    <rect key="frame" x="20" y="70" width="355" height="32"/>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                    <state key="normal" title="Inicio">
+                        <color key="titleColor" name="Secondary"/>
+                    </state>
                     <connections>
                         <action selector="homeButtonTapped" destination="-1" eventType="touchUpInside" id="GS5-SD-ODe"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhO-ra-1fy">
-                    <rect key="frame" x="27" y="227" width="65" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Licencias"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhO-ra-1fy">
+                    <rect key="frame" x="20" y="226" width="355" height="32"/>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                    <state key="normal" title="Licencias">
+                        <color key="titleColor" name="Secondary"/>
+                    </state>
                     <connections>
                         <action selector="licensiesButtonTapped" destination="-1" eventType="touchUpInside" id="qf1-Vg-8gO"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" name="Background"/>
+            <constraints>
+                <constraint firstItem="AhO-ra-1fy" firstAttribute="top" secondItem="edL-5t-8EM" secondAttribute="bottom" constant="20" id="00R-TP-Kfp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="AhO-ra-1fy" secondAttribute="trailing" id="1ft-BR-aYw"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5gX-eZ-D3u" secondAttribute="trailing" id="5r6-j3-4vu"/>
+                <constraint firstItem="edL-5t-8EM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="6Sz-ID-CVy"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="guQ-tL-EOc" secondAttribute="trailing" id="9mu-Ix-CNH"/>
+                <constraint firstItem="edL-5t-8EM" firstAttribute="top" secondItem="guQ-tL-EOc" secondAttribute="bottom" constant="20" id="DFy-Vd-xwi"/>
+                <constraint firstItem="guQ-tL-EOc" firstAttribute="top" secondItem="5gX-eZ-D3u" secondAttribute="bottom" constant="20" id="K6x-MD-UeA"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="edL-5t-8EM" secondAttribute="trailing" id="OMr-om-n01"/>
+                <constraint firstItem="AhO-ra-1fy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="b0I-E3-l9L"/>
+                <constraint firstItem="5gX-eZ-D3u" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="dzd-wg-ngt"/>
+                <constraint firstItem="5gX-eZ-D3u" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="lnj-6h-SON"/>
+                <constraint firstItem="guQ-tL-EOc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="wjN-gx-IHF"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
     </objects>
+    <resources>
+        <namedColor name="Background">
+            <color red="0.34509803921568627" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Secondary">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

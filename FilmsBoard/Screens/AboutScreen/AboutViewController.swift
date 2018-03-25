@@ -25,7 +25,7 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.descriptionLabel.text = "Aplicación desarrollada por Pablo Sánchez Egido y Javier García Antúnez para el máster MIMO.\nLos datos y las imágenes mostrados se obtienen de The Movie Database API.\nA continuación se detallan las librerías de terceros usadas."
+        self.descriptionLabel.text = "Aplicación desarrollada por Pablo Sánchez Egido y Javier García Antúnez para el máster MIMO.\n\nLos datos y las imágenes mostrados se obtienen de The Movie Database API.\nA continuación se detallan las librerías de terceros usadas."
         self.loadLibraries()
     }
 }

@@ -79,9 +79,9 @@ extension DetailFilmController {
         let alertController = UIAlertController(title: "Añadir a la lista:", message: nil, preferredStyle: .actionSheet)
         let actionCancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
 
-        let deleteFromLists = UIAlertAction(title: "Borrar de las listas", style: .destructive) { (action) in
+        let deleteFromLists = UIAlertAction(title: "Borrar de una lista", style: .destructive) { (action) in
 
-            let alertDelete = UIAlertController(title: "Borrar de las listas", message: "Nombre de la lista: ", preferredStyle: .alert)
+            let alertDelete = UIAlertController(title: "Borrar de una lista", message: "Nombre de la lista: ", preferredStyle: .alert)
 
             alertDelete.addTextField{ (tf) in
                 tf.placeholder = "Nombre"

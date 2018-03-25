@@ -87,6 +87,7 @@
 		C9DA674D2066B7A4005C3987 /* DetailedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA674B2066B7A4005C3987 /* DetailedListViewController.swift */; };
 		C9DA674E2066B7A4005C3987 /* DetailedListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9DA674C2066B7A4005C3987 /* DetailedListViewController.xib */; };
 		C9DA67502066B8DB005C3987 /* DetailedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DA674F2066B8DB005C3987 /* DetailedListViewModel.swift */; };
+		C9F683B920681DF300073236 /* ToastsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F683B820681DF300073236 /* ToastsBuilder.swift */; };
 		DFBB735B54D6C17C81B216A8 /* Pods_FilmsBoard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD6C39473E430CF495561E4 /* Pods_FilmsBoard.framework */; };
 /* End PBXBuildFile section */
 
@@ -176,6 +177,7 @@
 		C9DA674B2066B7A4005C3987 /* DetailedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedListViewController.swift; sourceTree = "<group>"; };
 		C9DA674C2066B7A4005C3987 /* DetailedListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailedListViewController.xib; sourceTree = "<group>"; };
 		C9DA674F2066B8DB005C3987 /* DetailedListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedListViewModel.swift; sourceTree = "<group>"; };
+		C9F683B820681DF300073236 /* ToastsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastsBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -415,6 +417,7 @@
 			children = (
 				6EFC14F82063DA6600C4FF87 /* SCLAlertViewBuilder.swift */,
 				6EFC14FC206406A000C4FF87 /* MBProgressHUDBuilder.swift */,
+				C9F683B820681DF300073236 /* ToastsBuilder.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -695,6 +698,7 @@
 				6E65ABEB206186E0004F96D3 /* SearchViewController.swift in Sources */,
 				6E63C7992058242E00914163 /* MediaItemTypes.swift in Sources */,
 				6E65ABEE20618722004F96D3 /* SearchViewModel.swift in Sources */,
+				C9F683B920681DF300073236 /* ToastsBuilder.swift in Sources */,
 				6EFC14FD206406A000C4FF87 /* MBProgressHUDBuilder.swift in Sources */,
 				6E5BBC742056D0FF00410758 /* MediaItemsBuilder.swift in Sources */,
 				C9DA673E206644AF005C3987 /* ListsViewCell.swift in Sources */,
