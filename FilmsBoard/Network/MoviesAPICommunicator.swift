@@ -28,6 +28,8 @@ class MoviesAPICommunicator: NSObject {
     func getMediaItems(type: MediaItemTypes, category: MediaItemCategories,
                        page: Int = 1, completion: @escaping Completion) {
         guard page > 0 else {
+            let error = "Page must be greater than 0"
+            completion(nil, RequestError(message: error))
             return
         }
 
@@ -41,6 +43,8 @@ class MoviesAPICommunicator: NSObject {
 
     func getMediaItems(forText text: String, type: MediaItemTypes, page: Int, completion: @escaping Completion) {
         guard page > 0 else {
+            let error = "Page must be greater than 0"
+            completion(nil, RequestError(message: error))
             return
         }
 

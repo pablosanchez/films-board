@@ -19,7 +19,7 @@ In order to run the application on either a real iOS device or a simulator, you 
 
 1. Clone the repository
 
-        git clone https://github.com/pablosanchez/films-board
+        git clone https://github.com/sanchezegido/films-board
         
 2. Install cocoapods if you still don't have it
    
@@ -36,7 +36,7 @@ In order to run the application on either a real iOS device or a simulator, you 
 5. Then, open file `FilmsBoard.xcworkspace` on Xcode and run the project.
 
 ## Authors
-* [Pablo Sánchez](https://github.com/pablosanchez)
+* [Pablo Sánchez](https://github.com/sanchezegido)
 * [Javier García](https://github.com/pitisflow)
 
 ## License
